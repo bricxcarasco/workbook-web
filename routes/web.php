@@ -18,3 +18,15 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::middleware('admin')->group(function(){
+    Route::get('/admin', 'AdminDashboardController@index')->name('admin.dashboard');
+});
+
+Route::middleware('provider')->group(function(){
+    Route::get('/provider', 'ProviderDashboardController@index')->name('provider.dashboard');
+});
+
+Route::middleware('seeker')->group(function(){
+    Route::get('/seeker', 'SeekerDashboardController@index')->name('seeker.dashboard');
+});
