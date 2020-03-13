@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Provider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProviderPagesController extends Controller
 {
@@ -13,7 +15,9 @@ class ProviderPagesController extends Controller
 
     public function myProfile()
     {
-        return view('provider.my-profile');
+        $userId = Auth::guard('web')->user()->id;
+        $provider = Provider::where('user_id', $userId)->first();
+        return view('provider.my-profile', compact('provider'));
     }
 
     public function mySchedule()

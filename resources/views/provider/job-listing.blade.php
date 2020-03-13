@@ -14,7 +14,7 @@
     @include('provider.parts.header')
 
     <!-- HOME -->
-    <section class="section-hero overlay inner-page bg-image" style="background-image: url('images/hero_1.jpg');" id="home-section">
+    <section class="section-hero overlay inner-page bg-image" style="background-image: url({{ asset('images/hero_1.jpg') }});" id="home-section">
       <div class="container">
         <div class="row">
           <div class="col-md-7">
@@ -28,24 +28,85 @@
       </div>
     </section>
 
-    <section class="site-section block__18514" id="next-section">
+    <section class="site-section">
       <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <span class="text-primary d-block mb-5"><span class="icon-magnet display-1"></span></span>
-            <h2 class="mb-4">Graphic Design</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam dolorum incidunt dolorem facere, officiis placeat consequuntur odit quasi, quam voluptates, deleniti! Neque tenetur in, omnis consectetur molestias expedita nostrum et.</p>
-            <p>Sed odio temporibus quaerat laboriosam dicta ipsam eligendi deserunt architecto, aliquam in totam provident praesentium aperiam, id impedit aut delectus mollitia doloribus nostrum numquam tempore ullam reprehenderit nesciunt cumque veniam.</p>
-            <p>Officia mollitia deserunt vel expedita deleniti iure eius illum dolor optio tempora! Fuga, voluptates omnis velit neque. Rerum aperiam consequatur vero, nulla dolores a. Sed, non veniam maiores recusandae iure.</p>
-            <p>Nobis officia tempore porro incidunt quaerat commodi numquam exercitationem laboriosam deserunt, error excepturi et delectus quis explicabo repellendus obcaecati iusto. Delectus magni ducimus illo! Fugit quaerat debitis deserunt facere reiciendis!</p>
-            <p><a href="#" class="btn btn-primary btn-md mt-4">Hire Us, Our Agency</a></p>
+        
+        <div class="row mb-5 justify-content-center">
+          <div class="col-md-7 text-center">
+            <h2 class="section-title mb-2">43,167 Job Listed</h2>
           </div>
         </div>
+        
+        <ul class="job-listings mb-5">
+
+          
+          
+        </ul>
+
+        <div class="row pagination-wrap">
+          <div class="col-md-6 text-center text-md-left mb-4 mb-md-0">
+            <span>Showing 1-7 Of 43,167 Jobs</span>
+          </div>
+          <div class="col-md-6 text-center text-md-right">
+            <div class="custom-pagination ml-auto">
+              <a href="#" class="prev">Prev</a>
+              <div class="d-inline-block">
+              <a href="#" class="active">1</a>
+              <a href="#">2</a>
+              <a href="#">3</a>
+              <a href="#">4</a>
+              </div>
+              <a href="#" class="next">Next</a>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
 
     @extends('layouts.site.footer')
-  
+
+    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+    <script>
+      $(document).ready(function() {
+        getJobs();
+      });
+
+      function getJobs() {
+        $.ajax({
+          url: `/job_listing/all`,
+          type: 'GET',
+          dataType: 'json',
+          success: function(data) {
+            console.log(data);
+            let divApp = '';
+            data.forEach( (element) => {
+                divApp = divApp + `
+                    <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
+                    <a href="job-single.html"></a>
+                    <div class="job-listing-logo">
+                      <img src="{{ asset('images/job_logo_1.jpg') }}" style="width:150px; height: 150px;" class="img-fluid">
+                    </div>
+
+                    <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
+                      <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
+                        <h2>Product Designer</h2>
+                        <strong>Adidas</strong>
+                      </div>
+                      <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25">
+                        <span class="icon-room"></span> New York, New York
+                      </div>
+                      <div class="job-listing-meta">
+                        <span class="badge badge-danger">Part Time</span>
+                      </div>
+                    </div>
+                  </li>`;
+            });
+            $(".job-listings").append(divApp);
+          }
+        });
+      }
+    </script>
 </div>
   
     @extends('layouts.site.script')

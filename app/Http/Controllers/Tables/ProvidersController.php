@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tables;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Tables\NotificationsController;
+use App\Http\Requests\MyProfileValidation;
 use App\Provider;
 use App\User;
 use Illuminate\Support\Facades\DB;
@@ -94,10 +95,26 @@ class ProvidersController extends Controller
         return 'Success';
     }
 
+    public function myProfileUpdate(MyProfileValidation $request)
+    {
+        if (!is_null($request->image_upload)) {
+            $imageName = time().'.'.request()->image_upload->getClientOriginalExtension();
+            request()->image_upload->move(public_path('images'), $imageName);
+            $request->merge(['image' => $imageName]);
+        }
+
+        $update = Provider::where('id', $request->id)->update($request->except('_token', 'image_upload'));
+        
+        if ($update) {
+            return redirect()->back()->with('message', 'Updated successfully!');
+        }
+    }
+
     public function random_strings($length_of_string) 
     { 
         $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
         return substr(str_shuffle($str_result),  
                         0, $length_of_string); 
-    } 
+    }
+
 }

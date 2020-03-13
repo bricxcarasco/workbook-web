@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Tables;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SeekerMyProfileValidation;
 use App\Seeker;
 use App\User;
 use Illuminate\Support\Facades\DB;
@@ -57,6 +58,21 @@ class SeekersController extends Controller
         } catch (\Throwable $th) {
             Log::debug($th);
             return "Failed";
+        }
+    }
+
+    public function myProfileUpdate(SeekerMyProfileValidation $request)
+    {
+        if (!is_null($request->image_upload)) {
+            $imageName = time().'.'.request()->image_upload->getClientOriginalExtension();
+            request()->image_upload->move(public_path('images'), $imageName);
+            $request->merge(['image' => $imageName]);
+        }
+
+        $update = Seeker::where('id', $request->id)->update($request->except('_token', 'image_upload'));
+        
+        if ($update) {
+            return redirect()->back()->with('message', 'Updated successfully!');
         }
     }
 }

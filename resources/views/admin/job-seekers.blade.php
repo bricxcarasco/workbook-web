@@ -510,7 +510,7 @@
 
     function view(id) {
       $.ajax({
-        url: `/seeker/${id}`,
+        url: `/seeker/get/${id}`,
         type: 'GET',
         success: function(data) {
           if (data == 'Empty') {
@@ -647,9 +647,9 @@
                     bSortable : false,
                     render : function (data, type, row) {
                       return  `
-                            <button class="btn btn-primary" onClick="view(this.id)" id="${data.id}">View</button>
-                            <button class="btn btn-success" onClick="chat(this.id)" id="${data.id}">Chat</button>
-                            <button class="btn btn-danger" onClick="remove(this.id)" id="${data.id}">Delete</button>`;
+                            <button class="btn btn-primary" onClick="view(this.id)" id="${data.id}"><i class="fa fa-eye"></i> View</button>
+                            <button class="btn btn-success" onClick="chat(this.id)" id="${data.id}"><i class="fa fa-comment"></i> Chat</button>
+                            <button class="btn btn-danger" onClick="remove(this.id)" id="${data.id}"><i class="fa fa-times-circle"></i> Delete</button>`;
                     }  
                 }
               ]

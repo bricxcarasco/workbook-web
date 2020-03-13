@@ -69,7 +69,7 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Job Provider List</h3>
-                <button class="btn btn-primary float-right" id="add">Add User</button>
+                <button class="btn btn-primary float-right" id="add"><i class="fa fa-plus-circle"></i> Add User</button>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -690,7 +690,7 @@
 
     function edit(id) {
       $.ajax({
-        url: `/provider/${id}`,
+        url: `/provider/get/${id}`,
         type: 'GET',
         dataType: 'json',
         success: function(data) {
@@ -766,13 +766,13 @@
                   { data : null, 
                     bSortable : false,
                     render : function (data, type, row) {
-                      let verified = `<button class="btn btn-info" onClick="enable(this.id)" id="${data.id}">Enable</button>`;
+                      let verified = `<button class="btn btn-info" onClick="enable(this.id)" id="${data.id}"><i class="fa fa-check-circle"></i> Enable</button>`;
                       if (data.is_delete == 0) {
-                        verified = `<button class="btn btn-danger" onClick="remove(this.id)" id="${data.id}">Disable</button>`;
+                        verified = `<button class="btn btn-danger" onClick="remove(this.id)" id="${data.id}"><i class="fa fa-times-circle"></i> Disable</button>`;
                       }
                       return  `
-                            <button class="btn btn-primary" onClick="edit(this.id)" id="${data.id}">View</button>
-                            <button class="btn btn-success" onClick="chat(this.id)" id="${data.id}">Chat</button>
+                            <button class="btn btn-primary" onClick="edit(this.id)" id="${data.id}"><i class="fa fa-eye"></i> View</button>
+                            <button class="btn btn-success" onClick="chat(this.id)" id="${data.id}"><i class="fa fa-comment"></i> Chat</button>
                             ${verified}`;
                     }  
                 }

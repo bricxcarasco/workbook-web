@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Seeker;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SeekerPagesController extends Controller
 {
@@ -23,7 +25,9 @@ class SeekerPagesController extends Controller
 
     public function myProfile()
     {
-        return view('seeker.my-profile');
+        $userId = Auth::guard('web')->user()->id;
+        $seeker = Seeker::where('user_id', $userId)->first();
+        return view('seeker.my-profile', compact('seeker'));
     }
 
     public function ongoingApplications()

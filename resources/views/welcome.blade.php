@@ -29,7 +29,7 @@
     </header>
 
     <!-- HOME -->
-    <section class="home-section section-hero overlay bg-image" style="background-image: url('images/hero_1.jpg');" id="home-section">
+    <section class="home-section section-hero overlay bg-image" style="background-image: url({{ asset('images/hero_1.jpg') }});" id="home-section">
 
       <div class="container">
         <div class="row align-items-center justify-content-center">
@@ -87,7 +87,7 @@
 
     </section>
     
-    <section class="py-5 bg-image overlay-primary fixed overlay" id="next" style="background-image: url('images/hero_1.jpg');">
+    <section class="py-5 bg-image overlay-primary fixed overlay" id="next" style="background-image: url({{ asset('images/hero_1.jpg') }});">
       <div class="container">
         <div class="row mb-5 justify-content-center">
           <div class="col-md-7 text-center">
@@ -305,7 +305,7 @@
       </div>
     </section>
 
-    <section class="py-5 bg-image overlay-primary fixed overlay" style="background-image: url('images/hero_1.jpg');">
+    <section class="py-5 bg-image overlay-primary fixed overlay" style="background-image: url({{ asset('images/hero_1.jpg') }});">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-md-8">
