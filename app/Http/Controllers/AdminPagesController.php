@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Seeker;
 
 class AdminPagesController extends Controller
 {
@@ -15,7 +16,9 @@ class AdminPagesController extends Controller
     }
 
     public function jobSeekers() {
-        return view('admin.job-seekers');
+        $seekers = Seeker::get();
+        $test = "sds";
+        return view('admin.job-seekers', compact('seekers', 'test'));
     }
 
     public function manageAnnouncements() {

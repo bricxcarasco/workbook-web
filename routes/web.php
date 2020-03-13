@@ -19,6 +19,24 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/seeker_list', 'Tables\SeekersController@seekerList');
+Route::get('/seeker/{id}', 'Tables\SeekersController@seekerSingle');
+Route::post('/seeker', 'Tables\SeekersController@seekerAdd');
+Route::put('/seeker/edit', 'Tables\SeekersController@seekerEdit');
+Route::put('/seeker/delete', 'Tables\SeekersController@seekerDelete')->name('seeker.delete');
+
+Route::get('/provider_list', 'Tables\ProvidersController@providerList');
+Route::get('/provider/{id}', 'Tables\ProvidersController@providerSingle');
+Route::post('/provider', 'Tables\ProvidersController@providerAdd');
+Route::put('/provider/edit', 'Tables\ProvidersController@providerEdit');
+Route::put('/provider/delete', 'Tables\ProvidersController@providerDelete')->name('provider.delete');
+Route::put('/provider/enable', 'Tables\ProvidersController@providerEnable')->name('provider.enable');
+
+Route::get('/chat/{id}', 'Tables\ChatsController@getChats');
+Route::post('/chat/send', 'Tables\ChatsController@sendMessage');
+
+Route::get('mail/send', 'Tables\NotificationsController@send');
+
 Route::middleware('admin')->group(function(){
     Route::prefix('admin')->group(function () {
         Route::get('/', 'AdminDashboardController@index')->name('admin.dashboard');
