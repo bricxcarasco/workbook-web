@@ -20,13 +20,41 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware('admin')->group(function(){
-    Route::get('/admin', 'AdminDashboardController@index')->name('admin.dashboard');
+    Route::prefix('admin')->group(function () {
+        Route::get('/', 'AdminDashboardController@index')->name('admin.dashboard');
+        Route::get('/employment-rate', 'AdminPagesController@employmentRate');
+        Route::get('/job-providers', 'AdminPagesController@jobProviders');
+        Route::get('/job-seekers', 'AdminPagesController@jobSeekers');
+        Route::get('/manage-announcements', 'AdminPagesController@manageAnnouncements');
+        Route::get('/manage-listings', 'AdminPagesController@manageListings');
+        Route::get('/my-events', 'AdminPagesController@myEvents');
+        Route::get('/recent-listings', 'AdminPagesController@recentListings');
+        Route::get('/user-activity', 'AdminPagesController@userActivity');
+        Route::get('/website-administrators', 'AdminPagesController@websiteAdministrators');
+    });    
 });
 
 Route::middleware('provider')->group(function(){
-    Route::get('/provider', 'ProviderDashboardController@index')->name('provider.dashboard');
+    Route::prefix('provider')->group(function () {
+        Route::get('/', 'ProviderDashboardController@index')->name('provider.dashboard');
+        Route::get('/job-listing', 'ProviderPagesController@jobListing');
+        Route::get('/my-profile', 'ProviderPagesController@myProfile');
+        Route::get('/my-schedule', 'ProviderPagesController@mySchedule');
+        Route::get('/new-job-listing', 'ProviderPagesController@newJobListing');
+        Route::get('/post-job', 'ProviderPagesController@postJob');
+        Route::get('/quick-job-request', 'ProviderPagesController@quickJobRequest');
+        Route::get('/view-applications', 'ProviderPagesController@viewApplications');
+    });
 });
 
 Route::middleware('seeker')->group(function(){
-    Route::get('/seeker', 'SeekerDashboardController@index')->name('seeker.dashboard');
+    Route::prefix('seeker')->group(function () {
+        Route::get('/', 'SeekerDashboardController@index')->name('seeker.dashboard');
+        Route::get('/full-time', 'SeekerPagesController@fullTime');
+        Route::get('/my-calendar', 'SeekerPagesController@myCalendar');
+        Route::get('/my-schedule', 'SeekerPagesController@mySchedule');
+        Route::get('/my-profile', 'SeekerPagesController@myProfile');
+        Route::get('/ongoing-applications', 'SeekerPagesController@ongoingApplications');
+        Route::get('/part-time', 'SeekerPagesController@partTime');
+    });
 });
