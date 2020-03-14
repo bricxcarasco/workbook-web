@@ -303,7 +303,6 @@
     </div>
   </div>
 
-
   <div class="modal fade" id="chatModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -345,7 +344,6 @@
       </div>
     </div>
   </div>
-
 
   <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
   <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

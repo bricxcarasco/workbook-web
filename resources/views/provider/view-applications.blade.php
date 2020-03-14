@@ -1,4 +1,38 @@
-@extends('layouts.header-user.header')
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>WorkBook</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>WorkBook &mdash; Job Site</title>
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    
+    <link rel="stylesheet" href="{{ asset('css/custom-bs.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/jquery.fancybox.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-select.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('fonts/icomoon/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('fonts/line-icons/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/animate.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/quill.snow.css') }}">
+    
+    <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
+      <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+      <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
+      <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">    
+  </head>
+  <body id="top">
+
+  <div id="overlayer"></div>
+  <div class="loader">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+
 
 <div class="site-wrap">
 
@@ -18,37 +52,436 @@
       <div class="container">
         <div class="row">
           <div class="col-md-7">
-            <h1 class="text-white font-weight-bold">View Applications</h1>
+            <h1 class="text-white font-weight-bold">Hiring Applications</h1>
             <div class="custom-breadcrumbs">
               <a href="#">Home</a> <span class="mx-2 slash">/</span>
-              <span class="text-white"><strong>View Applications</strong></span>
+              <span class="text-white"><strong>Hiring Applications</strong></span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="site-section block__18514" id="next-section">
+    <section class="site-section" id="next-section">
       <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <span class="text-primary d-block mb-5"><span class="icon-magnet display-1"></span></span>
-            <h2 class="mb-4">Graphic Design</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam dolorum incidunt dolorem facere, officiis placeat consequuntur odit quasi, quam voluptates, deleniti! Neque tenetur in, omnis consectetur molestias expedita nostrum et.</p>
-            <p>Sed odio temporibus quaerat laboriosam dicta ipsam eligendi deserunt architecto, aliquam in totam provident praesentium aperiam, id impedit aut delectus mollitia doloribus nostrum numquam tempore ullam reprehenderit nesciunt cumque veniam.</p>
-            <p>Officia mollitia deserunt vel expedita deleniti iure eius illum dolor optio tempora! Fuga, voluptates omnis velit neque. Rerum aperiam consequatur vero, nulla dolores a. Sed, non veniam maiores recusandae iure.</p>
-            <p>Nobis officia tempore porro incidunt quaerat commodi numquam exercitationem laboriosam deserunt, error excepturi et delectus quis explicabo repellendus obcaecati iusto. Delectus magni ducimus illo! Fugit quaerat debitis deserunt facere reiciendis!</p>
-            <p><a href="#" class="btn btn-primary btn-md mt-4">Hire Us, Our Agency</a></p>
+        
+        @if(session()->has('message'))
+            <div class="alert alert-success">
+                {{ session()->get('message') }}
+            </div>
+        @endif
+
+        @if(session()->has('error'))
+            <div class="alert alert-danger">
+                {{ session()->get('error') }}
+            </div>
+        @endif
+
+        <div class="col-md-12 gedf-main">
+
+          <div class="card gedf-card">
+
+              <div class="card-header">
+
+                  <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+                      <li class="nav-item">
+                          <a class="nav-link active" id="jobs-tab" data-toggle="tab" href="#jobs" role="tab" aria-controls="jobs" aria-selected="true">Job Listing</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" id="quicks-tab" data-toggle="tab" href="#quicks" role="tab" aria-controls="quicks" aria-selected="false">Quick Job Request</a>
+                      </li>
+                  </ul>
+
+              </div>
+
+              <div class="card-body">
+                  <div class="tab-content" id="myTabContent">
+
+                      <div class="tab-pane fade show active" id="jobs" role="tabpanel" aria-labelledby="jobs-tab">
+                          
+                        <table id="listingst" class="table table-striped table-hover" style="width:100%">
+                          <thead>
+                            <tr>
+                              <th>ID</th>
+                                <th>Job Title</th>
+                                <th>Location</th>
+                                <th>Salary</th>
+                                <th>Date</th>
+                                <th>Slots</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @foreach ($app_listings as $listing)
+                              <tr>
+                                  <td>{{ $listing->id }}</td>
+                                  <td>{{ $listing->title }}</td>
+                                  <td>{{ $listing->barangay.' '.$listing->municipality.' '.$listing->postal }}</td>
+                                  <td>{{ 'Php. '.$listing->min_offer.' - Php. '.$listing->max_offer }}</td>
+                                  <td>{{ $listing->event_date }}</td>
+                                  <td>{{ $listing->slots }}</td>
+                                  <td>
+                                    @if ($listing->status == 1)
+                                    <span class="badge badge-pill badge-secondary">On Process</span>
+                                    @elseif ($listing->status == 2)
+                                    <span class="badge badge-pill badge-warning">Interview</span>
+                                    @elseif ($listing->status == 3)
+                                    <span class="badge badge-pill badge-primary">Pending</span>
+                                    @elseif ($listing->status == 4)
+                                    <span class="badge badge-pill badge-info">Cancelled</span>
+                                    @elseif ($listing->status == 5)
+                                    <span class="badge badge-pill badge-success">Hired</span>
+                                    @elseif ($listing->status == 6)
+                                    <span class="badge badge-pill badge-danger">Failed</span>
+                                    @else
+                                    <span class="badge badge-pill badge-dark">Other</span>
+                                    @endif  
+                                  </td>
+                                  <td>
+                                    <button class="btn btn-primary" onclick="listingChange({{ $listing->id }}, {{ $listing->status }})">Update Status</button>
+                                  </td>
+                              </tr>
+                            @endforeach
+                          </tbody>
+                          <tfoot>
+                              <tr>
+                                <th>ID</th>
+                                <th>Job Title</th>
+                                <th>Location</th>
+                                <th>Salary</th>
+                                <th>Date</th>
+                                <th>Slots</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                              </tr>
+                          </tfoot>
+                        </table>                                  
+
+                      </div>
+
+                      <div class="tab-pane fade" id="quicks" role="tabpanel" aria-labelledby="quicks-tab">
+
+                        <table id="quickst" class="table table-striped table-hover" style="width:100%">
+                          <thead>
+                            <tr>
+                              <th>ID</th>
+                              <th>Job Title</th>
+                              <th>Location</th>
+                              <th>Date</th>
+                              <th>Status</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @foreach ($app_quicks as $quick)
+                            <tr>
+                              <td>{{ $quick->id }}</td>
+                              <td>
+                                @if (strlen(strip_tags($quick->request)) > 40)
+                                  {{ substr(strip_tags($quick->request),0,40)."..." }}
+                                @else
+                                  {{ strip_tags($quick->request) }}
+                                @endif
+                              <td>{{ $quick->location }}</td>
+                              <td>{{ $quick->event_date }}</td>
+                              <td>
+                                @if ($quick->status == 1)
+                                <span class="badge badge-pill badge-secondary">On Process</span>
+                                @elseif ($quick->status == 2)
+                                <span class="badge badge-pill badge-warning">Interview</span>
+                                @elseif ($quick->status == 3)
+                                <span class="badge badge-pill badge-primary">Pending</span>
+                                @elseif ($quick->status == 4)
+                                <span class="badge badge-pill badge-info">Cancelled</span>
+                                @elseif ($quick->status == 5)
+                                <span class="badge badge-pill badge-success">Hired</span>
+                                @elseif ($quick->status == 6)
+                                <span class="badge badge-pill badge-danger">Failed</span>
+                                @else
+                                <span class="badge badge-pill badge-dark">Other</span>
+                                @endif  
+                              </td>
+                              <td>
+                                <button class="btn btn-primary" onclick="quickChange({{ $quick->id }}, {{ $quick->status }})">Update Status</button>
+                              </td>
+                          </tr>
+                            @endforeach
+                          </tbody>
+                          <tfoot>
+                              <tr>
+                                <th>ID</th>
+                                <th>Job Title</th>
+                                <th>Location</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                              </tr>
+                          </tfoot>
+                        </table>    
+
+                      </div>
+
+                  </div>
+              </div>
           </div>
-        </div>
+
+      </div>
+
       </div>
     </section>
+
+    <div class="modal fade" id="quickModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Update Status</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <input type="hidden" name="id" id="id">
+              <label for="">Employment Status</label>
+              <select class="form-control" name="status" id="status">
+                <option value="1">On Process</option>
+                <option value="2">Interview</option>
+                <option value="3">Pending</option>
+                <option value="4">Cancelled</option>
+                <option value="5">Hired</option>
+                <option value="6">Failed</option>
+              </select>
+
+              <div class="applicationMessage" style="display:none;">
+                <label for="">Date</label>
+                <input class="form-control" type="date" id="e_date" name="e_date">
+
+                <label for="">Time</label>
+                <input class="form-control" type="time" id="e_time" name="lookfor">
+
+                <label for="">Location</label>
+                <input class="form-control" type="text" id="location" name="location">
+
+                <label for="">Message</label>
+                <textarea class="form-control" name="message" id="message" cols="30" rows="10"></textarea>
+
+                <label for="">Look for:</label>
+                <input class="form-control" type="text" id="lookfor" name="lookfor">
+              </div>
+
+              <div class="applicationReason" style="display:none;">
+                <label for="">Reason</label>
+                <textarea class="form-control" name="reason" id="reason" cols="30" rows="10"></textarea>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id ="updateQuick">Update Status</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="listingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Update Status</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <input type="hidden" name="id" id="id">
+              <label for="">Employment Status</label>
+              <select class="form-control" name="status" id="status">
+                <option value="1">On Process</option>
+                <option value="2">Interview</option>
+                <option value="3">Pending</option>
+                <option value="4">Cancelled</option>
+                <option value="5">Hired</option>
+                <option value="6">Failed</option>
+              </select>
+
+              <div class="applicationMessage" style="display:none;">
+                <label for="">Date</label>
+                <input class="form-control" type="date" id="e_date" name="e_date">
+
+                <label for="">Time</label>
+                <input class="form-control" type="time" id="e_time" name="lookfor">
+
+                <label for="">Location</label>
+                <input class="form-control" type="text" id="location" name="location">
+
+                <label for="">Message</label>
+                <textarea class="form-control" name="message" id="message" cols="30" rows="10"></textarea>
+
+                <label for="">Look for:</label>
+                <input class="form-control" type="text" id="lookfor" name="lookfor">
+              </div>
+
+              <div class="applicationReason" style="display:none;">
+                <label for="">Reason</label>
+                <textarea class="form-control" name="reason" id="reason" cols="30" rows="10"></textarea>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id ="updateListing">Update Status</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
 
     @extends('layouts.site.footer')
   
 </div>
-  
-    @extends('layouts.site.script')
+
+<script src="{{ asset('js/jquery.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('js/isotope.pkgd.min.js') }}"></script>
+<script src="{{ asset('js/stickyfill.min.js') }}"></script>
+<script src="{{ asset('js/jquery.fancybox.min.js') }}"></script>
+<script src="{{ asset('js/jquery.easing.1.3.js') }}"></script>
+
+<script src="{{ asset('js/jquery.waypoints.min.js') }}"></script>
+<script src="{{ asset('js/jquery.animateNumber.min.js') }}"></script>
+<script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('js/quill.min.js') }}"></script>
+
+<script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
+
+<script src="{{ asset('js/custom.js') }}"></script>
+
+<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables/jquery.dataTables.js') }}"></script>
+<script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
+    <script>
+      $(function() {
+        $('#listingModal').on('change', '#status', function() {
+          if (this.value == "2" || this.value == "5") {
+            $('#listingModal .applicationMessage').css('display', 'block');
+            $('#listingModal .applicationReason').css('display', 'none');
+          } else {
+            $('#listingModal .applicationMessage').css('display', 'none');
+            $('#listingModal .applicationReason').css('display', 'block');
+          }
+        });
+
+        $('#quickModal').on('change', '#status', function() {
+          if (this.value == "2" || this.value == "5") {
+            $('#quickModal .applicationMessage').css('display', 'block');
+            $('#quickModal .applicationReason').css('display', 'none');
+          } else {
+            $('#quickModal .applicationMessage').css('display', 'none');
+            $('#quickModal .applicationReason').css('display', 'block');
+          }
+        });
+
+        $("#listingModal").on('click', '#updateListing', function() {
+            if ($("#listingModal #status").val() == 2 || $("#listingModal #status").val() == 5) {
+              let id = $("#listingModal #id").val();
+              let message = $("#listingModal #message").val()
+              let lookfor = $("#listingModal #lookfor").val()
+              let e_date = $("#listingModal #e_date").val()
+              let e_time = $("#listingModal #e_time").val()
+              let location = $("#listingModal #location").val()
+              sendPositive(id, message, lookfor, e_date, e_time, location, $("#listingModal #status").val());
+              $('#listingModal').modal('hide');
+              alert('Successfully sent!');
+            } else {
+              let id = $("#listingModal #id").val();
+              let reason = $("#listingModal #reason").val()
+              sendNegative(id, reason, $("#listingModal #status").val());
+              $('#listingModal').modal('hide');
+              alert('Successfully sent!');
+            }
+          });
+
+          $("#quickModal").on('click', '#updateQuick', function() {
+            if ($("#quickModal #status").val() == 2 || $("#quickModal #status").val() == 5) {
+              let id = $("#quickModal #id").val();
+              let message = $("#quickModal #message").val()
+              let lookfor = $("#quickModal #lookfor").val()
+              let e_date = $("#quickModal #e_date").val()
+              let e_time = $("#quickModal #e_time").val()
+              let location = $("#quickModal #location").val()
+              sendPositive(id, message, lookfor, e_date, e_time, location, $("#quickModal #status").val());
+              $('#quickModal').modal('hide');
+              alert('Successfully sent!');
+            } else {
+              let id = $("#quickModal #id").val();
+              let reason = $("#quickModal #reason").val()
+              sendNegative(id, reason, $("#quickModal #status").val());
+              $('#quickModal').modal('hide');
+              alert('Successfully sent!');
+            }
+          });
+      });
+
+      $(document).ready(function() {
+          $('#listingst').DataTable();
+          $('#quickst').DataTable();
+
+          
+      });
+
+      function listingChange(id, status) {
+        $("#listingModal").modal('show');
+        $("#listingModal #id").val(id);
+        $("#listingModal #status").val(status);
+      }
+
+      function quickChange(id, status) {
+        $("#quickModal").modal('show');
+        $("#quickModal #id").val(id);
+        $("#quickModal #status").val(status);
+      }
+
+      function sendNegative(id, reason, status) {
+        $.ajax({
+          url: `/send/negative`,
+          type: 'POST',
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          data: {
+            id : id,
+            reason: reason,
+            status: status
+          },
+          success: function(data) {
+            return data;
+          }
+        });
+      }
+
+      function sendPositive(id, message, lookfor, e_date, e_time, location, status) {
+        $.ajax({
+          url: `/send/positive`,
+          type: 'POST',
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          data: {
+            id : id,
+            message: message,
+            lookfor: lookfor,
+            e_date: e_date,
+            e_time: e_time,
+            location: location,
+            status: status
+          },
+          success: function(data) {
+            return data;
+          }
+        });
+      }
+    </script>
    
   </body>
 </html>

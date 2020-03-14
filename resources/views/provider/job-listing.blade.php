@@ -31,6 +31,18 @@
     <section class="site-section">
       <div class="container">
         
+        @if(session()->has('message'))
+            <div class="alert alert-success">
+                {{ session()->get('message') }}
+            </div>
+        @endif
+
+        @if(session()->has('error'))
+            <div class="alert alert-danger">
+                {{ session()->get('error') }}
+            </div>
+        @endif
+
         <div class="row mb-5 justify-content-center">
           <div class="col-md-7 text-center">
             <h2 class="section-title mb-2">43,167 Job Listed</h2>
@@ -39,27 +51,43 @@
         
         <ul class="job-listings mb-5">
 
-          
-          
-        </ul>
+          @foreach($listings as $listing)
 
-        <div class="row pagination-wrap">
-          <div class="col-md-6 text-center text-md-left mb-4 mb-md-0">
-            <span>Showing 1-7 Of 43,167 Jobs</span>
-          </div>
-          <div class="col-md-6 text-center text-md-right">
-            <div class="custom-pagination ml-auto">
-              <a href="#" class="prev">Prev</a>
-              <div class="d-inline-block">
-              <a href="#" class="active">1</a>
-              <a href="#">2</a>
-              <a href="#">3</a>
-              <a href="#">4</a>
+            <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
+              <a href="{{ url('provider/job-listing/get') }}/{{ $listing->id }}"></a>
+              <div class="job-listing-logo">
+                @if (empty($listing->image))
+                  <img src="{{ asset('images/default-job.png') }}" style="width:150px; height: 150px;" class="img-fluid rounded mb-4">
+                @else
+                  <img src="{{ asset('images') }}/{{ $listing->image }}" style="width:150px; height: 150px;" class="img-fluid rounded mb-4">
+                @endif
               </div>
-              <a href="#" class="next">Next</a>
-            </div>
-          </div>
-        </div>
+
+              <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
+                <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
+                  <h2>{{ $listing->title }}</h2>
+                  <strong>{{ $listing->details }}</strong>
+                </div>
+                <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25">
+                  <span class="icon-room"></span> {{ $listing->barangay.' '.$listing->municipality.' '.$listing->postal }}
+                </div>
+                <div class="job-listing-meta">
+                  <h4>
+                    @if ($listing->type == 1)
+                      <span class="badge badge-primary">Part Time</span>
+                    @elseif($listing->type == 2)
+                      <span class="badge badge-info">Full Time</span>
+                    @endif
+                  </h4>
+                </div>
+              </div>
+            </li>
+            
+            <br>
+
+          @endforeach
+
+        </ul>
 
       </div>
     </section>
@@ -67,46 +95,6 @@
     @extends('layouts.site.footer')
 
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
-    <script>
-      $(document).ready(function() {
-        getJobs();
-      });
-
-      function getJobs() {
-        $.ajax({
-          url: `/job_listing/all`,
-          type: 'GET',
-          dataType: 'json',
-          success: function(data) {
-            console.log(data);
-            let divApp = '';
-            data.forEach( (element) => {
-                divApp = divApp + `
-                    <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-                    <a href="job-single.html"></a>
-                    <div class="job-listing-logo">
-                      <img src="{{ asset('images/job_logo_1.jpg') }}" style="width:150px; height: 150px;" class="img-fluid">
-                    </div>
-
-                    <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-                      <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
-                        <h2>Product Designer</h2>
-                        <strong>Adidas</strong>
-                      </div>
-                      <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25">
-                        <span class="icon-room"></span> New York, New York
-                      </div>
-                      <div class="job-listing-meta">
-                        <span class="badge badge-danger">Part Time</span>
-                      </div>
-                    </div>
-                  </li>`;
-            });
-            $(".job-listings").append(divApp);
-          }
-        });
-      }
-    </script>
 </div>
   
     @extends('layouts.site.script')

@@ -6,8 +6,14 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Tables\NotificationsController;
 use App\Http\Requests\MyProfileValidation;
+use App\Http\Requests\PostRegularJobAddValidation;
+use App\Http\Requests\PostRegularJobEditValidation;
+use App\Http\Requests\QuickJobRequestAddValidation;
 use App\Provider;
+use App\QuickListing;
+use App\RegularListing;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -107,6 +113,67 @@ class ProvidersController extends Controller
         
         if ($update) {
             return redirect()->back()->with('message', 'Updated successfully!');
+        }
+    }
+
+    public function quickJobRequestAdd(QuickJobRequestAddValidation $request)
+    {
+        $user_id = Auth::guard('web')->user()->id;
+        $request->merge(['user_id' => $user_id]);
+        $save = QuickListing::insert($request->except('_token'));
+        if ($save) {
+            return redirect()->route('quick-job-listing')->with('message', 'Job has been posted!');
+        }
+    }
+
+    public function postJobAdd(PostRegularJobAddValidation $request)
+    {
+        if (!is_null($request->image_upload)) {
+            $imageName = time().'.'.request()->image_upload->getClientOriginalExtension();
+            request()->image_upload->move(public_path('images'), $imageName);
+            $request->merge(['image' => $imageName]);
+        }
+
+        if (!is_null($request->dti)) {
+            $dtiImageName = time().'.'.request()->dti->getClientOriginalExtension();
+            request()->dti->move(public_path('images'), $dtiImageName);
+            $request->merge(['dti_permit' => $dtiImageName]);
+        }
+
+        $user_id = Auth::guard('web')->user()->id;
+        $request->merge(['user_id' => $user_id]);
+
+        try {
+            RegularListing::insert($request->except('_token', 'image_upload', 'dti'));
+            return redirect()->route('job-listing')->with('message', 'Job has been posted successfully!');
+        } catch (\Throwable $th) {
+            return redirect()->route('job-listing')->with('error', $th->getMessage());
+        }
+
+    }
+
+    public function postJobEdit(PostRegularJobEditValidation $request)
+    {   
+        if (!is_null($request->image_upload)) {
+            $imageName = time().'.'.request()->image_upload->getClientOriginalExtension();
+            request()->image_upload->move(public_path('images'), $imageName);
+            $request->merge(['image' => $imageName]);
+        }
+
+        if (!is_null($request->dti)) {
+            $dtiImageName = time().'.'.request()->dti->getClientOriginalExtension();
+            request()->dti->move(public_path('images'), $dtiImageName);
+            $request->merge(['dti_permit' => $dtiImageName]);
+        }
+
+        $user_id = Auth::guard('web')->user()->id;
+        $request->merge(['user_id' => $user_id]);
+
+        try {
+            RegularListing::where('id', $request->id)->update($request->except('_token', 'image_upload', 'dti', '_method'));
+            return redirect()->route('job-listing-single', ['id' => $request->id])->with('message', 'Job has been posted successfully!');
+        } catch (\Throwable $th) {
+            return redirect()->route('job-listing-single', ['id' => $request->id])->with('error', $th->getMessage());
         }
     }
 

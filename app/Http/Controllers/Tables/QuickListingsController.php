@@ -2,10 +2,86 @@
 
 namespace App\Http\Controllers\Tables;
 
+use App\Application;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ApplyQuickJobValidation;
+use App\QuickListing;
+use App\Seeker;
+use Illuminate\Support\Facades\Auth;
 
 class QuickListingsController extends Controller
 {
-    //
+    public function getQuickJobListingSingle(Request $request, $id)
+    {
+        return QuickListing::find($id);
+    }
+
+    public function updateQuickJobListing(Request $request)
+    {
+        try {
+            QuickListing::where('id', $request->id)->update($request->all());
+            return 'Success';
+        } catch (\Throwable $th) {
+            return 'Failed';
+        }
+    }
+
+    public function deleteQuickJobListing(Request $request)
+    {
+        try {
+            QuickListing::where('id', $request->id)->update(['is_delete' => 1]);
+            return 'Success';
+        } catch (\Throwable $th) {
+            return 'Failed';
+        }
+    }
+
+    public function applyQuickJob($id)
+    {
+        $quick = QuickListing::find($id);
+        return view('seeker.apply-quick-job', compact('quick'));
+    }
+
+    public function applyQuickJobSend(ApplyQuickJobValidation $request)
+    {
+        if (!is_null($request->image_upload)) {
+            $imageName = time().'.'.request()->image_upload->getClientOriginalExtension();
+            request()->image_upload->move(public_path('images'), $imageName);
+            $request->merge(['resume' => $imageName]);
+        }
+
+        $user_id = Auth::guard('web')->user()->id;
+        $id = Seeker::where('user_id', $user_id)->first();
+        $quick_id = $request->quick_id;
+
+        try {
+            //code...
+            Application::insert([
+                'job_id' => $quick_id,
+                'seeker_id' => $id->id,
+                'type' => 2,
+                'event_date' => $request->event_date,
+                'resume' => $request->resume,
+                'message' => $request->message,
+                'status' => 1,
+            ]);
+            return redirect()->route('ongoing-applications')->with('message', 'You applied successfully!');
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('ongoing-applications')->with('error', $th->getMessage());
+        }
+    }
+
+    public function cancelQuick(Request $request, $id)
+    {
+        try {
+            //code...
+            Application::where('id', $id)->update(['status'=>4]);
+            return redirect()->back()->with('message', 'Application has been cancelled!');
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->back()->with('error', $th->getMessage());
+        }
+    }
 }

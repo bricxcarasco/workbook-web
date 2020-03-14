@@ -18,34 +18,62 @@
       <div class="container">
         <div class="row">
           <div class="col-md-7">
-            <h1 class="text-white font-weight-bold">Dashboard</h1>
+            <h1 class="text-white font-weight-bold">Quick Job Request</h1>
             <div class="custom-breadcrumbs">
               <a href="#">Home</a> <span class="mx-2 slash">/</span>
-              <span class="text-white"><strong>Dashboard</strong></span>
+              <span class="text-white"><strong>Quick Job Request</strong></span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="site-section block__18514" id="next-section">
+    <section class="site-section">
       <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <span class="text-primary d-block mb-5"><span class="icon-magnet display-1"></span></span>
-            <h2 class="mb-4">Graphic Design</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam dolorum incidunt dolorem facere, officiis placeat consequuntur odit quasi, quam voluptates, deleniti! Neque tenetur in, omnis consectetur molestias expedita nostrum et.</p>
-            <p>Sed odio temporibus quaerat laboriosam dicta ipsam eligendi deserunt architecto, aliquam in totam provident praesentium aperiam, id impedit aut delectus mollitia doloribus nostrum numquam tempore ullam reprehenderit nesciunt cumque veniam.</p>
-            <p>Officia mollitia deserunt vel expedita deleniti iure eius illum dolor optio tempora! Fuga, voluptates omnis velit neque. Rerum aperiam consequatur vero, nulla dolores a. Sed, non veniam maiores recusandae iure.</p>
-            <p>Nobis officia tempore porro incidunt quaerat commodi numquam exercitationem laboriosam deserunt, error excepturi et delectus quis explicabo repellendus obcaecati iusto. Delectus magni ducimus illo! Fugit quaerat debitis deserunt facere reiciendis!</p>
-            <p><a href="#" class="btn btn-primary btn-md mt-4">Hire Us, Our Agency</a></p>
+        
+        <div class="row mb-5 justify-content-center">
+          <div class="col-md-7 text-center">
+            <h2 class="section-title mb-2">{{ $categories->count() }} Categories Listed</h2>
           </div>
         </div>
+        
+        <ul class="job-listings mb-5">
+
+          @foreach($categories as $category)
+            <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
+              <a href="{{ url('/provider/quick-job-request') }}/{{ $category->id }}"></a>
+              <div class="job-listing-logo">
+                @if (empty($category->image))
+                  <img src="{{ asset('images/default-job.png') }}" style="width:150px; height: 150px;" class="img-fluid rounded mb-4">
+                @else
+                  <img src="{{ asset('images') }}/{{ $category->image }}" style="width:150px; height: 150px;" class="img-fluid rounded mb-4">
+                @endif
+              </div>
+
+              <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
+                <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
+                  <h2>{{ $category->title }}</h2>
+                  <strong>{{ $category->description }}</strong>
+                </div>
+                <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25">
+                  <span class="icon-room"></span> Anywhere in Laguna
+                </div>
+                <div class="job-listing-meta">
+                  <span class="badge badge-info">Quick Job Request</span>
+                </div>
+              </div>
+            </li>
+            <br>
+          @endforeach
+          
+        </ul>
+
       </div>
     </section>
 
     @extends('layouts.site.footer')
-  
+
+    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
 </div>
   
     @extends('layouts.site.script')

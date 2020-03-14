@@ -2,10 +2,10 @@
     <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
         <li><a href="{{ url('/provider') }}" class="nav-link">Dashboard</a></li>
         <li class="has-children">
-            <a href="#">My Account</a>
+            <a href="#">Jobs</a>
             <ul class="dropdown">
-                <li><a href="{{ url('/provider/job-listing') }}">Job Listing</a></li>
-                <li><a href="{{ url('/provider/new-job-listing') }}">New Job Listing</a></li>
+                <li><a href="{{ url('/provider/job-listing') }}">Job List</a></li>
+                <li><a href="{{ url('/provider/quick-job-list') }}">Quick Job Request List</a></li>
             </ul>
         </li>
         <li>
@@ -16,9 +16,6 @@
             <ul class="dropdown">
                 <li><a href="{{ url('/provider/my-profile') }}">My Profile</a></li>
             </ul>
-        </li>
-        <li>
-            <a href="{{ url('/provider/quick-job-request') }}" class="nav-link">Quick Job Request</a>
         </li>
         <li>
             <a href="{{ url('/provider/my-schedule') }}" class="nav-link">My Schedule</a>
