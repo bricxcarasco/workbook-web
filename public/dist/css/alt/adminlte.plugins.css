@@ -100,7 +100,7 @@
 }
 
 .external-event {
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.125), 0 1px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 1px rgb(0, 122, 255), 0 1px 3px rgba(0, 0, 0, 0.2);
   border-radius: 0.25rem;
   cursor: move;
   font-weight: bold;

@@ -27,10 +27,10 @@
       <div class="container">
         <div class="row">
           <div class="col-md-7">
-            <h1 class="text-white font-weight-bold">Dashboard</h1>
+            <h1 class="text-white font-weight-bold">Find Jobs</h1>
             <div class="custom-breadcrumbs">
               <a href="#">Home</a> <span class="mx-2 slash">/</span>
-              <span class="text-white"><strong>Dashboard</strong></span>
+              <span class="text-white"><strong>Find Jobs</strong></span>
             </div>
           </div>
         </div>
@@ -38,21 +38,7 @@
     </section>
 
     <section class="site-section" id="next-section">
-      <div class="container" style="max-width: 1400px !important;">
-                
-        {{-- <nav class="navbar navbar-light bg-white">
-          <form class="form-inline">
-              <div class="input-group">
-                  <input type="text" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2">
-                  <div class="input-group-append">
-                      <button class="btn btn-outline-primary" type="button" id="button-addon2">
-                          <i class="fa fa-search"></i>
-                      </button>
-                  </div>
-              </div>
-          </form>
-        </nav> --}}
-
+      <div class="container">
 
         <style>
 
@@ -214,7 +200,7 @@
                                         <div class="card gedf-card">
                                           <div class="card-header">
                                               <div class="d-flex justify-content-between align-items-center">
-                                                  <div class="d-flex justify-content-between align-items-center">
+                                                  <div class="d-flex justify-content-between align-items-center viewCom" style="cursor: hand;" id="{{ $quick }}" title="View company information">
                                                       <div class="mr-2">
                                                           @if (empty($quick->p_image))
                                                               <img class="rounded-circle" width="45" src="{{ asset('images') }}/{{ $quick->p_image }}" alt="">
@@ -293,7 +279,7 @@
 
                       @foreach ($providers as $provider)    
                         <div class="card gedf-card">
-                          <div class="card" style="width: 18rem;">
+                          <div class="card">
                             @if (empty($provider->image))
                               <img class="card-img-top" src="{{ asset('images/default-job.png') }}" alt="Card image cap">
                             @else
@@ -302,7 +288,7 @@
                             <div class="card-body">
                               <h5 class="card-title">{{ $provider->business_name }}</h5>
                               <p class="card-text">{{ $provider->business_type }}</p>
-                              <a href="#" class="btn btn-primary">View Profile</a>
+                              <button id="{{ $provider }}" class="btn btn-primary viewCom" title="View company information">View Profile</button>
                             </div>
                           </div>
                         </div>
@@ -438,14 +424,75 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">View Information</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Company Information</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
             
+            <style>
+              .fa {
+                color: #1b3d6c;
+              }
 
+              label .fa {
+                padding-left: 5px;
+                padding-right: 5px;
+              }
+
+              p span {
+                padding-left: 15px;
+              }
+            </style>
+
+            <fieldset style="padding: 10px;">
+
+              <p for="">
+                <i class="fa fa-2x fa-briefcase" aria-hidden="true"></i> <span id="business_name"></span>
+              </p>
+
+              <p for="">
+                <i class="fa fa-2x fa-building" aria-hidden="true"></i> <span id="business_type"></span>
+              </p>
+
+              <p for="">
+                <i class="fa fa-2x fa-envelope" aria-hidden="true"></i> <span id="email_address"></span>
+              </p>
+
+              <p for="">
+                <i class="fa fa-2x fa-address-book" aria-hidden="true"></i> <span id="mailing_address"></span>
+              </p>
+
+              <p for="">
+                <i class="fa fa-2x fa-phone" aria-hidden="true"></i> <span id="telephone_number"></span>
+              </p>
+
+              <p for="">
+                <i class="fa fa-2x fa-mobile" aria-hidden="true"></i> <span id="mobile_number"></span>
+              </p>
+
+              <p for="">
+                <i class="fa fa-2x fa-sitemap" aria-hidden="true"></i> <span id="affiliation"></span>
+              </p>
+
+              <hr>
+              <p for="">Social Media Account</p>
+              <hr>
+
+              <a id="facebook" target="_blank" style="padding-left: 5x; padding-right: 5x;" for="">
+                <i class="fa fa-3x fa-facebook-official" aria-hidden="true"></i>
+              </a>
+
+              <a id="twitter" target="_blank" style="padding-left: 5x; padding-right: 5x;" for="">
+                <i class="fa fa-3x fa-twitter-square" aria-hidden="true"></i>
+              </a>
+
+              <a id="instagram" target="_blank" style="padding-left: 5x; padding-right: 5x;" for="">
+                <i class="fa fa-3x fa-instagram" aria-hidden="true"></i>
+              </a>
+
+            </fieldset>
 
           </div>
           <div class="modal-footer">
@@ -522,9 +569,20 @@
         });
 
         $(".viewCom").click(function() {
-          let id = $(this).attr('id');
-          alert(id);
+          let id = JSON.parse($(this).attr('id'));
+          $('#viewCompanyModal').modal('show');
+          $("#viewCompanyModal #business_name").text(id.business_name)
+          $("#viewCompanyModal #business_type").text(id.business_type)
+          $("#viewCompanyModal #email_address").text(id.email_address)
+          $("#viewCompanyModal #mailing_address").text(id.mailing_address)
+          $("#viewCompanyModal #telephone_number").text(id.telephone_number)
+          $("#viewCompanyModal #mobile_number").text(id.mobile_number)
+          $("#viewCompanyModal #facebook").attr('href', id.facebook)
+          $("#viewCompanyModal #twitter").attr('href', id.twitter)
+          $("#viewCompanyModal #instagram").attr('href', id.instagram)
+          $("#viewCompanyModal #affiliation").text(id.affiliation)
         });
+
       });
     </script>
 

@@ -1,5 +1,9 @@
 @extends('layouts.header-user.header')
 
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <div class="site-wrap">
 
     <div class="site-mobile-menu site-navbar-target">
@@ -18,29 +22,70 @@
       <div class="container">
         <div class="row">
           <div class="col-md-7">
-            <h1 class="text-white font-weight-bold">Dashboard</h1>
+            <h1 class="text-white font-weight-bold">Timeline</h1>
             <div class="custom-breadcrumbs">
               <a href="#">Home</a> <span class="mx-2 slash">/</span>
-              <span class="text-white"><strong>Dashboard</strong></span>
+              <span class="text-white"><strong>Timeline</strong></span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="site-section block__18514" id="next-section">
+    <style>
+      ul.timeline {
+          list-style-type: none;
+          position: relative;
+      }
+      ul.timeline:before {
+          content: ' ';
+          background: #d4d9df;
+          display: inline-block;
+          position: absolute;
+          left: 29px;
+          width: 2px;
+          height: 100%;
+          z-index: 400;
+      }
+      ul.timeline > li {
+          margin: 20px 0;
+          padding-left: 20px;
+      }
+      ul.timeline > li:before {
+          content: ' ';
+          background: white;
+          display: inline-block;
+          position: absolute;
+          border-radius: 50%;
+          border: 3px solid #22c0e8;
+          left: 20px;
+          width: 20px;
+          height: 20px;
+          z-index: 400;
+      }
+    </style>
+
+    <section class="site-section"  style="padding-top: 2rem;padding-bottom: 2rem;">>
       <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <span class="text-primary d-block mb-5"><span class="icon-magnet display-1"></span></span>
-            <h2 class="mb-4">Graphic Design</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam dolorum incidunt dolorem facere, officiis placeat consequuntur odit quasi, quam voluptates, deleniti! Neque tenetur in, omnis consectetur molestias expedita nostrum et.</p>
-            <p>Sed odio temporibus quaerat laboriosam dicta ipsam eligendi deserunt architecto, aliquam in totam provident praesentium aperiam, id impedit aut delectus mollitia doloribus nostrum numquam tempore ullam reprehenderit nesciunt cumque veniam.</p>
-            <p>Officia mollitia deserunt vel expedita deleniti iure eius illum dolor optio tempora! Fuga, voluptates omnis velit neque. Rerum aperiam consequatur vero, nulla dolores a. Sed, non veniam maiores recusandae iure.</p>
-            <p>Nobis officia tempore porro incidunt quaerat commodi numquam exercitationem laboriosam deserunt, error excepturi et delectus quis explicabo repellendus obcaecati iusto. Delectus magni ducimus illo! Fugit quaerat debitis deserunt facere reiciendis!</p>
-            <p><a href="#" class="btn btn-primary btn-md mt-4">Hire Us, Our Agency</a></p>
+            
+        <div class="container mt-5 mb-5">
+          <div class="row">
+            <div class="col-md-6 offset-md-3">
+              <h4>Announcements</h4>
+              <ul class="timeline">
+                @foreach ($announcements as $announcement)
+                <li>
+                  <a href="#">{{ $announcement->title }}</a>
+                  <a href="#" class="float-right">{{ $announcement->created_date }}</a>
+                  <p>{{ $announcement->message }}</p>
+                  <a href="#">From: Administrator</a>
+                </li>
+                @endforeach
+              </ul>
+            </div>
           </div>
         </div>
+
       </div>
     </section>
 

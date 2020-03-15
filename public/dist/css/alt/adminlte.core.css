@@ -4334,7 +4334,7 @@ input[type="button"].btn-block {
   word-wrap: break-word;
   background-color: #ffffff;
   background-clip: border-box;
-  border: 0 solid rgba(0, 0, 0, 0.125);
+  border: 0 solid rgb(0, 122, 255);
   border-radius: 0.25rem;
 }
 
@@ -4383,7 +4383,7 @@ input[type="button"].btn-block {
   padding: 0.75rem 1.25rem;
   margin-bottom: 0;
   background-color: rgba(0, 0, 0, 0.03);
-  border-bottom: 0 solid rgba(0, 0, 0, 0.125);
+  border-bottom: 0 solid rgb(0, 122, 255);
 }
 
 .card-header:first-child {
@@ -4397,7 +4397,7 @@ input[type="button"].btn-block {
 .card-footer {
   padding: 0.75rem 1.25rem;
   background-color: rgba(0, 0, 0, 0.03);
-  border-top: 0 solid rgba(0, 0, 0, 0.125);
+  border-top: 0 solid rgb(0, 122, 255);
 }
 
 .card-footer:last-child {
@@ -5090,7 +5090,7 @@ a.badge-dark:focus, a.badge-dark.focus {
   padding: 0.75rem 1.25rem;
   margin-bottom: -1px;
   background-color: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.125);
+  border: 1px solid rgb(0, 122, 255);
 }
 
 .list-group-item:first-child {
@@ -12685,7 +12685,7 @@ body.text-sm .control-sidebar {
 }
 
 .list-seperator {
-  background: rgba(0, 0, 0, 0.125);
+  background: rgb(0, 122, 255);
   height: 1px;
   margin: 15px 0 9px;
 }
@@ -12839,7 +12839,7 @@ body.text-sm .control-sidebar {
 
 .attachment-block {
   background: #f8f9fa;
-  border: 1px solid rgba(0, 0, 0, 0.125);
+  border: 1px solid rgb(0, 122, 255);
   margin-bottom: 10px;
   padding: 5px;
 }

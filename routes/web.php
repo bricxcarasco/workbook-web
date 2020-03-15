@@ -59,6 +59,15 @@ Route::post('/apply/listing_job', 'Tables\RegularListingsController@applyRegular
 Route::post('/cancel_quick/{id}', 'Tables\QuickListingsController@cancelQuick')->name('cancel_quick');
 Route::post('/cancel_listing/{id}', 'Tables\RegularListingsController@cancellisting')->name('cancel_listing');
 
+Route::post('/announcement', 'Tables\AnnouncementsController@makeAnnouncement');
+Route::post('/announcement/delete', 'Tables\AnnouncementsController@deleteAnnouncement');
+
+Route::get('/application/view/{employment}', 'Tables\ApplicationsController@viewDetailEmployment');
+
+Route::post('/administrator/add', 'Tables\AdministratorsController@addAdministrator');
+Route::post('/administrator/edit', 'Tables\AdministratorsController@editAdministrator');
+Route::post('/administrator/delete', 'Tables\AdministratorsController@deleteAdministrator');
+
 Route::middleware('admin')->group(function(){
     Route::prefix('admin')->group(function () {
         Route::get('/', 'AdminDashboardController@index')->name('admin.dashboard');

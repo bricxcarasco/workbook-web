@@ -93,6 +93,8 @@ class NotificationsController extends Controller
             'status' => $status
         ]); 
 
+        Application::where('id', $id)->update(['status' => $status]);
+
         $to_name = $seeker->full_name;
         $to_email = $seeker->email_address;
 
@@ -140,6 +142,8 @@ class NotificationsController extends Controller
             'message' => $message2,
             'status' => $status
         ]); 
+
+        Application::where('id', $id)->update(['status' => $status]);
 
         $to_name = $seeker->full_name;
         $to_email = $seeker->email_address;

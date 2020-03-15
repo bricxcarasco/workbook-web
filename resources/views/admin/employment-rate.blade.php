@@ -1,4 +1,18 @@
-@extends('admin.parts.header')
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>WorkBook | Employment Rate</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
+  <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -27,214 +41,522 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <!-- Small boxes (Stat box) -->
+        
         <div class="row">
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-              <div class="inner">
-                <h3>150</h3>
+          <!-- left column -->
+          <div class="col-md-6">
 
-                <p>New Orders</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-bag"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+            <div class="card card-primary">
 
-                <p>Bounce Rate</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>44</h3>
-
-                <p>User Registrations</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-person-add"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h3>65</h3>
-
-                <p>Unique Visitors</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-        </div>
-        <!-- /.row -->
-        <!-- Main row -->
-        <div class="row">
-          <!-- Left col -->
-          <section class="col-lg-7 connectedSortable">
-            <!-- Custom tabs (Charts with tabs)-->
-            <div class="card">
               <div class="card-header">
                 <h3 class="card-title">
                   <i class="fas fa-chart-pie mr-1"></i>
-                  Sales
+                  Employment Rate
                 </h3>
                 <div class="card-tools">
                   <ul class="nav nav-pills ml-auto">
                     <li class="nav-item">
-                      <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
+                      <a class="nav-link active" href="#employment-chart" data-toggle="tab">Area</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
                     </li>
                   </ul>
                 </div>
-              </div><!-- /.card-header -->
+              </div>
               <div class="card-body">
                 <div class="tab-content p-0">
-                  <!-- Morris chart - Sales -->
-                  <div class="chart tab-pane active" id="revenue-chart"
-                       style="position: relative; height: 300px;">
-                      <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>                         
-                   </div>
+                  <div class="chart tab-pane active" id="employment-chart"
+                        style="position: relative; height: 300px;">
+                      <canvas id="employment-chart-canvas" height="300" style="height: 300px;"></canvas>                         
+                    </div>
                   <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
                     <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>                         
                   </div>  
                 </div>
-              </div><!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-
-            
-          </section>
-          <!-- /.Left col -->
-          <!-- right col (We are only adding the ID to make the widgets sortable)-->
-          <section class="col-lg-5 connectedSortable">
-
-            <!-- Map card -->
-            <div class="card bg-gradient-primary">
-              <div class="card-header border-0">
-                <h3 class="card-title">
-                  <i class="fas fa-map-marker-alt mr-1"></i>
-                  Visitors
-                </h3>
-                <!-- card tools -->
-                <div class="card-tools">
-                  <button type="button"
-                          class="btn btn-primary btn-sm daterange"
-                          data-toggle="tooltip"
-                          title="Date range">
-                    <i class="far fa-calendar-alt"></i>
-                  </button>
-                  <button type="button"
-                          class="btn btn-primary btn-sm"
-                          data-card-widget="collapse"
-                          data-toggle="tooltip"
-                          title="Collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                </div>
-                <!-- /.card-tools -->
-              </div>
-              <div class="card-body">
-                <div id="world-map" style="height: 250px; width: 100%;"></div>
-              </div>
-              <!-- /.card-body-->
-              <div class="card-footer bg-transparent">
-                <div class="row">
-                  <div class="col-4 text-center">
-                    <div id="sparkline-1"></div>
-                    <div class="text-white">Visitors</div>
-                  </div>
-                  <!-- ./col -->
-                  <div class="col-4 text-center">
-                    <div id="sparkline-2"></div>
-                    <div class="text-white">Online</div>
-                  </div>
-                  <!-- ./col -->
-                  <div class="col-4 text-center">
-                    <div id="sparkline-3"></div>
-                    <div class="text-white">Sales</div>
-                  </div>
-                  <!-- ./col -->
-                </div>
-                <!-- /.row -->
               </div>
             </div>
-            <!-- /.card -->
 
-            <!-- Calendar -->
-            <div class="card bg-gradient-success">
-              <div class="card-header border-0">
-
-                <h3 class="card-title">
-                  <i class="far fa-calendar-alt"></i>
-                  Calendar
-                </h3>
-                <!-- tools card -->
-                <div class="card-tools">
-                  <!-- button with a dropdown -->
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
-                      <i class="fas fa-bars"></i></button>
-                    <div class="dropdown-menu float-right" role="menu">
-                      <a href="#" class="dropdown-item">Add new event</a>
-                      <a href="#" class="dropdown-item">Clear events</a>
-                      <div class="dropdown-divider"></div>
-                      <a href="#" class="dropdown-item">View calendar</a>
-                    </div>
-                  </div>
-                  <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-success btn-sm" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
-                  </button>
-                </div>
-                <!-- /. tools -->
+          </div>
+          <!--/.col (left) -->
+          <!-- right column -->
+          <div class="col-md-6">
+            <!-- general form elements disabled -->
+            <div class="card card-warning">
+              <div class="card-header">
+                <h3 class="card-title">Application List</h3>
               </div>
               <!-- /.card-header -->
-              <div class="card-body pt-0">
-                <!--The calendar -->
-                <div id="calendar" style="width: 100%"></div>
+              <div class="card-body">
+                
+                <table id="employment" class="table table-striped table-hover" style="width:100%">
+                  <thead>
+                    <tr>
+                      <th>Seeker</th>
+                      <th>Provider</th>
+                      <th>Job Type</th>
+                      <th>Date</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach ($employments as $employment)
+                    <tr>
+                      <td>{{ $employment->full_name }}</td>  
+                      <td>{{ $employment->business_name }}</td>  
+                      <td>
+                        @if ($employment->type == 1)
+                        <span class="badge badge-pill badge-info">Regular Job</span>
+                        @else
+                        <span class="badge badge-pill badge-warning">Request Job</span>
+                        @endif
+                      </td>  
+                      <td>{{ $employment->event_date }}</td>  
+                      <td>
+                        @if ($employment->status == 1)
+                        <span class="badge badge-pill badge-secondary">On Process</span>
+                        @elseif ($employment->status == 2)
+                        <span class="badge badge-pill badge-warning">Interview</span>
+                        @elseif ($employment->status == 3)
+                        <span class="badge badge-pill badge-primary">Pending</span>
+                        @elseif ($employment->status == 4)
+                        <span class="badge badge-pill badge-info">Cancelled</span>
+                        @elseif ($employment->status == 5)
+                        <span class="badge badge-pill badge-success">Hired</span>
+                        @elseif ($employment->status == 6)
+                        <span class="badge badge-pill badge-danger">Failed</span>
+                        @else
+                        <span class="badge badge-pill badge-dark">Other</span>
+                        @endif  
+                      </td>
+                      <td><button id="{{ $employment }}" class="viewMore">View More</button></td>  
+                    </tr>
+                    @endforeach
+                  </tbody>
+                  <tfoot>
+                      <tr>
+                        <th>Seeker</th>
+                        <th>Provider</th>
+                        <th>Job</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                      </tr>
+                  </tfoot>
+                </table>    
+
               </div>
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
-          </section>
-          <!-- right col -->
+
+          </div>
+          <!--/.col (right) -->
         </div>
-        <!-- /.row (main row) -->
+
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
 
-  @extends('admin.parts.footer')
+
+  <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Application Information</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="padding: 0rem;">
+          
+          <table class="table table-striped">
+            <tbody>
+               <tr>
+                  <td colspan="1">
+                     <form class="well form-horizontal">
+                        <fieldset>
+
+                          <label>Seeker Information</label>
+
+                          <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-user" aria-hidden="true"></i></span>
+                            </div>
+                            <input type="text" class="form-control" id="full_name" disabled>
+                          </div>
+
+                          <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-birthday-cake" aria-hidden="true"></i></span>
+                            </div>
+                            <input type="text" class="form-control" id="birth_date" disabled>
+                          </div>
+
+                          <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-mercury" aria-hidden="true"></i></span>
+                            </div>
+                            <input type="text" class="form-control" id="gender" disabled>
+                          </div>
+
+                          <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-adjust" aria-hidden="true"></i></span>
+                            </div>
+                            <input type="text" class="form-control" id="civil_status" disabled>
+                          </div>
+
+                          <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-address-book" aria-hidden="true"></i></span>
+                            </div>
+                            <input type="text" class="form-control" id="address" disabled>
+                          </div>
+
+                          <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-phone" aria-hidden="true"></i></span>
+                            </div>
+                            <input type="text" class="form-control" id="telephone_number" disabled>
+                          </div>
+
+                          <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-mobile" aria-hidden="true"></i></span>
+                            </div>
+                            <input type="text" class="form-control" id="mobile_number" disabled>
+                          </div>
+
+                          <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                            </div>
+                            <input type="text" class="form-control" id="email_address" disabled>
+                          </div>
+
+                          <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-graduation-cap" aria-hidden="true"></i></span>
+                            </div>
+                            <input type="text" class="form-control" id="high_school" disabled>
+                          </div>
+
+                          <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                            </div>
+                            <input type="text" class="form-control" id="high_school_year" disabled>
+                          </div>
+
+                          <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-graduation-cap" aria-hidden="true"></i></span>
+                            </div>
+                            <input type="text" class="form-control" id="college" disabled>
+                          </div>
+
+                          <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                            </div>
+                            <input type="text" class="form-control" id="college_year" disabled>
+                          </div>
+
+                        </fieldset>
+                     </form>
+                  </td>
+                  <td colspan="1">
+                     <form class="well form-horizontal">
+                        <fieldset>
+
+                          <label>Provider Information</label>
+
+                          <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-briefcase" aria-hidden="true"></i></span>
+                            </div>
+                            <input type="text" class="form-control" id="business_name" disabled>
+                          </div>
+
+                          <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-building" aria-hidden="true"></i></span>
+                            </div>
+                            <input type="text" class="form-control" id="business_type" disabled>
+                          </div>
+
+                          <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                            </div>
+                            <input type="text" class="form-control" id="mailing_address" disabled>
+                          </div>
+
+                          <label>Job Information</label>
+
+                          <div id="regular" style="display:none;">
+
+                            <div class="input-group input-group-sm mb-3">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+                              </div>
+                              <input type="text" class="form-control" id="title" disabled>
+                            </div>
+
+                            <div class="input-group input-group-sm mb-3">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-info" aria-hidden="true"></i></span>
+                              </div>
+                              <input type="text" class="form-control" id="details" disabled>
+                            </div>
+
+                            <div class="input-group input-group-sm mb-3">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-credit-card" aria-hidden="true"></i></span>
+                              </div>
+                              <input type="text" class="form-control" id="offer" disabled>
+                            </div>
+
+                            <div class="input-group input-group-sm mb-3">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-briefcase" aria-hidden="true"></i></span>
+                              </div>
+                              <input type="text" class="form-control" id="experience" disabled>
+                            </div>
+
+                            <div class="input-group input-group-sm mb-3">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+                              </div>
+                              <input type="text" class="form-control" id="location" disabled>
+                            </div>
+
+                          </div>
+
+                          <div id="request" style="display:none;">
+
+                            <div class="input-group input-group-sm mb-3">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+                              </div>
+                              <input type="text" class="form-control" id="tag" disabled>
+                            </div>
+
+                            <div class="input-group input-group-sm mb-3">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+                              </div>
+                              <input type="text" class="form-control" id="request_location" disabled>
+                            </div>
+
+                            <div class="input-group input-group-sm mb-3">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-info" aria-hidden="true"></i></span>
+                              </div>
+                              <input type="text" class="form-control" id="request_request" disabled>
+                            </div>
+
+                          </div>
+
+                            
+
+                        </fieldset>
+                     </form>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="main-footer">
+    <strong>Copyright &copy; 2020 WorkBook.</strong>
+    All rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Version</b> 1.0.
+    </div>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+  <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+  <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ asset('plugins/datatables/jquery.dataTables.js') }}"></script>
+  <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
+  <script src="{{ asset('dist/js/adminlte.js') }}"></script>
+  <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
+
+  <script type="text/javascript">
+
+    var salesChartCanvas = document.getElementById('employment-chart-canvas').getContext('2d');
+    var pieChartCanvas = $('#sales-chart-canvas').get(0).getContext('2d')
+    
+    var salesChartData = {
+      labels  : ['On Process', 'Interview', 'Pending', 'Cancelled', 'Hired', 'Failed', 'Other'],
+      datasets: [
+        {
+          label               : 'Employee Rate',
+          backgroundColor     : 'rgba(60,141,188,0.9)',
+          borderColor         : 'rgba(60,141,188,0.8)',
+          pointRadius          : false,
+          pointColor          : '#3b8bba',
+          pointStrokeColor    : 'rgba(60,141,188,1)',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(60,141,188,1)',
+          data                : {!! json_encode($total_counts) !!}
+        }
+      ]
+    }
+    
+    var pieData = {
+      labels: ['On Process', 'Interview', 'Pending', 'Cancelled', 'Hired', 'Failed', 'Other'],
+      datasets: [
+        {
+          data: {!! json_encode($total_counts) !!},
+          backgroundColor : ['#007bff', '#6f42c1', '#e83e8c', '#fd7e14', '#ffc107', '#28a745','#17a2b8'],
+        }
+      ]
+    }
+
+
+    var pieOptions = {
+      legend: {
+        display: true
+      },
+      maintainAspectRatio : false,
+      responsive : true,
+    }
+
+    var salesChartOptions = {
+      maintainAspectRatio : false,
+      responsive : true,
+      legend: {
+        display: true
+      },
+      scales: {
+        xAxes: [{
+          gridLines : {
+            display : true,
+          }
+        }],
+        yAxes: [{
+          gridLines : {
+            display : true,
+          }
+        }]
+      }
+    }
+
+    var salesChart = new Chart(salesChartCanvas, { 
+        type: 'line', 
+        data: salesChartData, 
+        options: salesChartOptions
+      }
+    )
+
+    var pieChart = new Chart(pieChartCanvas, {
+      type: 'doughnut',
+      data: pieData,
+      options: pieOptions      
+    });
+
+  </script>
+
+  <script>
+    $(document).ready(function() {
+      $('#employment').DataTable();
+
+      $("#employment").on('click', '.viewMore', function() {
+        let employment = $(this).attr('id');
+        $.ajax({
+          url: `/application/view/${employment}`,
+          type: 'GET',
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          success: function(data) {
+            console.log(data);
+            $("#viewModal").modal('show');
+            $("#viewModal #full_name").val(data.full_name);
+            $("#viewModal #birth_date").val(data.birth_date);
+            let sex = '';
+            if (data.gender == 1) {
+              sex = 'Male';
+            } else {
+              sex = 'Female';
+            }
+            $("#viewModal #gender").val(sex);
+            $("#viewModal #civil_status").val(data.civil_status);
+            $("#viewModal #address").val(data.address);
+            $("#viewModal #telephone_number").val(data.telephone_number);
+            $("#viewModal #mobile_number").val(data.mobile_number);
+            $("#viewModal #email_address").val(data.email_address);
+            $("#viewModal #high_school").val(data.high_school);
+            $("#viewModal #high_school_year").val(data.high_school_year);
+            $("#viewModal #college").val(data.college);
+            $("#viewModal #college_year").val(data.college_year);
+
+            $("#viewModal #business_name").val(data.business_name);
+            $("#viewModal #business_type").val(data.business_type);
+            $("#viewModal #mailing_address").val(data.mailing_address);
+
+            if (data.type == 1) {
+
+              $("#viewModal #regular").css('display', 'block');
+              $("#viewModal #request").css('display', 'none');
+            } else {
+
+              $("#viewModal #regular").css('display', 'none');
+              $("#viewModal #request").css('display', 'block');
+            }
+
+
+            $("#viewModal #title").val(data.title);
+            $("#viewModal #details").val(data.details);
+            $("#viewModal #offer").val('Php ' + data.min_offer + ' - Php ' + data.max_offer);
+
+            let exp = '';
+            if (data.experience == 1) {
+              let exp = 'No experience';
+            } else if (data.experience == 2) {
+              let exp = 'Fresh Graduate';
+            }  else if (data.experience == 3) {
+              let exp = '1 year';
+            }  else if (data.experience == 4) {
+              let exp = '2 to 3 years';
+            }  else if (data.experience == 5) {
+              let exp = '3 to 5 years';
+            }  else if (data.experience == 6) {
+              let exp = '5 to 10 years';
+            } else if (data.experience == 7) {
+              let exp = '10 years above';
+            }
+
+            $("#viewModal #location").val(data.barangay + ' ' + data.municipality);
+
+            $("#viewModal #request_location").val(data.location);
+            $("#viewModal #request_request").val(data.request);
+          }
+        });
+      });
+    });
+  </script>
 
 </body>
 </html>

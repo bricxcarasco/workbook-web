@@ -102,12 +102,12 @@
                         <table id="listingst" class="table table-striped table-hover" style="width:100%">
                           <thead>
                             <tr>
-                              <th>ID</th>
+                              <th>Applicant</th>
+                                <th>Gender</th>
+                                <th>Address</th>
                                 <th>Job Title</th>
                                 <th>Location</th>
-                                <th>Salary</th>
                                 <th>Date</th>
-                                <th>Slots</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -115,12 +115,20 @@
                           <tbody>
                             @foreach ($app_listings as $listing)
                               <tr>
-                                  <td>{{ $listing->id }}</td>
+                                  <td class="viewCom" id="{{ $listing }}"><a>{{ $listing->full_name }}</a></td>
+                                  <td>
+                                    @if ($listing->gender == 1)
+                                      Male
+                                    @elseif ($listing->gender == 2)
+                                      Female
+                                    @else
+                                      Other
+                                    @endif
+                                  </td>
+                                  <td>{{ $listing->address }}</td>
                                   <td>{{ $listing->title }}</td>
                                   <td>{{ $listing->barangay.' '.$listing->municipality.' '.$listing->postal }}</td>
-                                  <td>{{ 'Php. '.$listing->min_offer.' - Php. '.$listing->max_offer }}</td>
                                   <td>{{ $listing->event_date }}</td>
-                                  <td>{{ $listing->slots }}</td>
                                   <td>
                                     @if ($listing->status == 1)
                                     <span class="badge badge-pill badge-secondary">On Process</span>
@@ -146,12 +154,12 @@
                           </tbody>
                           <tfoot>
                               <tr>
-                                <th>ID</th>
+                              <th>Applicant</th>
+                                <th>Gender</th>
+                                <th>Address</th>
                                 <th>Job Title</th>
                                 <th>Location</th>
-                                <th>Salary</th>
                                 <th>Date</th>
-                                <th>Slots</th>
                                 <th>Status</th>
                                 <th>Action</th>
                               </tr>
@@ -165,9 +173,10 @@
                         <table id="quickst" class="table table-striped table-hover" style="width:100%">
                           <thead>
                             <tr>
-                              <th>ID</th>
+                              <th>Full Name</th>
+                              <th>Gender</th>
+                              <th>Address</th>
                               <th>Job Title</th>
-                              <th>Location</th>
                               <th>Date</th>
                               <th>Status</th>
                               <th>Action</th>
@@ -176,14 +185,25 @@
                           <tbody>
                             @foreach ($app_quicks as $quick)
                             <tr>
-                              <td>{{ $quick->id }}</td>
+                              <td class="viewCom" id="{{ $quick }}"><a>{{ $quick->full_name }}</a></td>
+
+                                  <td>
+                                    @if ($listing->gender == 1)
+                                      Male
+                                    @elseif ($listing->gender == 2)
+                                      Female
+                                    @else
+                                      Other
+                                    @endif
+                                  </td>
+                                  <td>{{ $listing->address }}</td>
                               <td>
-                                @if (strlen(strip_tags($quick->request)) > 40)
-                                  {{ substr(strip_tags($quick->request),0,40)."..." }}
+                                @if (strlen(strip_tags($quick->request)) > 20)
+                                  {{ substr(strip_tags($quick->request),0,20)."..." }}
                                 @else
                                   {{ strip_tags($quick->request) }}
                                 @endif
-                              <td>{{ $quick->location }}</td>
+                              </td>
                               <td>{{ $quick->event_date }}</td>
                               <td>
                                 @if ($quick->status == 1)
@@ -210,12 +230,13 @@
                           </tbody>
                           <tfoot>
                               <tr>
-                                <th>ID</th>
-                                <th>Job Title</th>
-                                <th>Location</th>
-                                <th>Date</th>
-                                <th>Status</th>
-                                <th>Action</th>
+                              <th>Full Name</th>
+                              <th>Gender</th>
+                              <th>Address</th>
+                              <th>Job Title</th>
+                              <th>Date</th>
+                              <th>Status</th>
+                              <th>Action</th>
                               </tr>
                           </tfoot>
                         </table>    
@@ -274,6 +295,8 @@
                 <label for="">Reason</label>
                 <textarea class="form-control" name="reason" id="reason" cols="30" rows="10"></textarea>
               </div>
+
+              <span class="spanMessage" style="color:red; display:none;">Make sure fields are not empty!</span>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" id ="updateQuick">Update Status</button>
@@ -327,12 +350,92 @@
                 <label for="">Reason</label>
                 <textarea class="form-control" name="reason" id="reason" cols="30" rows="10"></textarea>
               </div>
+
+              <span class="spanMessage" style="color:red; display:none;">Make sure fields are not empty!</span>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" id ="updateListing">Update Status</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
           </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="viewCompanyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Job Seeker Information</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            
+            <style>
+              .fa {
+                color: #1b3d6c;
+              }
+
+              label .fa {
+                padding-left: 5px;
+                padding-right: 5px;
+              }
+
+              p span {
+                padding-left: 15px;
+              }
+            </style>
+
+            <fieldset style="padding: 10px;">
+
+              <p for="">
+                <i class="fa fa-2x fa-user" aria-hidden="true"></i> <span id="full_name"></span>
+              </p>
+
+              <p for="">
+                <i class="fa fa-2x fa-mercury" aria-hidden="true"></i> <span id="gender"></span>
+              </p>
+
+              <p for="">
+                <i class="fa fa-2x fa-address-book" aria-hidden="true"></i> <span id="address"></span>
+              </p>
+
+              <p for="">
+                <i class="fa fa-2x fa-adjust" aria-hidden="true"></i> <span id="civil_status"></span>
+              </p>
+
+              <p for="">
+                <i class="fa fa-2x fa-phone" aria-hidden="true"></i> <span id="telephone_number"></span>
+              </p>
+
+              <p for="">
+                <i class="fa fa-2x fa-mobile" aria-hidden="true"></i> <span id="mobile_number"></span>
+              </p>
+
+              <p for="">
+                <i class="fa fa-2x fa-graduation-cap" aria-hidden="true"></i> <span id="high_school"></span>
+              </p>
+
+              <p for="">
+                <i class="fa fa-2x fa-calendar" aria-hidden="true"></i> <span id="high_school_year"></span>
+              </p>
+
+              <p for="">
+                <i class="fa fa-2x fa-graduation-cap" aria-hidden="true"></i> <span id="college"></span>
+              </p>
+
+              <p for="">
+                <i class="fa fa-2x fa-calendar" aria-hidden="true"></i> <span id="college_year"></span>
+              </p>
+
+            </fieldset>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
         </div>
       </div>
     </div>
@@ -390,15 +493,37 @@
               let e_date = $("#listingModal #e_date").val()
               let e_time = $("#listingModal #e_time").val()
               let location = $("#listingModal #location").val()
-              sendPositive(id, message, lookfor, e_date, e_time, location, $("#listingModal #status").val());
-              $('#listingModal').modal('hide');
-              alert('Successfully sent!');
+              if (!message || !lookfor || !e_date || !e_time || !location) {
+                $("#listingModal .spanMessage").css('display', 'block');
+              } else {
+                $("#listingModal .spanMessage").css('display', 'none');
+                sendPositive(id, message, lookfor, e_date, e_time, location, $("#listingModal #status").val());
+                $('#listingModal').modal('hide');
+                $("#quickModal #message").val("")
+                $("#quickModal #lookfor").val("")
+                $("#quickModal #e_date").val("")
+                $("#quickModal #e_time").val("")
+                $("#quickModal #location").val("")
+                $("#quickModal #reason").val("")
+                alert('Successfully sent!');
+              }
             } else {
               let id = $("#listingModal #id").val();
               let reason = $("#listingModal #reason").val()
-              sendNegative(id, reason, $("#listingModal #status").val());
-              $('#listingModal').modal('hide');
-              alert('Successfully sent!');
+              if (!reason) {
+                $("#listingModal .spanMessage").css('display', 'block');
+              } else {
+                $("#listingModal .spanMessage").css('display', 'none');
+                sendNegative(id, reason, $("#listingModal #status").val());
+                $("#listingModal #message").val("")
+                $("#listingModal #lookfor").val("")
+                $("#listingModal #e_date").val("")
+                $("#listingModal #e_time").val("")
+                $("#listingModal #location").val("")
+                $("#listingModal #reason").val("")
+                $('#listingModal').modal('hide');
+                alert('Successfully sent!');
+              }
             }
           });
 
@@ -410,15 +535,37 @@
               let e_date = $("#quickModal #e_date").val()
               let e_time = $("#quickModal #e_time").val()
               let location = $("#quickModal #location").val()
-              sendPositive(id, message, lookfor, e_date, e_time, location, $("#quickModal #status").val());
-              $('#quickModal').modal('hide');
-              alert('Successfully sent!');
+              if (!message || !lookfor || !e_date || !e_time || !location) {
+                $("#quickModal .spanMessage").css('display', 'block');
+              } else {
+                $("#quickModal .spanMessage").css('display', 'none');
+                sendPositive(id, message, lookfor, e_date, e_time, location, $("#quickModal #status").val());
+                $("#quickModal #message").val("")
+                $("#quickModal #lookfor").val("")
+                $("#quickModal #e_date").val("")
+                $("#quickModal #e_time").val("")
+                $("#quickModal #location").val("")
+                $("#quickModal #reason").val("")
+                $('#quickModal').modal('hide');
+                alert('Successfully sent!');
+              }
             } else {
               let id = $("#quickModal #id").val();
               let reason = $("#quickModal #reason").val()
-              sendNegative(id, reason, $("#quickModal #status").val());
-              $('#quickModal').modal('hide');
-              alert('Successfully sent!');
+              if (!reason) {
+                $("#quickModal .spanMessage").css('display', 'block');
+              } else {
+                $("#quickModal .spanMessage").css('display', 'none');
+                sendNegative(id, reason, $("#quickModal #status").val());
+                $("#quickModal #message").val("")
+                $("#quickModal #lookfor").val("")
+                $("#quickModal #e_date").val("")
+                $("#quickModal #e_time").val("")
+                $("#quickModal #location").val("")
+                $("#quickModal #reason").val("")
+                $('#quickModal').modal('hide');
+                alert('Successfully sent!');
+              }
             }
           });
       });
@@ -427,7 +574,20 @@
           $('#listingst').DataTable();
           $('#quickst').DataTable();
 
-          
+          $(".viewCom").click(function() {
+            let id = JSON.parse($(this).attr('id'));
+            $('#viewCompanyModal').modal('show');
+          $("#viewCompanyModal #full_name").text(id.full_name)
+          $("#viewCompanyModal #gender").text(id.gender)
+          $("#viewCompanyModal #address").text(id.address)
+          $("#viewCompanyModal #civil_status").text(id.civil_status)
+          $("#viewCompanyModal #telephone_number").text(id.telephone_number)
+          $("#viewCompanyModal #mobile_number").text(id.mobile_number)
+          $("#viewCompanyModal #high_school").text(id.high_school)
+          $("#viewCompanyModal #high_school_year").text(id.high_school_year)
+          $("#viewCompanyModal #college").text(id.college)
+          $("#viewCompanyModal #college_year").text(id.college_year)
+          });
       });
 
       function listingChange(id, status) {

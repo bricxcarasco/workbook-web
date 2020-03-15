@@ -1942,7 +1942,7 @@ textarea.form-control.is-warning {
 }
 
 .card {
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.125), 0 1px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 1px rgb(0, 122, 255), 0 1px 3px rgba(0, 0, 0, 0.2);
   margin-bottom: 1rem;
 }
 
@@ -1985,7 +1985,7 @@ textarea.form-control.is-warning {
 }
 
 .card .nav.flex-column > li {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  border-bottom: 1px solid rgb(0, 122, 255);
   margin: 0;
 }
 
@@ -1999,11 +1999,11 @@ textarea.form-control.is-warning {
 }
 
 .card .border-right {
-  border-right: 1px solid rgba(0, 0, 0, 0.125);
+  border-right: 1px solid rgb(0, 122, 255);
 }
 
 .card .border-left {
-  border-left: 1px solid rgba(0, 0, 0, 0.125);
+  border-left: 1px solid rgb(0, 122, 255);
 }
 
 .card.card-tabs:not(.card-outline) .card-header {
@@ -2058,7 +2058,7 @@ html.maximized-card {
 
 .card-header {
   background-color: transparent;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  border-bottom: 1px solid rgb(0, 122, 255);
   padding: 0.75rem 1.25rem;
   position: relative;
   border-top-left-radius: 0.25rem;
@@ -4707,7 +4707,7 @@ html.maximized-card {
 }
 
 .btn-app:active, .btn-app:focus {
-  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgb(0, 122, 255);
 }
 
 .btn-app > .badge {

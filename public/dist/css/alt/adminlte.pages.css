@@ -44,11 +44,11 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
 }
 
 .mailbox-controls.with-border {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  border-bottom: 1px solid rgb(0, 122, 255);
 }
 
 .mailbox-read-info {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  border-bottom: 1px solid rgb(0, 122, 255);
   padding: 10px;
 }
 
@@ -343,7 +343,7 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
 
 .invoice {
   background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.125);
+  border: 1px solid rgb(0, 122, 255);
   position: relative;
 }
 

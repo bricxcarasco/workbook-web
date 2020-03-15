@@ -61,15 +61,17 @@ class ProviderPagesController extends Controller
 
         $app_listings = Application::where('applications.type', 1)
             ->leftJoin('regular_listings', 'applications.job_id', '=', 'regular_listings.id')
+            ->leftJoin('seekers', 'applications.seeker_id', '=', 'seekers.id')
             ->where('regular_listings.user_id', $userId)
-            ->select('regular_listings.*','applications.*')
+            ->select('regular_listings.*','applications.*', 'seekers.full_name', 'seekers.gender', 'seekers.address', 'seekers.id as employee_id', 'seekers.civil_status', 'seekers.telephone_number', 'seekers.mobile_number', 'seekers.high_school', 'seekers.high_school_year', 'seekers.college', 'seekers.college_year', 'seekers.image as e_image')
             ->orderBy('applications.created_at', 'ASC')
             ->get();
 
         $app_quicks = Application::where('applications.type', 2)
             ->leftJoin('quick_listings', 'applications.job_id', '=', 'quick_listings.id')
+            ->leftJoin('seekers', 'applications.seeker_id', '=', 'seekers.id')
             ->where('quick_listings.user_id', $userId)
-            ->select('quick_listings.*','applications.*')
+            ->select('quick_listings.*','applications.*', 'seekers.full_name', 'seekers.gender', 'seekers.address', 'seekers.id as employee_id', 'seekers.civil_status', 'seekers.telephone_number', 'seekers.mobile_number', 'seekers.high_school', 'seekers.high_school_year', 'seekers.college', 'seekers.college_year', 'seekers.image as e_image')
             ->orderBy('applications.created_at', 'ASC')
             ->get();
 
