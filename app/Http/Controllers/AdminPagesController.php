@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Announcement;
 use App\Application;
+use App\Provider;
+use App\QuickListing;
+use App\RegularListing;
 use Illuminate\Http\Request;
 use App\Seeker;
 use App\User;
+use App\UserLog;
 use App\WorkClass;
+use Carbon\Carbon;
 
 class AdminPagesController extends Controller
 {
@@ -63,7 +68,7 @@ class AdminPagesController extends Controller
     }
 
     public function manageListings() {
-        $work_classes = WorkClass::all();
+        $work_classes = WorkClass::where('is_delete', 0)->get();
         return view('admin.manage-listings', compact('work_classes'));
     }
 
@@ -76,7 +81,36 @@ class AdminPagesController extends Controller
     }
 
     public function userActivity() {
-        return view('admin.user-activity');
+        $regular = RegularListing::count();
+        $quick = QuickListing::count();
+        $providers = UserLog::where('type', 2)->count();
+        $seekers = UserLog::where('type', 3)->count();
+
+        $data_count = array(
+            'jobs' => ($regular + $quick),
+            'providers' => $providers,
+            'seekers' => $seekers,
+            'users' => ($seekers + $providers)
+        );
+
+        $startDate = Carbon::now()->subDays(7);
+        $endDate = Carbon::now()->format('Y-m-d');
+        $all_dates = [];
+        $providers = [];
+        $seekers = [];
+        while ($startDate->lte($endDate)){
+            $all_dates[] = $startDate->toDateString();
+            $startDate->addDay();
+        }
+
+        foreach ($all_dates as $date) {
+            array_push($providers, UserLog::where('type', 2)->where('created_at', $date)->count());
+            array_push($seekers, UserLog::where('type', 3)->where('created_at', $date)->count());
+        }
+
+        $total = array_sum($providers) + array_sum($seekers);
+
+        return view('admin.user-activity', compact('data_count', 'providers', 'seekers', 'all_dates', 'total'));
     }
 
     public function websiteAdministrators() {

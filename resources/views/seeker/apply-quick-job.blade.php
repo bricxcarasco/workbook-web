@@ -55,6 +55,16 @@
                             <span style="display: block;" class="error invalid-feedback">{{ $errors->first('image_upload') }}</span>
                         @endif
                     </div>
+
+                    <div class="form-group">
+                      <label for="company-website-tw d-block">Valid ID</label> <br>
+                          {{-- <label class="btn btn-primary btn-md btn-file"> --}}
+                              <input class="btn btn-primary btn-md btn-file" type="file" id="identification" value="{{ old('identification') }}" name="identification">
+                          {{-- </label> --}}
+                          @if ($errors->has('identification'))
+                              <span style="display: block;" class="error invalid-feedback">{{ $errors->first('identification') }}</span>
+                          @endif
+                      </div>
       
                     <div class="form-group">
                         <label class="text-black" for="fname">Date</label>

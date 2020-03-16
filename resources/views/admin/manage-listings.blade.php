@@ -62,6 +62,7 @@
             <div class="card card-primary">
               <div class="card-header">
                 <h3 class="card-title">Listings</h3>
+                <button class="btn btn-success float-right" id="add">Add Listing</button>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -70,36 +71,30 @@
                   <thead>
                     <tr>
                       <th>ID</th>
-                      <th>Listed By</th>
-                      <th>Date</th>
-                      <th>Tags</th>
                       <th>Title</th>
+                      <th>Description</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {{-- @foreach ($announcements as $announcement) --}}
+                    @foreach ($work_classes as $work_class)
                     <tr>
-                      <td>Test</td>  
-                      <td>Test</td>  
-                      <td>Test</td>  
-                      <td>Test</td>  
-                      <td>Test</td>  
+                      <td>{{ $work_class->id }}</td>  
+                      <td>{{ $work_class->title }}</td>  
+                      <td>{{ $work_class->description }}</td>  
                       <td>
-                        <button class="btn btn-info"><i class="fa fa-eye"></i> Edit</button>
-                        <button class="btn btn-danger"><i class="fa fa-times-circle"></i> Remove</button>
+                        <button id="{{ $work_class }}" class="btn btn-info view"><i class="fa fa-eye"></i> Edit</button>
+                        <button id="{{ $work_class->id }}" class="btn btn-danger remove"><i class="fa fa-times-circle"></i> Remove</button>
                       </td>  
                     </tr>
-                    {{-- @endforeach --}}
+                    @endforeach
                   </tbody>
                   <tfoot>
                       <tr>
                         <th>ID</th>
-                        <th>Listed By</th>
-                        <th>Date</th>
-                        <th>Tags</th>
-                        <th>Title</th>
-                        <th>Action</th>
+                      <th>Title</th>
+                      <th>Description</th>
+                      <th>Action</th>
                       </tr>
                   </tfoot>
                 </table>    
@@ -135,19 +130,211 @@
 </div>
 <!-- ./wrapper -->
 
+
+<div class="modal fade" id="listingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Listing</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+
+          <label for="">Title</label>
+          <input class="form-control" type="text" id="title" name="title">
+
+          <label for="">Description</label>
+          <input class="form-control" type="text" id="description" name="description">
+
+          <span class="spanMessage" style="color:red; display:none;">Make sure fields are not empty!</span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id ="updateListing">Save Listing</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Listing</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+
+          <input type="hidden" name="id" id="id">
+          <label for="">Title</label>
+          <input class="form-control" type="text" id="title" name="title">
+
+          <label for="">Description</label>
+          <input class="form-control" type="text" id="description" name="description">
+
+          <span class="spanMessage" style="color:red; display:none;">Make sure fields are not empty!</span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id ="updateListing">Save Listing</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <label>Are you sure you want to delete this listing?</label>
+          <input type="hidden" id="id">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" id ="deleteSeeker">Delete</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
   <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
   <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('plugins/datatables/jquery.dataTables.js') }}"></script>
   <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
   <script src="{{ asset('dist/js/adminlte.js') }}"></script>
 
-  <script>
-    $(document).ready(function() {
-          $('#announcements').DataTable(); 
+<script>
+  $(document).ready(function() {
+    $('#announcements').DataTable(); 
 
-      });
+    $("#add").click(function() {
+      $("#listingModal").modal("show");
+    });
 
-  </script>
+    $("#announcements").on('click', '.view', function() {
+      let work_class = JSON.parse($(this).attr('id'));
+      $("#editModal").modal("show");
+      $("#editModal #id").val(work_class.id);
+      $("#editModal #title").val(work_class.title);
+      $("#editModal #description").val(work_class.description);
+    });
+
+    $("#announcements").on('click', '.remove', function() {
+      let id = $(this).attr('id');
+      $("#deleteModal").modal("show");
+      $("#deleteModal #id").val(id);
+    });
+
+    $("#listingModal").on('click', '#updateListing', function() {
+      let description = $("#listingModal #description").val();
+      let title = $("#listingModal #title").val();
+      if (!description || !title) {
+        $("#listingModal .spanMessage").css('display', 'block');
+      } else {
+        $("#listingModal .spanMessage").css('display', 'none');
+        $.ajax({
+          url: `/work_class/add`,
+          type: 'POST',
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          data: {
+            description : description,
+            title: title
+          },
+          success: function(data) {
+            if (data == 'Success') { 
+              $("#listingModal").modal("hide");
+              location.reload();
+              alert('Listing has been added!');
+            } else {
+              $("#listingModal").modal("hide");
+              location.reload();
+              alert('Listing adding failed!');
+            }
+          }
+        });
+      }
+    });
+
+    $("#editModal").on('click', '#updateListing', function() {
+      let id = $("#editModal #id").val();
+      let description = $("#editModal #description").val();
+      let title = $("#editModal #title").val();
+      if (!description || !title) {
+        $("#editModal .spanMessage").css('display', 'block');
+      } else {
+        $("#editModal .spanMessage").css('display', 'none');
+        $.ajax({
+          url: `/work_class/edit`,
+          type: 'POST',
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          data: {
+            id: id,
+            description : description,
+            title: title
+          },
+          success: function(data) {
+            if (data == 'Success') { 
+              $("#editModal").modal("hide");
+              location.reload();
+              alert('Listing has been updated!');
+            } else {
+              $("#editModal").modal("hide");
+              location.reload();
+              alert('Listing updating failed!');
+            }
+          }
+        });
+      }
+    });
+
+    $("#deleteModal").on('click', '#deleteSeeker', function() {
+      let id = $("#deleteModal #id").val();
+        $.ajax({
+          url: `/work_class/delete`,
+          type: 'POST',
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          data: {
+            id: id
+          },
+          success: function(data) {
+            if (data == 'Success') { 
+              $("#deleteModal").modal("hide");
+              location.reload();
+              alert('Listing has been deleted!');
+            } else {
+              $("#deleteModal").modal("hide");
+              location.reload();
+              alert('Listing deleting failed!');
+            }
+          }
+        });
+    });
+
+
+  });
+</script>
 
 </body>
 </html>

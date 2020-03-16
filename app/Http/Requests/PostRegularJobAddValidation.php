@@ -20,6 +20,7 @@ class PostRegularJobAddValidation extends FormRequest
             'title' => 'bail|required|max:100',
             'details' => 'bail|required|max:250',
             'type' => 'bail|required',
+            'tags' => 'bail|required',
             'min_offer' => 'bail|required|numeric',
             'max_offer' => 'bail|required|numeric',
             'experience' => 'bail|required',

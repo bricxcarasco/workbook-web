@@ -15,6 +15,7 @@ class ApplyRegularJobValidation extends FormRequest
     {
         return [
             'image_upload' => 'bail|required|mimes:pdf,docx,doc',
+            'identification' => 'bail|required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'event_date' => 'bail|required|date',
             'message' => 'bail|required'
         ];

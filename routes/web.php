@@ -68,6 +68,13 @@ Route::post('/administrator/add', 'Tables\AdministratorsController@addAdministra
 Route::post('/administrator/edit', 'Tables\AdministratorsController@editAdministrator');
 Route::post('/administrator/delete', 'Tables\AdministratorsController@deleteAdministrator');
 
+Route::get('/calendar/list', 'Tables\CalendarEventsController@calendarList');
+Route::post('/calendar/add', 'Tables\CalendarEventsController@addEvent');
+
+Route::post('/work_class/add', 'Tables\WorkClassesController@addWorkClass');
+Route::post('/work_class/edit', 'Tables\WorkClassesController@editWorkClass');
+Route::post('/work_class/delete', 'Tables\WorkClassesController@deleteWorkClass');
+
 Route::middleware('admin')->group(function(){
     Route::prefix('admin')->group(function () {
         Route::get('/', 'AdminDashboardController@index')->name('admin.dashboard');

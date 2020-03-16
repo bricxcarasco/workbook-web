@@ -104,9 +104,21 @@
 
                 <div class="form-group">
                   <label for="job-type">Job Type</label>
-                  <select class="selectpicker border rounded" id="type" name="type" data-style="btn-black" data-width="100%" data-live-search="true" title="Select Job Type">
+                  <select class="form-control" id="type" name="type" data-style="btn-black" data-width="100%" title="Select Job Type">
                     <option value="1">Part Time</option>
                     <option value="2">Full Time</option>
+                  </select>
+                  @if ($errors->has('type'))
+                      <span style="display: block;" class="error invalid-feedback">{{ $errors->first('type') }}</span>
+                  @endif
+                </div>
+
+                <div class="form-group">
+                  <label for="job-type">Category</label>
+                  <select class="form-control" id="tags" name="tags" data-style="btn-black" data-width="100%" title="Select Job Type">
+                    @foreach ($categories as $category)
+                      <option value="{{ $category->id }}">{{ $category->title }}</option>
+                    @endforeach
                   </select>
                   @if ($errors->has('type'))
                       <span style="display: block;" class="error invalid-feedback">{{ $errors->first('type') }}</span>
@@ -132,7 +144,7 @@
 
                 <div class="form-group">
                   <label for="job-region">Experience</label>
-                  <select class="selectpicker border rounded" id="experience" name="experience" data-style="btn-black" data-width="100%" data-live-search="true" title="Select Experience Requirements">
+                  <select class="form-control" id="experience" name="experience" data-style="btn-black" data-width="100%" title="Select Experience Requirements">
                     <option value="1">No experience</option>
                     <option value="2">Fresh Graduate</option>
                     <option value="3">1 year</option>

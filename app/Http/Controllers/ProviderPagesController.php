@@ -39,7 +39,8 @@ class ProviderPagesController extends Controller
 
     public function postJob()
     {
-        return view('provider.post-job');
+        $categories = WorkClass::where('is_delete', 0)->select('id', 'title')->get();
+        return view('provider.post-job', compact('categories'));
     }
     
     public function quickJobRequest()

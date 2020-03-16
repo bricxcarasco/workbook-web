@@ -148,6 +148,7 @@
                                   </td>
                                   <td>
                                     <button class="btn btn-primary" onclick="listingChange({{ $listing->id }}, {{ $listing->status }})">Update Status</button>
+                                    <button class="btn btn-primary" onclick="viewAttach({{ $listing }})">View Attachment</button>
                                   </td>
                               </tr>
                             @endforeach
@@ -224,6 +225,7 @@
                               </td>
                               <td>
                                 <button class="btn btn-primary" onclick="quickChange({{ $quick->id }}, {{ $quick->status }})">Update Status</button>
+                                <button class="btn btn-primary" onclick="viewAttach({{ $quick }})">View Attachment</button>
                               </td>
                           </tr>
                             @endforeach
@@ -275,11 +277,11 @@
               </select>
 
               <div class="applicationMessage" style="display:none;">
-                <label for="">Date</label>
-                <input class="form-control" type="date" id="e_date" name="e_date">
+                <label for="">Start DateTime</label>
+                <input class="form-control" type="datetime-local" id="start_date" name="start_date">
 
-                <label for="">Time</label>
-                <input class="form-control" type="time" id="e_time" name="lookfor">
+                <label for="">End DateTime</label>
+                <input class="form-control" type="datetime-local" id="end_date" name="end_date">
 
                 <label for="">Location</label>
                 <input class="form-control" type="text" id="location" name="location">
@@ -330,11 +332,11 @@
               </select>
 
               <div class="applicationMessage" style="display:none;">
-                <label for="">Date</label>
-                <input class="form-control" type="date" id="e_date" name="e_date">
+                <label for="">Start DateTime</label>
+                <input class="form-control" type="datetime-local" id="start_date" name="start_date">
 
-                <label for="">Time</label>
-                <input class="form-control" type="time" id="e_time" name="lookfor">
+                <label for="">End DateTime</label>
+                <input class="form-control" type="datetime-local" id="end_date" name="end_date">
 
                 <label for="">Location</label>
                 <input class="form-control" type="text" id="location" name="location">
@@ -440,6 +442,38 @@
       </div>
     </div>
 
+    <div class="modal fade" id="viewAttch" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">View Attachment</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form style="align: center;">
+
+              <label for="">Valid ID</label>
+              <div class="form-group">
+                <img src="" alt="" id="valid_id" style="width: 300px; height: 300px;">
+              </div>
+
+              <div class="form-group">
+                <label for="" id="labelRes"></label>
+                <a target="_blank" href="" id="resume" download>Download Resume</a>
+              </div>
+              
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id ="updateQuick">Update Status</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     @extends('layouts.site.footer')
   
 </div>
@@ -486,88 +520,89 @@
         });
 
         $("#listingModal").on('click', '#updateListing', function() {
-            if ($("#listingModal #status").val() == 2 || $("#listingModal #status").val() == 5) {
-              let id = $("#listingModal #id").val();
-              let message = $("#listingModal #message").val()
-              let lookfor = $("#listingModal #lookfor").val()
-              let e_date = $("#listingModal #e_date").val()
-              let e_time = $("#listingModal #e_time").val()
-              let location = $("#listingModal #location").val()
-              if (!message || !lookfor || !e_date || !e_time || !location) {
-                $("#listingModal .spanMessage").css('display', 'block');
-              } else {
-                $("#listingModal .spanMessage").css('display', 'none');
-                sendPositive(id, message, lookfor, e_date, e_time, location, $("#listingModal #status").val());
-                $('#listingModal').modal('hide');
-                $("#quickModal #message").val("")
-                $("#quickModal #lookfor").val("")
-                $("#quickModal #e_date").val("")
-                $("#quickModal #e_time").val("")
-                $("#quickModal #location").val("")
-                $("#quickModal #reason").val("")
-                alert('Successfully sent!');
-              }
+          if ($("#listingModal #status").val() == 2 || $("#listingModal #status").val() == 5) {
+            let id = $("#listingModal #id").val();
+            let message = $("#listingModal #message").val()
+            let lookfor = $("#listingModal #lookfor").val()
+            let start_date = $("#listingModal #start_date").val()
+            let end_date = $("#listingModal #end_date").val()
+            let location = $("#listingModal #location").val()
+            if (!message || !lookfor || !start_date || !end_date || !location) {
+              $("#listingModal .spanMessage").css('display', 'block');
             } else {
-              let id = $("#listingModal #id").val();
-              let reason = $("#listingModal #reason").val()
-              if (!reason) {
-                $("#listingModal .spanMessage").css('display', 'block');
-              } else {
-                $("#listingModal .spanMessage").css('display', 'none');
-                sendNegative(id, reason, $("#listingModal #status").val());
-                $("#listingModal #message").val("")
-                $("#listingModal #lookfor").val("")
-                $("#listingModal #e_date").val("")
-                $("#listingModal #e_time").val("")
-                $("#listingModal #location").val("")
-                $("#listingModal #reason").val("")
-                $('#listingModal').modal('hide');
-                alert('Successfully sent!');
-              }
+              $("#listingModal .spanMessage").css('display', 'none');
+              sendPositive(id, message, lookfor, start_date, end_date, location, $("#listingModal #status").val());
+              $('#listingModal').modal('hide');
+              $("#quickModal #message").val("")
+              $("#quickModal #lookfor").val("")
+              $("#quickModal #start_date").val("")
+              $("#quickModal #end_date").val("")
+              $("#quickModal #location").val("")
+              $("#quickModal #reason").val("")
+              alert('Successfully sent!');
             }
-          });
+          } else {
+            let id = $("#listingModal #id").val();
+            let reason = $("#listingModal #reason").val()
+            if (!reason) {
+              $("#listingModal .spanMessage").css('display', 'block');
+            } else {
+              $("#listingModal .spanMessage").css('display', 'none');
+              sendNegative(id, reason, $("#listingModal #status").val());
+              $("#listingModal #message").val("")
+              $("#listingModal #lookfor").val("")
+              $("#listingModal #start_date").val("")
+              $("#listingModal #end_date").val("")
+              $("#listingModal #location").val("")
+              $("#listingModal #reason").val("")
+              $('#listingModal').modal('hide');
+              alert('Successfully sent!');
+            }
+          }
+        });
 
-          $("#quickModal").on('click', '#updateQuick', function() {
-            if ($("#quickModal #status").val() == 2 || $("#quickModal #status").val() == 5) {
-              let id = $("#quickModal #id").val();
-              let message = $("#quickModal #message").val()
-              let lookfor = $("#quickModal #lookfor").val()
-              let e_date = $("#quickModal #e_date").val()
-              let e_time = $("#quickModal #e_time").val()
-              let location = $("#quickModal #location").val()
-              if (!message || !lookfor || !e_date || !e_time || !location) {
-                $("#quickModal .spanMessage").css('display', 'block');
-              } else {
-                $("#quickModal .spanMessage").css('display', 'none');
-                sendPositive(id, message, lookfor, e_date, e_time, location, $("#quickModal #status").val());
-                $("#quickModal #message").val("")
-                $("#quickModal #lookfor").val("")
-                $("#quickModal #e_date").val("")
-                $("#quickModal #e_time").val("")
-                $("#quickModal #location").val("")
-                $("#quickModal #reason").val("")
-                $('#quickModal').modal('hide');
-                alert('Successfully sent!');
-              }
+        $("#quickModal").on('click', '#updateQuick', function() {
+          if ($("#quickModal #status").val() == 2 || $("#quickModal #status").val() == 5) {
+            let id = $("#quickModal #id").val();
+            let message = $("#quickModal #message").val()
+            let lookfor = $("#quickModal #lookfor").val()
+            let start_date = $("#quickModal #start_date").val()
+            let end_date = $("#quickModal #end_date").val()
+            let location = $("#quickModal #location").val()
+            if (!message || !lookfor || !start_date || !end_date || !location) {
+              $("#quickModal .spanMessage").css('display', 'block');
             } else {
-              let id = $("#quickModal #id").val();
-              let reason = $("#quickModal #reason").val()
-              if (!reason) {
-                $("#quickModal .spanMessage").css('display', 'block');
-              } else {
-                $("#quickModal .spanMessage").css('display', 'none');
-                sendNegative(id, reason, $("#quickModal #status").val());
-                $("#quickModal #message").val("")
-                $("#quickModal #lookfor").val("")
-                $("#quickModal #e_date").val("")
-                $("#quickModal #e_time").val("")
-                $("#quickModal #location").val("")
-                $("#quickModal #reason").val("")
-                $('#quickModal').modal('hide');
-                alert('Successfully sent!');
-              }
+              $("#quickModal .spanMessage").css('display', 'none');
+              sendPositive(id, message, lookfor, start_date, end_date, location, $("#quickModal #status").val());
+              $("#quickModal #message").val("")
+              $("#quickModal #lookfor").val("")
+              $("#quickModal #start_date").val("")
+              $("#quickModal #end_date").val("")
+              $("#quickModal #location").val("")
+              $("#quickModal #reason").val("")
+              $('#quickModal').modal('hide');
+              alert('Successfully sent!');
             }
-          });
+          } else {
+            let id = $("#quickModal #id").val();
+            let reason = $("#quickModal #reason").val()
+            if (!reason) {
+              $("#quickModal .spanMessage").css('display', 'block');
+            } else {
+              $("#quickModal .spanMessage").css('display', 'none');
+              sendNegative(id, reason, $("#quickModal #status").val());
+              $("#quickModal #message").val("")
+              $("#quickModal #lookfor").val("")
+              $("#quickModal #start_date").val("")
+              $("#quickModal #end_date").val("")
+              $("#quickModal #location").val("")
+              $("#quickModal #reason").val("")
+              $('#quickModal').modal('hide');
+              alert('Successfully sent!');
+            }
+          }
+        });
+
       });
 
       $(document).ready(function() {
@@ -620,7 +655,12 @@
         });
       }
 
-      function sendPositive(id, message, lookfor, e_date, e_time, location, status) {
+      function sendPositive(id, message, lookfor, start_date, end_date, location, status) {
+        let color = '#CD5C5C';
+        if (status == 2)
+          color = '#3498DB';
+        else if (status == 5)
+          color = '#2ECC71';
         $.ajax({
           url: `/send/positive`,
           type: 'POST',
@@ -631,16 +671,29 @@
             id : id,
             message: message,
             lookfor: lookfor,
-            e_date: e_date,
-            e_time: e_time,
+            start_date: start_date,
+            end_date: end_date,
             location: location,
-            status: status
+            status: status,
+            color: color
           },
           success: function(data) {
             return data;
           }
         });
       }
+
+      function viewAttach(data) {
+        // let jsonData = JSON.parse(data);
+        let image = `/images/${data.valid_id}`;
+        let resume = `/images/${data.resume}`;
+        $("#viewAttch").modal('show');
+        $("#viewAttch #valid_id").attr('src', image);
+        $("#viewAttch #resume").attr('href', resume);
+        $("#viewAttch #labelRes").text(data.resume);
+        
+      }
+
     </script>
    
   </body>

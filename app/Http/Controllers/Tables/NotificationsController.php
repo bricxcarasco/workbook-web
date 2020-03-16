@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tables;
 
 use App\Application;
+use App\CalendarEvent;
 use App\Hiring;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -71,27 +72,39 @@ class NotificationsController extends Controller
         $id = $request->id;
         $message2 = $request->message;
         $lookfor = $request->lookfor;
-        $e_date = $request->e_date;
-        $e_time = $request->e_time;
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
         $location = $request->location;
         $status = $request->status;
+        $color = $request->color;
 
         $application = Application::find($id);
         $seeker = Seeker::where('id', $application->seeker_id)->first();
-        $user = Auth::guard('web')->user()->id;
-        $provider = Provider::where('user_id', $user)->first();
+        $user = Auth::guard('web')->user();
+        $provider = Provider::where('user_id', $user->id)->first();
 
         Hiring::insert([
             'application_id' => $id,
             'provider_id' => $provider->id,
             'seeker_id' => $seeker->id,
-            'interview_date' => $e_date,
-            'interview_time' => $e_time,
+            'interview_start_date' => $start_date,
+            'interview_end_date' => $end_date,
             'interview_location' => $location,
             'contact_person' => $lookfor,
             'message' => $message2,
             'status' => $status
-        ]); 
+        ]);
+
+        CalendarEvent::insert([
+            'user_id' => $user->id,
+            'target_id' => $seeker->user_id,
+            'from_user' => 2,
+            'to_user' => 3,
+            'title' => $message2,
+            'start' => $start_date,
+            'end' => $end_date,
+            'color' => $color
+        ]);
 
         Application::where('id', $id)->update(['status' => $status]);
 
@@ -101,8 +114,8 @@ class NotificationsController extends Controller
         $data = array(
             'name' => $seeker->full_name,
             'message2' => $message2,
-            'date' => $e_date,
-            'time' => $e_time,
+            'date' => $start_date,
+            'time' => $end_date,
             'location' => $location,
             'provider' => $provider->business_name
         );

@@ -51,6 +51,12 @@ class QuickListingsController extends Controller
             $request->merge(['resume' => $imageName]);
         }
 
+        if (!is_null($request->identification)) {
+            $imageNameID = time().'.'.request()->identification->getClientOriginalExtension();
+            request()->identification->move(public_path('images'), $imageNameID);
+            $request->merge(['valid_id' => $imageNameID]);
+        }
+
         $user_id = Auth::guard('web')->user()->id;
         $id = Seeker::where('user_id', $user_id)->first();
         $quick_id = $request->quick_id;
@@ -63,6 +69,7 @@ class QuickListingsController extends Controller
                 'type' => 2,
                 'event_date' => $request->event_date,
                 'resume' => $request->resume,
+                'valid_id' => $request->valid_id,
                 'message' => $request->message,
                 'status' => 1,
             ]);
