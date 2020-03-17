@@ -19,4 +19,5 @@ class RegularListing extends Model
     {
         return $this->created_at->diffForHumans();
     }
+
 }

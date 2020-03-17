@@ -43,48 +43,53 @@
       <div class="container-fluid">
         
         <div class="row">
-          <!-- left column -->
-          <div class="col-md-6">
-
-            <div class="card card-primary">
-
-              <div class="card-header">
-                <h3 class="card-title">
-                  <i class="fas fa-chart-pie mr-1"></i>
-                  Recent Listings
-                </h3>
-                <div class="card-tools">
-                  <ul class="nav nav-pills ml-auto">
-                    <li class="nav-item">
-                      <a class="nav-link active" href="#employment-chart" data-toggle="tab">Area</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
-                    </li>
-                  </ul>
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-header border-0">
+                <div class="d-flex justify-content-between">
+                  <h3 class="card-title">Recent Listings Line Chart</h3>
                 </div>
               </div>
               <div class="card-body">
-                <div class="tab-content p-0">
-                  <div class="chart tab-pane active" id="employment-chart"
-                        style="position: relative; height: 300px;">
-                      <canvas id="employment-chart-canvas" height="300" style="height: 300px;"></canvas>                         
-                    </div>
-                  <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
-                    <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>                         
-                  </div>  
+
+                <div class="position-relative mb-4">
+                  <canvas id="visitors-chart" height="300"></canvas>
                 </div>
+
               </div>
             </div>
+            <!-- /.card -->
 
           </div>
-          <!--/.col (left) -->
+          <!-- /.col-md-6 -->
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-header border-0">
+                <div class="d-flex justify-content-between">
+                  <h3 class="card-title">Recent Listings Bar Graph</h3>
+                </div>
+              </div>
+              <div class="card-body">
+
+                <div class="position-relative mb-4">
+                  <canvas id="sales-chart" height="300"></canvas>
+                </div>
+
+              </div>
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col-md-6 -->
+        </div>
+        <!-- /.row -->
+
+        <div class="row">
           <!-- right column -->
-          <div class="col-md-6">
+          <div class="col-md-12">
             <!-- general form elements disabled -->
             <div class="card card-warning">
               <div class="card-header">
-                <h3 class="card-title">Application List</h3>
+                <h3 class="card-title">Recent Listings</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -92,56 +97,31 @@
                 <table id="employment" class="table table-striped table-hover" style="width:100%">
                   <thead>
                     <tr>
-                      <th>Seeker</th>
-                      <th>Provider</th>
-                      <th>Job Type</th>
-                      <th>Date</th>
-                      <th>Status</th>
+                      <th>ID</th>
+                      <th>Category</th>
+                      <th>Description</th>
+                      <th>Created At</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach ($employments as $employment)
+                    @foreach ($category_list as $category)
                     <tr>
-                      <td>{{ $employment->full_name }}</td>  
-                      <td>{{ $employment->business_name }}</td>  
-                      <td>
-                        @if ($employment->type == 1)
-                        <span class="badge badge-pill badge-info">Regular Job</span>
-                        @else
-                        <span class="badge badge-pill badge-warning">Request Job</span>
-                        @endif
-                      </td>  
-                      <td>{{ $employment->event_date }}</td>  
-                      <td>
-                        @if ($employment->status == 1)
-                        <span class="badge badge-pill badge-secondary">On Process</span>
-                        @elseif ($employment->status == 2)
-                        <span class="badge badge-pill badge-warning">Interview</span>
-                        @elseif ($employment->status == 3)
-                        <span class="badge badge-pill badge-primary">Pending</span>
-                        @elseif ($employment->status == 4)
-                        <span class="badge badge-pill badge-info">Cancelled</span>
-                        @elseif ($employment->status == 5)
-                        <span class="badge badge-pill badge-success">Hired</span>
-                        @elseif ($employment->status == 6)
-                        <span class="badge badge-pill badge-danger">Failed</span>
-                        @else
-                        <span class="badge badge-pill badge-dark">Other</span>
-                        @endif  
-                      </td>
-                      <td><button id="{{ $employment }}" class="viewMore">View More</button></td>  
+                      <td>{{ $category->id }}</td>
+                      <td>{{ $category->title }}</td>
+                      <td>{{ $category->description }}</td>
+                      <td>{{ $category->created_at }}</td>
+                      <td><button id="{{ $category->id }}" class="btn btn-info viewMore">View More</button></td>
                     </tr>
                     @endforeach
                   </tbody>
                   <tfoot>
                       <tr>
-                        <th>Seeker</th>
-                        <th>Provider</th>
-                        <th>Job</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                        <th>Action</th>
+                        <th>ID</th>
+                      <th>Category</th>
+                      <th>Description</th>
+                      <th>Created At</th>
+                      <th>Action</th>
                       </tr>
                   </tfoot>
                 </table>    
@@ -163,213 +143,30 @@
 
 
   <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Application Information</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Job Information</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body" style="padding: 0rem;">
           
-          <table class="table table-striped">
+          <table class="table table-striped" id="tabView">
+            <thead>
+              <tr>
+                <th scope="col">Provider</th>
+                <th scope="col">Title</th>
+                <th scope="col">Details</th>
+                <th scope="col">Location</th>
+                <th scope="col">Event Date</th>
+              </tr>
+            </thead>
             <tbody>
-               <tr>
-                  <td colspan="1">
-                     <form class="well form-horizontal">
-                        <fieldset>
 
-                          <label>Seeker Information</label>
-
-                          <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-user" aria-hidden="true"></i></span>
-                            </div>
-                            <input type="text" class="form-control" id="full_name" disabled>
-                          </div>
-
-                          <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-birthday-cake" aria-hidden="true"></i></span>
-                            </div>
-                            <input type="text" class="form-control" id="birth_date" disabled>
-                          </div>
-
-                          <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-mercury" aria-hidden="true"></i></span>
-                            </div>
-                            <input type="text" class="form-control" id="gender" disabled>
-                          </div>
-
-                          <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-adjust" aria-hidden="true"></i></span>
-                            </div>
-                            <input type="text" class="form-control" id="civil_status" disabled>
-                          </div>
-
-                          <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-address-book" aria-hidden="true"></i></span>
-                            </div>
-                            <input type="text" class="form-control" id="address" disabled>
-                          </div>
-
-                          <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-phone" aria-hidden="true"></i></span>
-                            </div>
-                            <input type="text" class="form-control" id="telephone_number" disabled>
-                          </div>
-
-                          <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-mobile" aria-hidden="true"></i></span>
-                            </div>
-                            <input type="text" class="form-control" id="mobile_number" disabled>
-                          </div>
-
-                          <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-envelope" aria-hidden="true"></i></span>
-                            </div>
-                            <input type="text" class="form-control" id="email_address" disabled>
-                          </div>
-
-                          <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-graduation-cap" aria-hidden="true"></i></span>
-                            </div>
-                            <input type="text" class="form-control" id="high_school" disabled>
-                          </div>
-
-                          <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-                            </div>
-                            <input type="text" class="form-control" id="high_school_year" disabled>
-                          </div>
-
-                          <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-graduation-cap" aria-hidden="true"></i></span>
-                            </div>
-                            <input type="text" class="form-control" id="college" disabled>
-                          </div>
-
-                          <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-                            </div>
-                            <input type="text" class="form-control" id="college_year" disabled>
-                          </div>
-
-                        </fieldset>
-                     </form>
-                  </td>
-                  <td colspan="1">
-                     <form class="well form-horizontal">
-                        <fieldset>
-
-                          <label>Provider Information</label>
-
-                          <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-briefcase" aria-hidden="true"></i></span>
-                            </div>
-                            <input type="text" class="form-control" id="business_name" disabled>
-                          </div>
-
-                          <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-building" aria-hidden="true"></i></span>
-                            </div>
-                            <input type="text" class="form-control" id="business_type" disabled>
-                          </div>
-
-                          <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-envelope" aria-hidden="true"></i></span>
-                            </div>
-                            <input type="text" class="form-control" id="mailing_address" disabled>
-                          </div>
-
-                          <label>Job Information</label>
-
-                          <div id="regular" style="display:none;">
-
-                            <div class="input-group input-group-sm mb-3">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
-                              </div>
-                              <input type="text" class="form-control" id="title" disabled>
-                            </div>
-
-                            <div class="input-group input-group-sm mb-3">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-info" aria-hidden="true"></i></span>
-                              </div>
-                              <input type="text" class="form-control" id="details" disabled>
-                            </div>
-
-                            <div class="input-group input-group-sm mb-3">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-credit-card" aria-hidden="true"></i></span>
-                              </div>
-                              <input type="text" class="form-control" id="offer" disabled>
-                            </div>
-
-                            <div class="input-group input-group-sm mb-3">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-briefcase" aria-hidden="true"></i></span>
-                              </div>
-                              <input type="text" class="form-control" id="experience" disabled>
-                            </div>
-
-                            <div class="input-group input-group-sm mb-3">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
-                              </div>
-                              <input type="text" class="form-control" id="location" disabled>
-                            </div>
-
-                          </div>
-
-                          <div id="request" style="display:none;">
-
-                            <div class="input-group input-group-sm mb-3">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
-                              </div>
-                              <input type="text" class="form-control" id="tag" disabled>
-                            </div>
-
-                            <div class="input-group input-group-sm mb-3">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
-                              </div>
-                              <input type="text" class="form-control" id="request_location" disabled>
-                            </div>
-
-                            <div class="input-group input-group-sm mb-3">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-info" aria-hidden="true"></i></span>
-                              </div>
-                              <input type="text" class="form-control" id="request_request" disabled>
-                            </div>
-
-                          </div>
-
-                            
-
-                        </fieldset>
-                     </form>
-                  </td>
-               </tr>
             </tbody>
-         </table>
+          </table>
 
         </div>
         <div class="modal-footer">
@@ -395,6 +192,7 @@
 </div>
 <!-- ./wrapper -->
 
+
   <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
   <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('plugins/datatables/jquery.dataTables.js') }}"></script>
@@ -403,78 +201,131 @@
   <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
 
   <script type="text/javascript">
+      $(function () {
+        'use strict'
 
-    var salesChartCanvas = document.getElementById('employment-chart-canvas').getContext('2d');
-    var pieChartCanvas = $('#sales-chart-canvas').get(0).getContext('2d')
-    
-    var salesChartData = {
-      labels  : ['On Process', 'Interview', 'Pending', 'Cancelled', 'Hired', 'Failed', 'Other'],
-      datasets: [
-        {
-          label               : 'Employee Rate',
-          backgroundColor     : 'rgba(60,141,188,0.9)',
-          borderColor         : 'rgba(60,141,188,0.8)',
-          pointRadius          : false,
-          pointColor          : '#3b8bba',
-          pointStrokeColor    : 'rgba(60,141,188,1)',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(60,141,188,1)',
-          data                : {!! json_encode($total_counts) !!}
-        }
-      ]
-    }
-    
-    var pieData = {
-      labels: ['On Process', 'Interview', 'Pending', 'Cancelled', 'Hired', 'Failed', 'Other'],
-      datasets: [
-        {
-          data: {!! json_encode($total_counts) !!},
-          backgroundColor : ['#007bff', '#6f42c1', '#e83e8c', '#fd7e14', '#ffc107', '#28a745','#17a2b8'],
-        }
-      ]
-    }
-
-
-    var pieOptions = {
-      legend: {
-        display: true
-      },
-      maintainAspectRatio : false,
-      responsive : true,
-    }
-
-    var salesChartOptions = {
-      maintainAspectRatio : false,
-      responsive : true,
-      legend: {
-        display: true
-      },
-      scales: {
-        xAxes: [{
-          gridLines : {
-            display : true,
+          var ticksStyle = {
+            fontColor: '#495057',
+            fontStyle: 'bold'
           }
-        }],
-        yAxes: [{
-          gridLines : {
-            display : true,
-          }
-        }]
-      }
-    }
 
-    var salesChart = new Chart(salesChartCanvas, { 
-        type: 'line', 
-        data: salesChartData, 
-        options: salesChartOptions
-      }
-    )
+          var mode      = 'index'
+          var intersect = true
 
-    var pieChart = new Chart(pieChartCanvas, {
-      type: 'doughnut',
-      data: pieData,
-      options: pieOptions      
-    });
+          var $salesChart = $('#sales-chart')
+          var salesChart  = new Chart($salesChart, {
+            type   : 'bar',
+            data   : {
+              labels  : {!! json_encode($categories) !!},
+              datasets: [
+                {
+                  backgroundColor: '#e83e8c',
+                  borderColor    : '#bb0558',
+                  data           : {!! json_encode($counts) !!}
+                }
+              ]
+            },
+            options: {
+              maintainAspectRatio: false,
+              tooltips           : {
+                mode     : mode,
+                intersect: intersect
+              },
+              hover              : {
+                mode     : mode,
+                intersect: intersect
+              },
+              legend             : {
+                display: false
+              },
+              scales             : {
+                yAxes: [{
+                  // display: false,
+                  gridLines: {
+                    display      : true,
+                    lineWidth    : '4px',
+                    color        : 'rgba(0, 0, 0, .2)',
+                    zeroLineColor: 'transparent'
+                  },
+                  ticks    : $.extend({
+                    beginAtZero: true,
+                    suggestedMax: {!! json_encode($total) !!},
+                    // Include a dollar sign in the ticks
+                    callback: function (value, index, values) {
+                      if (value >= 1000) {
+                        value /= 1000
+                        value += 'k'
+                      }
+                      return '$' + value
+                    }
+                  }, ticksStyle)
+                }],
+                xAxes: [{
+                  display  : true,
+                  gridLines: {
+                    display: false
+                  },
+                  ticks    : ticksStyle
+                }]
+              }
+            }
+          })
+
+          var $visitorsChart = $('#visitors-chart')
+          var visitorsChart  = new Chart($visitorsChart, {
+            data   : {
+              labels  : {!! json_encode($categories) !!},
+              datasets: [{
+                type                : 'line',
+                data                : {!! json_encode($counts) !!},
+                backgroundColor     : 'transparent',
+                borderColor         : '#007bff',
+                pointBorderColor    : '#007bff',
+                pointBackgroundColor: '#007bff',
+                fill                : false
+                // pointHoverBackgroundColor: '#007bff',
+                // pointHoverBorderColor    : '#007bff'
+              }]
+            },
+            options: {
+              maintainAspectRatio: false,
+              tooltips           : {
+                mode     : mode,
+                intersect: intersect
+              },
+              hover              : {
+                mode     : mode,
+                intersect: intersect
+              },
+              legend             : {
+                display: false
+              },
+              scales             : {
+                yAxes: [{
+                  // display: false,
+                  gridLines: {
+                    display      : true,
+                    lineWidth    : '4px',
+                    color        : 'rgba(0, 0, 0, .2)',
+                    zeroLineColor: 'transparent'
+                  },
+                  ticks    : $.extend({
+                    beginAtZero : true,
+                    suggestedMax: {!! json_encode($total) !!}
+                  }, ticksStyle)
+                }],
+                xAxes: [{
+                  display  : true,
+                  gridLines: {
+                    display: false
+                  },
+                  ticks    : ticksStyle
+                }]
+              }
+            }
+          })
+        })
+
 
   </script>
 
@@ -483,80 +334,49 @@
       $('#employment').DataTable();
 
       $("#employment").on('click', '.viewMore', function() {
-        let employment = $(this).attr('id');
+        let id = $(this).attr('id');
         $.ajax({
-          url: `/application/view/${employment}`,
+          url: `/admin/recent-listings/${id}`,
           type: 'GET',
           headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },
           success: function(data) {
             console.log(data);
-            $("#viewModal").modal('show');
-            $("#viewModal #full_name").val(data.full_name);
-            $("#viewModal #birth_date").val(data.birth_date);
-            let sex = '';
-            if (data.gender == 1) {
-              sex = 'Male';
+            if(data === undefined || data.length == 0) {
+              alert('Empty records.');
             } else {
-              sex = 'Female';
+              $("#viewModal").modal('show');
+              $("#tabView tbody").html("");
+              $.each(data, function(i, e) {
+                let str = strip_html_tags(e.details);
+                if(str.length > 10) 
+                  str = str.substring(0,10);
+                  var $tr = $("<tr>").append(
+                      $("<td>").text(e.user),
+                      $("<td>").text(e.title),
+                      $("<td>").text(str+'...'),
+                      $("<td>").text(e.location),
+                        $("<td>").text(e.created_date)
+                  );
+                  $tr.appendTo("#tabView tbody");
+              });
             }
-            $("#viewModal #gender").val(sex);
-            $("#viewModal #civil_status").val(data.civil_status);
-            $("#viewModal #address").val(data.address);
-            $("#viewModal #telephone_number").val(data.telephone_number);
-            $("#viewModal #mobile_number").val(data.mobile_number);
-            $("#viewModal #email_address").val(data.email_address);
-            $("#viewModal #high_school").val(data.high_school);
-            $("#viewModal #high_school_year").val(data.high_school_year);
-            $("#viewModal #college").val(data.college);
-            $("#viewModal #college_year").val(data.college_year);
-
-            $("#viewModal #business_name").val(data.business_name);
-            $("#viewModal #business_type").val(data.business_type);
-            $("#viewModal #mailing_address").val(data.mailing_address);
-
-            if (data.type == 1) {
-
-              $("#viewModal #regular").css('display', 'block');
-              $("#viewModal #request").css('display', 'none');
-            } else {
-
-              $("#viewModal #regular").css('display', 'none');
-              $("#viewModal #request").css('display', 'block');
-            }
-
-
-            $("#viewModal #title").val(data.title);
-            $("#viewModal #details").val(data.details);
-            $("#viewModal #offer").val('Php ' + data.min_offer + ' - Php ' + data.max_offer);
-
-            let exp = '';
-            if (data.experience == 1) {
-              let exp = 'No experience';
-            } else if (data.experience == 2) {
-              let exp = 'Fresh Graduate';
-            }  else if (data.experience == 3) {
-              let exp = '1 year';
-            }  else if (data.experience == 4) {
-              let exp = '2 to 3 years';
-            }  else if (data.experience == 5) {
-              let exp = '3 to 5 years';
-            }  else if (data.experience == 6) {
-              let exp = '5 to 10 years';
-            } else if (data.experience == 7) {
-              let exp = '10 years above';
-            }
-
-            $("#viewModal #location").val(data.barangay + ' ' + data.municipality);
-
-            $("#viewModal #request_location").val(data.location);
-            $("#viewModal #request_request").val(data.request);
           }
         });
       });
     });
+    function strip_html_tags(str)
+    {
+       if ((str===null) || (str===''))
+           return false;
+      else
+       str = str.toString();
+      return str.replace(/<[^>]*>/g, '');
+    }
   </script>
+
+
 
 </body>
 </html>

@@ -85,6 +85,7 @@ Route::middleware('admin')->group(function(){
         Route::get('/manage-listings', 'AdminPagesController@manageListings');
         Route::get('/my-events', 'AdminPagesController@myEvents');
         Route::get('/recent-listings', 'AdminPagesController@recentListings');
+        Route::get('/recent-listings/{id}', 'AdminPagesController@getListingSingle');
         Route::get('/user-activity', 'AdminPagesController@userActivity');
         Route::get('/website-administrators', 'AdminPagesController@websiteAdministrators');
     });    

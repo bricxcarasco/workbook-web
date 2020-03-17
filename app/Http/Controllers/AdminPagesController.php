@@ -14,6 +14,8 @@ use App\UserLog;
 use App\WorkClass;
 use Carbon\Carbon;
 
+use function GuzzleHttp\json_encode;
+
 class AdminPagesController extends Controller
 {
     public function employmentRate() {
@@ -77,7 +79,18 @@ class AdminPagesController extends Controller
     }
 
     public function recentListings() {
-        return view('admin.recent-listings');
+        $category_list = WorkClass::where('is_delete', 0)->orderBy('id', 'desc')->get();
+        $categories = WorkClass::where('is_delete', 0)->orderBy('id', 'desc')->pluck('title');
+        $ids = WorkClass::where('is_delete', 0)->orderBy('id', 'desc')->pluck('id');
+        
+        $counts = [];
+        foreach ($ids as $id) {
+            array_push($counts, (QuickListing::where('tag', $id)->count() + RegularListing::where('tags', $id)->count()));
+        }
+
+        $total = round(array_sum($counts), -1);
+
+        return view('admin.recent-listings', compact('category_list', 'categories', 'counts', 'total'));
     }
 
     public function userActivity() {
@@ -116,5 +129,29 @@ class AdminPagesController extends Controller
     public function websiteAdministrators() {
         $administrators = User::where('type', 1)->where('is_delete', 0)->get();
         return view('admin.website-administrators', compact('administrators'));
+    }
+
+    public function getListingSingle(Request $request, $id)
+    {
+        $app_listings = RegularListing::where('tags', $id)
+            ->leftJoin('users', 'regular_listings.user_id', '=', 'users.id')
+            ->select('users.name AS user', 'regular_listings.event_date', 'regular_listings.title', 'regular_listings.details', 'regular_listings.municipality AS location', 'regular_listings.created_at')
+            ->get();
+
+        $app_quicks = QuickListing::where('tag', $id)
+            ->leftJoin('users', 'quick_listings.user_id', '=', 'users.id')
+            ->select('users.name AS user', 'quick_listings.event_date', 'quick_listings.title', 'quick_listings.request AS details', 'quick_listings.location', 'quick_listings.created_at')
+            ->get();
+
+        $a1 = json_encode($app_listings);
+        $a2 = json_encode($app_quicks);
+
+        $j1 = collect(json_decode($a1));
+        $j2 = collect(json_decode($a2));
+
+        $rawEmployments = collect($j1->merge($j2))->sortBy('event_date');
+        $jobs = $rawEmployments->values()->all();
+
+        return $jobs;
     }
 }

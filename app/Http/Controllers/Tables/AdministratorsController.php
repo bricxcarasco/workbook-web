@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tables;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use Illuminate\Support\Facades\Hash;
 
 class AdministratorsController extends Controller
 {
@@ -14,7 +15,7 @@ class AdministratorsController extends Controller
             User::insert([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => $request->password,
+                'password' => Hash::make($request->password),
                 'type' => 1
             ]);
             return redirect()->back()->with('message', 'Administrator has been added!');
