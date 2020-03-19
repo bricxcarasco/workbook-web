@@ -21,8 +21,11 @@
             <a href="{{ url('/provider/my-schedule') }}" class="nav-link">My Schedule</a>
         </li>
 
-
         <li class="d-lg-none"><a href="{{ url('/provider/post-job') }}"><span class="mr-2">+</span> Post a Job</a></li>
-        <li class="d-lg-none"><a href="{{ url('/provider') }}">Log Out</a></li>
+        <li class="d-lg-none"><a onclick="event.preventDefault(); document.getElementById('logout-form2').submit();" href="{{ route('logout') }}">Log Out</a></li>
     </ul>
+
+    <form id="logout-form2" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
 </nav>

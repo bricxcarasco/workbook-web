@@ -17,6 +17,12 @@
         <div class="row align-items-center">
           <div class="site-logo col-6"><a href="{{ url('/') }}">WorkBook</a></div>
           
+          <nav class="mx-auto site-navigation">
+            <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
+              <li class="d-lg-none"><a href="{{ url('/login') }}"><span class="mr-2">+</span> Log In</a></li>
+            </ul>
+          </nav>
+
           <div class="right-cta-menu text-right d-flex aligin-items-center col-6">
             <div class="ml-auto">
               <a href="{{ url('/login') }}" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-lock_outline"></span>Log In</a>

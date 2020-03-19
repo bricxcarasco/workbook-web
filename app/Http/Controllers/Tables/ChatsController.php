@@ -16,6 +16,8 @@ class ChatsController extends Controller
         $myId = Auth::guard('web')->user()->id;
         $me = Chat::where('sender_id', $myId)->where('receiver_id', $id)->get();
         $you = Chat::where('sender_id', $id)->where('receiver_id', $myId)->get();
+
+        Chat::where('sender_id', $id)->orWhere('receiver_id', $id)->update(['status' => 1]);
         
         $he = User::find($id);
 

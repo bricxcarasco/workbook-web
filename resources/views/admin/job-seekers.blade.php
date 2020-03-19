@@ -17,7 +17,7 @@
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
-  @include('admin.parts.navbar')
+  @include('admin.parts.navbar', ['chats' => $chat_list, 'chat_count' => $chat_counts])
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -324,7 +324,7 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                   <input type="hidden" id="receiverId">
-                  <div class="direct-chat-messages" style="padding: 30px !important;">
+                  <div id="chatMessagesDiv" class="direct-chat-messages" style="padding: 30px !important;">
 
                   </div>
                 </div>
@@ -497,7 +497,7 @@
               if (data == 'Success') {
                 $("#chatModal #message").val("");
                 getMessages(receiverId);
-                $('.direct-chat-messages').scrollTop($('.direct-chat-messages').height());
+                
               }
             }
           });
@@ -577,11 +577,13 @@
             }
           });
           $("#chatModal .direct-chat-messages").append(divApp);
-          setTimeout(function() {
-            $('.direct-chat-messages').scrollTop($('.direct-chat-messages').height());
-          }, 200);
+          
         }
       });
+      setTimeout(function() {
+                  let element = document.getElementById("chatMessagesDiv");
+                  element.scrollTop = element.scrollHeight;
+                }, 200);
     }
 
     // function edit(id) {

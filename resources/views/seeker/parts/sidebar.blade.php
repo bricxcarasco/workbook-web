@@ -12,6 +12,10 @@
                 <li><a href="{{ url('/seeker/my-calendar') }}">My Calendar</a></li>
             </ul>
         </li>
-        <li class="d-lg-none"><a href="{{ url('/seeker') }}">Log Out</a></li>
+        <li class="d-lg-none"><a onclick="event.preventDefault(); document.getElementById('logout-form2').submit();" href="{{ route('logout') }}">Log Out</a></li>
     </ul>
+
+    <form id="logout-form2" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
 </nav>

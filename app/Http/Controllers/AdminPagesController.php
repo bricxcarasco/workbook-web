@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Announcement;
 use App\Application;
+use App\Chat;
 use App\Provider;
 use App\QuickListing;
 use App\RegularListing;
@@ -13,12 +14,35 @@ use App\User;
 use App\UserLog;
 use App\WorkClass;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use stdClass;
 
 use function GuzzleHttp\json_encode;
 
 class AdminPagesController extends Controller
 {
     public function employmentRate() {
+        $user = Auth::guard('web')->user();
+        $usersExceptMe = User::where('id', '<>', $user->id)->get();
+        $chat_counts = Chat::where('receiver_id', '<>' ,$user->id)->where('status', 0)->count();
+
+        $chat_list = [];
+        foreach ($usersExceptMe as $other) {
+            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first()['id'];
+            if (!is_null($chatCheck)) {
+                $object = new stdClass;
+                $object->id = $other->id;
+                $object->name = $other->name;
+                $object->counts = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->where('status', 0)->count();
+                $chatDesc = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first();
+                $object->priority = $chatDesc->id;
+                $object->message = (strlen($chatDesc->message) > 13) ? substr($chatDesc->message,0,10).'...' : $chatDesc->message;
+                $object->status = $chatDesc->status;
+                $object->created_at = Carbon::parse($chatDesc->created_at)->format('Y-m-d H:i');
+                $object->created_date = $chatDesc->created_date;
+                array_push($chat_list, $object);
+            }
+        }
 
         $app_listings = Application::where('applications.type', 1)
             ->leftJoin('regular_listings', 'applications.job_id', '=', 'regular_listings.id')
@@ -51,34 +75,160 @@ class AdminPagesController extends Controller
         $rawEmployments = collect($app_listings->merge($app_quicks))->sortBy('event_date');
         $employments = $rawEmployments->values()->all();
 
-        return view('admin.employment-rate', compact('employments','total_counts'));
+        return view('admin.employment-rate', compact('chat_counts', 'chat_list', 'employments','total_counts'));
     }
 
     public function jobProviders() {
-        return view('admin.job-providers');
+        $user = Auth::guard('web')->user();
+        $usersExceptMe = User::where('id', '<>', $user->id)->get();
+        $chat_counts = Chat::where('receiver_id', '<>' ,$user->id)->where('status', 0)->count();
+
+        $chat_list = [];
+        foreach ($usersExceptMe as $other) {
+            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first()['id'];
+            if (!is_null($chatCheck)) {
+                $object = new stdClass;
+                $object->id = $other->id;
+                $object->name = $other->name;
+                $object->counts = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->where('status', 0)->count();
+                $chatDesc = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first();
+                $object->priority = $chatDesc->id;
+                $object->message = (strlen($chatDesc->message) > 13) ? substr($chatDesc->message,0,10).'...' : $chatDesc->message;
+                $object->status = $chatDesc->status;
+                $object->created_at = Carbon::parse($chatDesc->created_at)->format('Y-m-d H:i');
+                $object->created_date = $chatDesc->created_date;
+                array_push($chat_list, $object);
+            }
+        }
+        return view('admin.job-providers', compact('chat_counts', 'chat_list'));
     }
 
     public function jobSeekers() {
+        $user = Auth::guard('web')->user();
+        $usersExceptMe = User::where('id', '<>', $user->id)->get();
+        $chat_counts = Chat::where('receiver_id', '<>' ,$user->id)->where('status', 0)->count();
+
+        $chat_list = [];
+        foreach ($usersExceptMe as $other) {
+            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first()['id'];
+            if (!is_null($chatCheck)) {
+                $object = new stdClass;
+                $object->id = $other->id;
+                $object->name = $other->name;
+                $object->counts = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->where('status', 0)->count();
+                $chatDesc = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first();
+                $object->priority = $chatDesc->id;
+                $object->message = (strlen($chatDesc->message) > 13) ? substr($chatDesc->message,0,10).'...' : $chatDesc->message;
+                $object->status = $chatDesc->status;
+                $object->created_at = Carbon::parse($chatDesc->created_at)->format('Y-m-d H:i');
+                $object->created_date = $chatDesc->created_date;
+                array_push($chat_list, $object);
+            }
+        }
         $seekers = Seeker::get();
         $test = "sds";
-        return view('admin.job-seekers', compact('seekers', 'test'));
+        return view('admin.job-seekers', compact('chat_counts', 'chat_list', 'seekers', 'test'));
     }
 
     public function manageAnnouncements() {
+        $user = Auth::guard('web')->user();
+        $usersExceptMe = User::where('id', '<>', $user->id)->get();
+        $chat_counts = Chat::where('receiver_id', '<>' ,$user->id)->where('status', 0)->count();
+
+        $chat_list = [];
+        foreach ($usersExceptMe as $other) {
+            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first()['id'];
+            if (!is_null($chatCheck)) {
+                $object = new stdClass;
+                $object->id = $other->id;
+                $object->name = $other->name;
+                $object->counts = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->where('status', 0)->count();
+                $chatDesc = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first();
+                $object->priority = $chatDesc->id;
+                $object->message = (strlen($chatDesc->message) > 13) ? substr($chatDesc->message,0,10).'...' : $chatDesc->message;
+                $object->status = $chatDesc->status;
+                $object->created_at = Carbon::parse($chatDesc->created_at)->format('Y-m-d H:i');
+                $object->created_date = $chatDesc->created_date;
+                array_push($chat_list, $object);
+            }
+        }
         $announcements = Announcement::where('is_delete', 0)->get();
-        return view('admin.manage-announcements', compact('announcements'));
+        return view('admin.manage-announcements', compact('chat_counts', 'chat_list', 'announcements'));
     }
 
     public function manageListings() {
+        $user = Auth::guard('web')->user();
+        $usersExceptMe = User::where('id', '<>', $user->id)->get();
+        $chat_counts = Chat::where('receiver_id', '<>' ,$user->id)->where('status', 0)->count();
+
+        $chat_list = [];
+        foreach ($usersExceptMe as $other) {
+            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first()['id'];
+            if (!is_null($chatCheck)) {
+                $object = new stdClass;
+                $object->id = $other->id;
+                $object->name = $other->name;
+                $object->counts = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->where('status', 0)->count();
+                $chatDesc = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first();
+                $object->priority = $chatDesc->id;
+                $object->message = (strlen($chatDesc->message) > 13) ? substr($chatDesc->message,0,10).'...' : $chatDesc->message;
+                $object->status = $chatDesc->status;
+                $object->created_at = Carbon::parse($chatDesc->created_at)->format('Y-m-d H:i');
+                $object->created_date = $chatDesc->created_date;
+                array_push($chat_list, $object);
+            }
+        }
         $work_classes = WorkClass::where('is_delete', 0)->get();
-        return view('admin.manage-listings', compact('work_classes'));
+        return view('admin.manage-listings', compact('chat_counts', 'chat_list', 'work_classes'));
     }
 
     public function myEvents() {
-        return view('admin.my-events');
+        $user = Auth::guard('web')->user();
+        $usersExceptMe = User::where('id', '<>', $user->id)->get();
+        $chat_counts = Chat::where('receiver_id', '<>' ,$user->id)->where('status', 0)->count();
+
+        $chat_list = [];
+        foreach ($usersExceptMe as $other) {
+            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first()['id'];
+            if (!is_null($chatCheck)) {
+                $object = new stdClass;
+                $object->id = $other->id;
+                $object->name = $other->name;
+                $object->counts = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->where('status', 0)->count();
+                $chatDesc = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first();
+                $object->priority = $chatDesc->id;
+                $object->message = (strlen($chatDesc->message) > 13) ? substr($chatDesc->message,0,10).'...' : $chatDesc->message;
+                $object->status = $chatDesc->status;
+                $object->created_at = Carbon::parse($chatDesc->created_at)->format('Y-m-d H:i');
+                $object->created_date = $chatDesc->created_date;
+                array_push($chat_list, $object);
+            }
+        }
+        return view('admin.my-events', compact('chat_counts', 'chat_list'));
     }
 
     public function recentListings() {
+        $user = Auth::guard('web')->user();
+        $usersExceptMe = User::where('id', '<>', $user->id)->get();
+        $chat_counts = Chat::where('receiver_id', '<>' ,$user->id)->where('status', 0)->count();
+
+        $chat_list = [];
+        foreach ($usersExceptMe as $other) {
+            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first()['id'];
+            if (!is_null($chatCheck)) {
+                $object = new stdClass;
+                $object->id = $other->id;
+                $object->name = $other->name;
+                $object->counts = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->where('status', 0)->count();
+                $chatDesc = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first();
+                $object->priority = $chatDesc->id;
+                $object->message = (strlen($chatDesc->message) > 13) ? substr($chatDesc->message,0,10).'...' : $chatDesc->message;
+                $object->status = $chatDesc->status;
+                $object->created_at = Carbon::parse($chatDesc->created_at)->format('Y-m-d H:i');
+                $object->created_date = $chatDesc->created_date;
+                array_push($chat_list, $object);
+            }
+        }
         $category_list = WorkClass::where('is_delete', 0)->orderBy('id', 'desc')->get();
         $categories = WorkClass::where('is_delete', 0)->orderBy('id', 'desc')->pluck('title');
         $ids = WorkClass::where('is_delete', 0)->orderBy('id', 'desc')->pluck('id');
@@ -90,10 +240,31 @@ class AdminPagesController extends Controller
 
         $total = round(array_sum($counts), -1);
 
-        return view('admin.recent-listings', compact('category_list', 'categories', 'counts', 'total'));
+        return view('admin.recent-listings', compact('chat_counts', 'chat_list', 'category_list', 'categories', 'counts', 'total'));
     }
 
     public function userActivity() {
+        $user = Auth::guard('web')->user();
+        $usersExceptMe = User::where('id', '<>', $user->id)->get();
+        $chat_counts = Chat::where('receiver_id', '<>' ,$user->id)->where('status', 0)->count();
+
+        $chat_list = [];
+        foreach ($usersExceptMe as $other) {
+            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first()['id'];
+            if (!is_null($chatCheck)) {
+                $object = new stdClass;
+                $object->id = $other->id;
+                $object->name = $other->name;
+                $object->counts = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->where('status', 0)->count();
+                $chatDesc = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first();
+                $object->priority = $chatDesc->id;
+                $object->message = (strlen($chatDesc->message) > 13) ? substr($chatDesc->message,0,10).'...' : $chatDesc->message;
+                $object->status = $chatDesc->status;
+                $object->created_at = Carbon::parse($chatDesc->created_at)->format('Y-m-d H:i');
+                $object->created_date = $chatDesc->created_date;
+                array_push($chat_list, $object);
+            }
+        }
         $regular = RegularListing::count();
         $quick = QuickListing::count();
         $providers = UserLog::where('type', 2)->count();
@@ -123,12 +294,33 @@ class AdminPagesController extends Controller
 
         $total = array_sum($providers) + array_sum($seekers);
 
-        return view('admin.user-activity', compact('data_count', 'providers', 'seekers', 'all_dates', 'total'));
+        return view('admin.user-activity', compact('chat_counts', 'chat_list', 'data_count', 'providers', 'seekers', 'all_dates', 'total'));
     }
 
     public function websiteAdministrators() {
+        $user = Auth::guard('web')->user();
+        $usersExceptMe = User::where('id', '<>', $user->id)->get();
+        $chat_counts = Chat::where('receiver_id', '<>' ,$user->id)->where('status', 0)->count();
+
+        $chat_list = [];
+        foreach ($usersExceptMe as $other) {
+            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first()['id'];
+            if (!is_null($chatCheck)) {
+                $object = new stdClass;
+                $object->id = $other->id;
+                $object->name = $other->name;
+                $object->counts = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->where('status', 0)->count();
+                $chatDesc = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first();
+                $object->priority = $chatDesc->id;
+                $object->message = (strlen($chatDesc->message) > 13) ? substr($chatDesc->message,0,10).'...' : $chatDesc->message;
+                $object->status = $chatDesc->status;
+                $object->created_at = Carbon::parse($chatDesc->created_at)->format('Y-m-d H:i');
+                $object->created_date = $chatDesc->created_date;
+                array_push($chat_list, $object);
+            }
+        }
         $administrators = User::where('type', 1)->where('is_delete', 0)->get();
-        return view('admin.website-administrators', compact('administrators'));
+        return view('admin.website-administrators', compact('chat_counts', 'chat_list', 'administrators'));
     }
 
     public function getListingSingle(Request $request, $id)

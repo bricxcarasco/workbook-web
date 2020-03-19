@@ -3,7 +3,7 @@
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
-  @include('admin.parts.navbar')
+  @include('admin.parts.navbar', ['chats' => $chat_list, 'chat_count' => $chat_counts])
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">

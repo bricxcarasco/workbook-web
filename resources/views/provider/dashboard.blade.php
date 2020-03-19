@@ -65,7 +65,7 @@
       }
     </style>
 
-    <section class="site-section"  style="padding-top: 2rem;padding-bottom: 2rem;">>
+    <section class="site-section"  style="padding-top: 2rem;padding-bottom: 2rem;">
       <div class="container">
             
         <div class="container mt-5 mb-5">

@@ -1,4 +1,35 @@
-@extends('layouts.site.header')
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Workbook &mdash; JobSite</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="Free-Template.co" />
+    <link rel="shortcut icon" href="ftco-32x32.png">
+    
+    <link rel="stylesheet" href="{{ asset('css/custom-bs.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/jquery.fancybox.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-select.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('fonts/icomoon/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('fonts/line-icons/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/animate.min.css') }}">
+
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}"> 
+  </head>
+  <body id="top">
+
+  <div id="overlayer"></div>
+  <div class="loader">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+    
 
 <div class="site-wrap">
 
@@ -17,6 +48,13 @@
         <div class="row align-items-center">
           <div class="site-logo col-6"><a href="{{ url('/') }}">WorkBook</a></div>
           
+          <nav class="mx-auto site-navigation">
+            <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
+              <li class="d-lg-none"><a href="{{ url('/login') }}"><span class="mr-2">+</span> Log In</a></li>
+              <li class="d-lg-none"><a href="{{ url('/register') }}">Sign Up</a></li>
+            </ul>
+          </nav>
+
           <div class="right-cta-menu text-right d-flex aligin-items-center col-6">
             <div class="ml-auto">
               <a href="{{ url('/login') }}" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-lock_outline"></span>Log In</a>
@@ -399,11 +437,37 @@
 
     </section>
     
-    @extends('layouts.site.footer')
+    <footer class="site-footer">
+      <a href="#top" class="smoothscroll scroll-top">
+        <span class="icon-keyboard_arrow_up"></span>
+      </a>
+    
+        <div class="row text-center">
+          <div class="col-12">
+            <p class="copyright"><small>
+            Copyright &copy;<script>document.write(new Date().getFullYear());</script> WorkBook | All rights reserved
+          </div>
+        </div>
+      </div>
+    </footer>
   
   </div>
 
-  @extends('layouts.site.script')
+  <script src="{{ asset('js/jquery.min.js') }}"></script>
+  <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ asset('js/isotope.pkgd.min.js') }}"></script>
+  <script src="{{ asset('js/stickyfill.min.js') }}"></script>
+  <script src="{{ asset('js/jquery.fancybox.min.js') }}"></script>
+  <script src="{{ asset('js/jquery.easing.1.3.js') }}"></script>
+  
+  <script src="{{ asset('js/jquery.waypoints.min.js') }}"></script>
+  <script src="{{ asset('js/jquery.animateNumber.min.js') }}"></script>
+  <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+  <script src="{{ asset('js/quill.min.js') }}"></script>
+  
+  <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
+  
+  <script src="{{ asset('js/custom.js') }}"></script>
      
   </body>
 </html>
