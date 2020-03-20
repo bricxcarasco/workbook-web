@@ -19,6 +19,7 @@ class AdminDashboardController extends Controller
     public function index()
     {
         $user = Auth::guard('web')->user();
+        $profile = $user;
         $usersExceptMe = User::where('id', '<>', $user->id)->get();
         $chat_counts = Chat::where('receiver_id', '<>' ,$user->id)->where('status', 0)->count();
 
@@ -53,6 +54,6 @@ class AdminDashboardController extends Controller
             'users' => ($seekers + $providers)
         );
 
-        return view('admin.dashboard', compact('data_count', 'chat_list', 'chat_counts'));
+        return view('admin.dashboard', compact('data_count', 'chat_list', 'chat_counts', 'profile'));
     }
 }

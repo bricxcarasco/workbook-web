@@ -23,6 +23,7 @@ class AdminPagesController extends Controller
 {
     public function employmentRate() {
         $user = Auth::guard('web')->user();
+        $profile = $user;
         $usersExceptMe = User::where('id', '<>', $user->id)->get();
         $chat_counts = Chat::where('receiver_id', '<>' ,$user->id)->where('status', 0)->count();
 
@@ -75,11 +76,12 @@ class AdminPagesController extends Controller
         $rawEmployments = collect($app_listings->merge($app_quicks))->sortBy('event_date');
         $employments = $rawEmployments->values()->all();
 
-        return view('admin.employment-rate', compact('chat_counts', 'chat_list', 'employments','total_counts'));
+        return view('admin.employment-rate', compact('profile', 'chat_counts', 'chat_list', 'employments','total_counts'));
     }
 
     public function jobProviders() {
         $user = Auth::guard('web')->user();
+        $profile = $user;
         $usersExceptMe = User::where('id', '<>', $user->id)->get();
         $chat_counts = Chat::where('receiver_id', '<>' ,$user->id)->where('status', 0)->count();
 
@@ -100,11 +102,12 @@ class AdminPagesController extends Controller
                 array_push($chat_list, $object);
             }
         }
-        return view('admin.job-providers', compact('chat_counts', 'chat_list'));
+        return view('admin.job-providers', compact('profile', 'chat_counts', 'chat_list'));
     }
 
     public function jobSeekers() {
         $user = Auth::guard('web')->user();
+        $profile = $user;
         $usersExceptMe = User::where('id', '<>', $user->id)->get();
         $chat_counts = Chat::where('receiver_id', '<>' ,$user->id)->where('status', 0)->count();
 
@@ -127,11 +130,12 @@ class AdminPagesController extends Controller
         }
         $seekers = Seeker::get();
         $test = "sds";
-        return view('admin.job-seekers', compact('chat_counts', 'chat_list', 'seekers', 'test'));
+        return view('admin.job-seekers', compact('profile', 'chat_counts', 'chat_list', 'seekers', 'test'));
     }
 
     public function manageAnnouncements() {
         $user = Auth::guard('web')->user();
+        $profile = $user;
         $usersExceptMe = User::where('id', '<>', $user->id)->get();
         $chat_counts = Chat::where('receiver_id', '<>' ,$user->id)->where('status', 0)->count();
 
@@ -153,11 +157,12 @@ class AdminPagesController extends Controller
             }
         }
         $announcements = Announcement::where('is_delete', 0)->get();
-        return view('admin.manage-announcements', compact('chat_counts', 'chat_list', 'announcements'));
+        return view('admin.manage-announcements', compact('profile', 'chat_counts', 'chat_list', 'announcements'));
     }
 
     public function manageListings() {
         $user = Auth::guard('web')->user();
+        $profile = $user;
         $usersExceptMe = User::where('id', '<>', $user->id)->get();
         $chat_counts = Chat::where('receiver_id', '<>' ,$user->id)->where('status', 0)->count();
 
@@ -179,11 +184,12 @@ class AdminPagesController extends Controller
             }
         }
         $work_classes = WorkClass::where('is_delete', 0)->get();
-        return view('admin.manage-listings', compact('chat_counts', 'chat_list', 'work_classes'));
+        return view('admin.manage-listings', compact('profile', 'chat_counts', 'chat_list', 'work_classes'));
     }
 
     public function myEvents() {
         $user = Auth::guard('web')->user();
+        $profile = $user;
         $usersExceptMe = User::where('id', '<>', $user->id)->get();
         $chat_counts = Chat::where('receiver_id', '<>' ,$user->id)->where('status', 0)->count();
 
@@ -204,11 +210,12 @@ class AdminPagesController extends Controller
                 array_push($chat_list, $object);
             }
         }
-        return view('admin.my-events', compact('chat_counts', 'chat_list'));
+        return view('admin.my-events', compact('profile', 'chat_counts', 'chat_list'));
     }
 
     public function recentListings() {
         $user = Auth::guard('web')->user();
+        $profile = $user;
         $usersExceptMe = User::where('id', '<>', $user->id)->get();
         $chat_counts = Chat::where('receiver_id', '<>' ,$user->id)->where('status', 0)->count();
 
@@ -240,11 +247,12 @@ class AdminPagesController extends Controller
 
         $total = round(array_sum($counts), -1);
 
-        return view('admin.recent-listings', compact('chat_counts', 'chat_list', 'category_list', 'categories', 'counts', 'total'));
+        return view('admin.recent-listings', compact('profile', 'chat_counts', 'chat_list', 'category_list', 'categories', 'counts', 'total'));
     }
 
     public function userActivity() {
         $user = Auth::guard('web')->user();
+        $profile = $user;
         $usersExceptMe = User::where('id', '<>', $user->id)->get();
         $chat_counts = Chat::where('receiver_id', '<>' ,$user->id)->where('status', 0)->count();
 
@@ -294,11 +302,12 @@ class AdminPagesController extends Controller
 
         $total = array_sum($providers) + array_sum($seekers);
 
-        return view('admin.user-activity', compact('chat_counts', 'chat_list', 'data_count', 'providers', 'seekers', 'all_dates', 'total'));
+        return view('admin.user-activity', compact('profile', 'chat_counts', 'chat_list', 'data_count', 'providers', 'seekers', 'all_dates', 'total'));
     }
 
     public function websiteAdministrators() {
         $user = Auth::guard('web')->user();
+        $profile = $user;
         $usersExceptMe = User::where('id', '<>', $user->id)->get();
         $chat_counts = Chat::where('receiver_id', '<>' ,$user->id)->where('status', 0)->count();
 
@@ -320,7 +329,7 @@ class AdminPagesController extends Controller
             }
         }
         $administrators = User::where('type', 1)->where('is_delete', 0)->get();
-        return view('admin.website-administrators', compact('chat_counts', 'chat_list', 'administrators'));
+        return view('admin.website-administrators', compact('profile', 'chat_counts', 'chat_list', 'administrators'));
     }
 
     public function getListingSingle(Request $request, $id)

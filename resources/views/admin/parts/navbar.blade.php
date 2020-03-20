@@ -30,7 +30,7 @@
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-comments"></i>
+          <i class="fas fa-comments"></i>
           @if ($chat_counts > 0)
             <span class="badge badge-danger navbar-badge">{{ $chat_counts }}</span>
           @endif
@@ -51,7 +51,7 @@
                     @endif
                   </h3>
                   <p class="text-sm">{{ $chat->message }}</p>
-                  <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> {{ $chat->created_date }}</p>
+                  <p class="text-sm text-muted"><i class="fas fa-clock mr-1"></i> {{ $chat->created_date }}</p>
                 </div>
               </div>
               <!-- Message End -->
@@ -66,7 +66,7 @@
       <!-- Notifications Dropdown Menu -->
       {{-- <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
+          <i class="fas fa-bell"></i>
           <span class="badge badge-warning navbar-badge">15</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
@@ -108,10 +108,12 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
+          {{-- <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image"> --}}
+          <img src="https://picsum.photos/50/50" class="img-circle elevation-2" alt="User Image">
+          
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block">{{ $profile->name }}</a>
         </div>
       </div>
 
@@ -130,7 +132,7 @@
           </li>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-copy"></i>
+              <i class="nav-icon fas fa-users"></i>
               <p>
                 Manage Users
                 <i class="fas fa-angle-left right"></i>
@@ -139,19 +141,19 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="{{ url('/admin/website-administrators') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-sync-alt nav-icon"></i>
                   <p>Website Administrators</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ url('/admin/job-providers') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-briefcase nav-icon"></i>
                   <p>Job Providers</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ url('/admin/job-seekers') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-user-tie nav-icon"></i>
                   <p>Job Seekers</p>
                 </a>
               </li>
@@ -159,7 +161,7 @@
           </li>
           <li class="nav-item has-treeview">
             <a href="{{ url('/admin/manage-listings') }}" class="nav-link">
-              <i class="nav-icon fas fa-chart-pie"></i>
+              <i class="nav-icon fas fa-list-alt"></i>
               <p>
                 Manage Listings
               </p>
@@ -167,7 +169,7 @@
           </li>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tree"></i>
+              <i class="nav-icon fas fa-file-medical-alt"></i>
               <p>
                 Manage Reports
                 <i class="fas fa-angle-left right"></i>
@@ -176,19 +178,19 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="{{ url('/admin/user-activity') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-users nav-icon"></i>
                   <p>User Activity</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ url('/admin/recent-listings') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-list nav-icon"></i>
                   <p>Recent Listings</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ url('/admin/employment-rate') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-chart-line nav-icon"></i>
                   <p>Employment Rate</p>
                 </a>
               </li>
@@ -196,7 +198,7 @@
           </li>
           <li class="nav-item has-treeview">
             <a href="{{ url('/admin/manage-announcements') }}" class="nav-link">
-              <i class="nav-icon fas fa-chart-pie"></i>
+              <i class="nav-icon fas fa-bullhorn"></i>
               <p>
                 Manage Announcements
               </p>
@@ -204,7 +206,7 @@
           </li>
           <li class="nav-item has-treeview">
             <a href="{{ url('/admin/my-events') }}" class="nav-link">
-              <i class="nav-icon fas fa-chart-pie"></i>
+              <i class="nav-icon fas fa-calendar-alt"></i>
               <p>
                 My Events
               </p>
@@ -213,7 +215,7 @@
           <li class="nav-header">Settings</li>
           <li class="nav-item has-treeview">
             <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link">
-              <i class="nav-icon fas fa-chart-pie"></i>
+              <i class="nav-icon fas fa-sign-out-alt"></i>
               <p>
                 Logout
               </p>

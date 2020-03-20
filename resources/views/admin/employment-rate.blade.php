@@ -20,7 +20,7 @@
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
-  @include('admin.parts.navbar', ['chats' => $chat_list, 'chat_count' => $chat_counts])
+  @include('admin.parts.navbar', ['chats' => $chat_list, 'chat_count' => $chat_counts, 'profile' => $profile])
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
