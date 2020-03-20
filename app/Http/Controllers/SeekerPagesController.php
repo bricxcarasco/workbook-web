@@ -18,6 +18,9 @@ class SeekerPagesController extends Controller
 {
     public function findJobs()
     {
+        $user = Auth::guard('web')->user();
+        $chat_counts = Chat::where('receiver_id', '<>' ,$user->id)->where('status', 0)->count();
+
         $regulars = RegularListing::where('regular_listings.is_delete', 0)
             ->where('regular_listings.status', 0)
             ->leftJoin('providers', 'regular_listings.user_id', '=', 'providers.id')
@@ -34,29 +37,35 @@ class SeekerPagesController extends Controller
         $providers = Provider::where('is_delete', 0)->get();
         $user = Auth::guard('web')->user();
         $seeker = Seeker::where('user_id', $user->id)->first();
-        return view('seeker.find-jobs', compact('regulars','quicks','providers','user','seeker'));
+        return view('seeker.find-jobs', compact('chat_counts', 'regulars','quicks','providers','user','seeker'));
     }
 
     public function myCalendar()
     {
-        return view('seeker.my-calendar');
+        $user = Auth::guard('web')->user();
+        $chat_counts = Chat::where('receiver_id', '<>' ,$user->id)->where('status', 0)->count();
+        return view('seeker.my-calendar', compact('chat_counts'));
     }
 
     public function mySchedule()
     {
-        return view('seeker.my-schedule');
+        $user = Auth::guard('web')->user();
+        $chat_counts = Chat::where('receiver_id', '<>' ,$user->id)->where('status', 0)->count();
+        return view('seeker.my-schedule', compact('chat_counts'));
     }
 
     public function myProfile()
     {
         $userId = Auth::guard('web')->user()->id;
+        $chat_counts = Chat::where('receiver_id', '<>' ,$userId)->where('status', 0)->count();
         $seeker = Seeker::where('user_id', $userId)->first();
-        return view('seeker.my-profile', compact('seeker'));
+        return view('seeker.my-profile', compact('chat_counts', 'seeker'));
     }
 
     public function ongoingApplications()
     {
         $userId = Auth::guard('web')->user()->id;
+        $chat_counts = Chat::where('receiver_id', '<>' ,$userId)->where('status', 0)->count();
         $seeker = Seeker::where('user_id', $userId)->first();
 
         $app_listings = Application::where('applications.seeker_id', $seeker->id)
@@ -73,7 +82,7 @@ class SeekerPagesController extends Controller
             ->orderBy('applications.created_at', 'ASC')
             ->get();
 
-        return view('seeker.ongoing-applications', compact('app_listings', 'app_quicks', 'seeker'));
+        return view('seeker.ongoing-applications', compact('chat_counts', 'app_listings', 'app_quicks', 'seeker'));
     }
 
     public function myMessages()
@@ -114,6 +123,6 @@ class SeekerPagesController extends Controller
             }
         }
 
-        return view('seeker.my-messages', compact('users'));
+        return view('seeker.my-messages', compact('chat_counts', 'users'));
     }
 }

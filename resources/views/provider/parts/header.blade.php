@@ -4,7 +4,7 @@
         <div class="row align-items-center">
         <div class="site-logo col-6"><a href="{{ url('/provider') }}">WorkBook</a></div>
 
-        @include('provider.parts.sidebar')
+        @include('provider.parts.sidebar', ['chat_counts' => $chat_counts])
         
         <div class="right-cta-menu text-right d-flex aligin-items-center col-6">
             <div class="ml-auto">

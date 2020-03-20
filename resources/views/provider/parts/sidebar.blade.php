@@ -11,15 +11,23 @@
         <li>
             <a href="{{ url('/provider/view-applications') }}" class="nav-link">View Applications</a>
         </li>
-        <li class="has-children">
-            <a href="#">Utilities</a>
-            <ul class="dropdown">
-                <li><a href="{{ url('/provider/my-profile') }}">My Profile</a></li>
-                <li><a href="{{ url('/provider/my-messages') }}">Messages</a></li>
-            </ul>
-        </li>
         <li>
             <a href="{{ url('/provider/my-schedule') }}" class="nav-link">My Schedule</a>
+        </li>
+        <li class="has-children">
+            <a href="#">Utilities 
+                @if ($chat_counts > 0)
+                    <span class="badge badge-danger navbar-badge">{{ $chat_counts }}</span>
+                @endif
+            </a>
+            <ul class="dropdown">
+                <li><a href="{{ url('/provider/my-profile') }}">My Profile</a></li>
+                <li><a href="{{ url('/provider/my-messages') }}">Messages 
+                @if ($chat_counts > 0)
+                    <span class="badge badge-danger navbar-badge">{{ $chat_counts }}</span>
+                @endif
+                </a></li>
+            </ul>
         </li>
 
         <li class="d-lg-none"><a href="{{ url('/provider/post-job') }}"><span class="mr-2">+</span> Post a Job</a></li>

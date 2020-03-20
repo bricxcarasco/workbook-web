@@ -6,11 +6,19 @@
         </li>
         <li><a href="{{ url('/seeker/ongoing-applications') }}" class="nav-link">My Applications</a></li>
         <li class="has-children">
-            <a href="#">Utilities</a>
+            <a href="#">Utilities 
+                @if ($chat_counts > 0)
+                    <span class="badge badge-danger navbar-badge">{{ $chat_counts }}</span>
+                @endif
+            </a>
             <ul class="dropdown">
                 <li><a href="{{ url('/seeker/my-profile') }}">My Profile</a></li>
                 <li><a href="{{ url('/seeker/my-calendar') }}">My Calendar</a></li>
-                <li><a href="{{ url('/seeker/my-messages') }}">Messages</a></li>
+                <li><a href="{{ url('/seeker/my-messages') }}">Messages 
+                @if ($chat_counts > 0)
+                    <span class="badge badge-danger navbar-badge">{{ $chat_counts }}</span>
+                @endif
+                </a></li>
             </ul>
         </li>
         <li class="d-lg-none"><a onclick="event.preventDefault(); document.getElementById('logout-form2').submit();" href="{{ route('logout') }}">Log Out</a></li>

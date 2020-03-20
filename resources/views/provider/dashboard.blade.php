@@ -15,7 +15,7 @@
         <div class="site-mobile-menu-body"></div>
     </div> <!-- .site-mobile-menu -->
       
-    @include('provider.parts.header')
+    @include('provider.parts.header', ['chat_counts' => $chat_counts])
 
     <!-- HOME -->
     <section class="section-hero overlay inner-page bg-image" style="background-image: url({{ asset('images/hero_1.jpg') }});" id="home-section">
