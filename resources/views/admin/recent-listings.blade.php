@@ -94,37 +94,41 @@
               <!-- /.card-header -->
               <div class="card-body">
                 
-                <table id="employment" class="table table-striped table-hover" style="width:100%">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Category</th>
-                      <th>Description</th>
-                      <th>Created At</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach ($category_list as $category)
-                    <tr>
-                      <td>{{ $category->id }}</td>
-                      <td>{{ $category->title }}</td>
-                      <td>{{ $category->description }}</td>
-                      <td>{{ $category->created_at }}</td>
-                      <td><button id="{{ $category->id }}" class="btn btn-info viewMore">View More</button></td>
-                    </tr>
-                    @endforeach
-                  </tbody>
-                  <tfoot>
+                <div class="table-responsive">
+
+                  <table id="employment" class="table table-striped table-hover">
+                    <thead>
                       <tr>
                         <th>ID</th>
-                      <th>Category</th>
-                      <th>Description</th>
-                      <th>Created At</th>
-                      <th>Action</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Created At</th>
+                        <th>Action</th>
                       </tr>
-                  </tfoot>
-                </table>    
+                    </thead>
+                    <tbody>
+                      @foreach ($category_list as $category)
+                      <tr>
+                        <td>{{ $category->id }}</td>
+                        <td>{{ $category->title }}</td>
+                        <td>{{ $category->description }}</td>
+                        <td>{{ $category->created_at }}</td>
+                        <td><button id="{{ $category->id }}" class="btn btn-info viewMore">View More</button></td>
+                      </tr>
+                      @endforeach
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                          <th>ID</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Created At</th>
+                        <th>Action</th>
+                        </tr>
+                    </tfoot>
+                  </table>    
+
+                </div>
 
               </div>
               <!-- /.card-body -->

@@ -67,37 +67,41 @@
               <!-- /.card-header -->
               <div class="card-body">
                 
-                <table id="administrator" class="table table-striped table-hover" style="width:100%">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Name</th>
-                      <th>Email Address</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach ($administrators as $administrator)
-                    <tr>
-                      <td>{{ $administrator->id }}</td>  
-                      <td>{{ $administrator->name }}</td>  
-                      <td>{{ $administrator->email }}</td>
-                      <td>
-                        <button id="{{ $administrator }}" class="btn btn-info edit"><i class="fa fa-eye"></i> Edit</button>
-                        <button id="{{ $administrator }}" class="btn btn-danger remove"><i class="fa fa-times-circle"></i> Remove</button>
-                      </td>  
-                    </tr>
-                    @endforeach
-                  </tbody>
-                  <tfoot>
+                <div class="table-responsive">
+
+                  <table id="administrator" class="table table-striped table-hover">
+                    <thead>
                       <tr>
                         <th>ID</th>
-                      <th>Name</th>
-                      <th>Email Address</th>
-                      <th>Action</th>
+                        <th>Name</th>
+                        <th>Email Address</th>
+                        <th>Action</th>
                       </tr>
-                  </tfoot>
-                </table>    
+                    </thead>
+                    <tbody>
+                      @foreach ($administrators as $administrator)
+                      <tr>
+                        <td>{{ $administrator->id }}</td>  
+                        <td>{{ $administrator->name }}</td>  
+                        <td>{{ $administrator->email }}</td>
+                        <td>
+                          <button id="{{ $administrator }}" class="btn btn-info edit"><i class="fa fa-eye"></i> Edit</button>
+                          <button id="{{ $administrator }}" class="btn btn-danger remove"><i class="fa fa-times-circle"></i> Remove</button>
+                        </td>  
+                      </tr>
+                      @endforeach
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                          <th>ID</th>
+                        <th>Name</th>
+                        <th>Email Address</th>
+                        <th>Action</th>
+                        </tr>
+                    </tfoot>
+                  </table>    
+
+                </div>
 
               </div>
               <!-- /.card-body -->

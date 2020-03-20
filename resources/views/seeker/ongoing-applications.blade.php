@@ -99,50 +99,38 @@
 
                       <div class="tab-pane fade show active" id="jobs" role="tabpanel" aria-labelledby="jobs-tab">
                           
-                        <table id="listingst" class="table table-striped table-hover" style="width:100%">
-                          <thead>
-                            <tr>
-                              <th>ID</th>
-                                <th>Job Title</th>
-                                <th>Location</th>
-                                <th>Salary</th>
-                                <th>Date</th>
-                                <th>Slots</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            @foreach ($app_listings as $listing)
+                        <div class="table-responsive">
+
+                          <table id="listingst" class="table table-striped table-hover">
+                            <thead>
                               <tr>
-                                  <td>{{ $listing->id }}</td>
-                                  <td>{{ $listing->title }}</td>
-                                  <td>{{ $listing->barangay.' '.$listing->municipality.' '.$listing->postal }}</td>
-                                  <td>{{ 'Php. '.$listing->min_offer.' - Php. '.$listing->max_offer }}</td>
-                                  <td>{{ $listing->event_date }}</td>
-                                  <td>{{ $listing->slots }}</td>
-                                  <td>
-                                    @if ($listing->status == 1)
-                                    <span class="badge badge-pill badge-secondary">On Process</span>
-                                    @elseif ($listing->status == 2)
-                                    <span class="badge badge-pill badge-warning">Interview</span>
-                                    @elseif ($listing->status == 3)
-                                    <span class="badge badge-pill badge-primary">Pending</span>
-                                    @elseif ($listing->status == 4)
-                                    <span class="badge badge-pill badge-info">Cancelled</span>
-                                    @elseif ($listing->status == 5)
-                                    <span class="badge badge-pill badge-success">Hired</span>
-                                    @elseif ($listing->status == 6)
-                                    <span class="badge badge-pill badge-danger">Failed</span>
-                                    @else
-                                    <span class="badge badge-pill badge-dark">Other</span>
-                                    @endif  
-                                  </td>
-                                  <td>
-                                    @if ($listing->status == 1 || $listing->status == 2 || $listing->status == 3)
-                                        <a href="{{ route('cancel_listing', ['id' => $listing->id]) }}" onclick="event.preventDefault(); document.getElementById('cancel_listing-form{{ $listing->id }}').submit();" class="btn btn-warning">Cancel</a>
-                                    @else
-                                      @if ($listing->status == 4)
+                                <th>ID</th>
+                                  <th>Job Title</th>
+                                  <th>Location</th>
+                                  <th>Salary</th>
+                                  <th>Date</th>
+                                  <th>Slots</th>
+                                  <th>Status</th>
+                                  <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              @foreach ($app_listings as $listing)
+                                <tr>
+                                    <td>{{ $listing->id }}</td>
+                                    <td>{{ $listing->title }}</td>
+                                    <td>{{ $listing->barangay.' '.$listing->municipality.' '.$listing->postal }}</td>
+                                    <td>{{ 'Php. '.$listing->min_offer.' - Php. '.$listing->max_offer }}</td>
+                                    <td>{{ $listing->event_date }}</td>
+                                    <td>{{ $listing->slots }}</td>
+                                    <td>
+                                      @if ($listing->status == 1)
+                                      <span class="badge badge-pill badge-secondary">On Process</span>
+                                      @elseif ($listing->status == 2)
+                                      <span class="badge badge-pill badge-warning">Interview</span>
+                                      @elseif ($listing->status == 3)
+                                      <span class="badge badge-pill badge-primary">Pending</span>
+                                      @elseif ($listing->status == 4)
                                       <span class="badge badge-pill badge-info">Cancelled</span>
                                       @elseif ($listing->status == 5)
                                       <span class="badge badge-pill badge-success">Hired</span>
@@ -151,77 +139,81 @@
                                       @else
                                       <span class="badge badge-pill badge-dark">Other</span>
                                       @endif  
-                                    @endif
-                                  </td>
-                                  <form id="cancel_listing-form{{ $listing->id }}" action="{{ route('cancel_listing', ['id' => $listing->id]) }}" method="POST" style="display: none;">
-                                    @csrf
-                                </form>
-                              </tr>
-                            @endforeach
-                          </tbody>
-                          <tfoot>
-                              <tr>
-                                <th>ID</th>
-                                <th>Job Title</th>
-                                <th>Location</th>
-                                <th>Salary</th>
-                                <th>Date</th>
-                                <th>Slots</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                              </tr>
-                          </tfoot>
-                        </table>                                  
+                                    </td>
+                                    <td>
+                                      @if ($listing->status == 1 || $listing->status == 2 || $listing->status == 3)
+                                          <a href="{{ route('cancel_listing', ['id' => $listing->id]) }}" onclick="event.preventDefault(); document.getElementById('cancel_listing-form{{ $listing->id }}').submit();" class="btn btn-warning">Cancel</a>
+                                      @else
+                                        @if ($listing->status == 4)
+                                        <span class="badge badge-pill badge-info">Cancelled</span>
+                                        @elseif ($listing->status == 5)
+                                        <span class="badge badge-pill badge-success">Hired</span>
+                                        @elseif ($listing->status == 6)
+                                        <span class="badge badge-pill badge-danger">Failed</span>
+                                        @else
+                                        <span class="badge badge-pill badge-dark">Other</span>
+                                        @endif  
+                                      @endif
+                                    </td>
+                                    <form id="cancel_listing-form{{ $listing->id }}" action="{{ route('cancel_listing', ['id' => $listing->id]) }}" method="POST" style="display: none;">
+                                      @csrf
+                                  </form>
+                                </tr>
+                              @endforeach
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                  <th>ID</th>
+                                  <th>Job Title</th>
+                                  <th>Location</th>
+                                  <th>Salary</th>
+                                  <th>Date</th>
+                                  <th>Slots</th>
+                                  <th>Status</th>
+                                  <th>Action</th>
+                                </tr>
+                            </tfoot>
+                          </table>                                  
+
+                        </div>
 
                       </div>
 
                       <div class="tab-pane fade" id="quicks" role="tabpanel" aria-labelledby="quicks-tab">
 
-                        <table id="quickst" class="table table-striped table-hover" style="width:100%">
-                          <thead>
-                            <tr>
-                              <th>ID</th>
-                              <th>Job Title</th>
-                              <th>Location</th>
-                              <th>Date</th>
-                              <th>Status</th>
-                              <th>Action</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            @foreach ($app_quicks as $quick)
-                            <tr>
-                              <td>{{ $quick->id }}</td>
-                              <td>
-                                @if (strlen(strip_tags($quick->request)) > 40)
-                                  {{ substr(strip_tags($quick->request),0,40)."..." }}
-                                @else
-                                  {{ strip_tags($quick->request) }}
-                                @endif
-                              <td>{{ $quick->location }}</td>
-                              <td>{{ $quick->event_date }}</td>
-                              <td>
-                                @if ($quick->status == 1)
-                                <span class="badge badge-pill badge-secondary">On Process</span>
-                                @elseif ($quick->status == 2)
-                                <span class="badge badge-pill badge-warning">Interview</span>
-                                @elseif ($quick->status == 3)
-                                <span class="badge badge-pill badge-primary">Pending</span>
-                                @elseif ($quick->status == 4)
-                                <span class="badge badge-pill badge-info">Cancelled</span>
-                                @elseif ($quick->status == 5)
-                                <span class="badge badge-pill badge-success">Hired</span>
-                                @elseif ($quick->status == 6)
-                                <span class="badge badge-pill badge-danger">Failed</span>
-                                @else
-                                <span class="badge badge-pill badge-dark">Other</span>
-                                @endif  
-                              </td>
-                              <td>
-                                @if ($quick->status == 1 || $quick->status == 2 || $quick->status == 3)
-                                <a href="{{ route('cancel_quick', ['id' => $quick->id]) }}" onclick="event.preventDefault(); document.getElementById('cancel_quick-form{{ $quick->id }}').submit();" class="btn btn-warning" id="cancelledlisting">Cancel</a>
-                                @else
-                                  @if ($quick->status == 4)
+                        <div class="table-responsive">
+
+                          <table id="quickst" class="table table-striped table-hover">
+                            <thead>
+                              <tr>
+                                <th>ID</th>
+                                <th>Job Title</th>
+                                <th>Location</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              @foreach ($app_quicks as $quick)
+                              <tr>
+                                <td>{{ $quick->id }}</td>
+                                <td>
+                                  @if (strlen(strip_tags($quick->request)) > 40)
+                                    {{ substr(strip_tags($quick->request),0,40)."..." }}
+                                  @else
+                                    {{ strip_tags($quick->request) }}
+                                  @endif
+                                <td>{{ $quick->location }}</td>
+                                <td>{{ $quick->event_date }}</td>
+                                <td>
+                                  @if ($quick->status == 1)
+                                  <span class="badge badge-pill badge-secondary">On Process</span>
+                                  @elseif ($quick->status == 2)
+                                  <span class="badge badge-pill badge-warning">Interview</span>
+                                  @elseif ($quick->status == 3)
+                                  <span class="badge badge-pill badge-primary">Pending</span>
+                                  @elseif ($quick->status == 4)
                                   <span class="badge badge-pill badge-info">Cancelled</span>
                                   @elseif ($quick->status == 5)
                                   <span class="badge badge-pill badge-success">Hired</span>
@@ -230,25 +222,41 @@
                                   @else
                                   <span class="badge badge-pill badge-dark">Other</span>
                                   @endif  
-                                @endif
-                              </td>
-                              <form id="cancel_quick-form{{ $quick->id }}" action="{{ route('cancel_quick', ['id' => $quick->id]) }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
-                          </tr>
-                            @endforeach
-                          </tbody>
-                          <tfoot>
-                              <tr>
-                                <th>ID</th>
-                                <th>Job Title</th>
-                                <th>Location</th>
-                                <th>Date</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                              </tr>
-                          </tfoot>
-                        </table>    
+                                </td>
+                                <td>
+                                  @if ($quick->status == 1 || $quick->status == 2 || $quick->status == 3)
+                                  <a href="{{ route('cancel_quick', ['id' => $quick->id]) }}" onclick="event.preventDefault(); document.getElementById('cancel_quick-form{{ $quick->id }}').submit();" class="btn btn-warning" id="cancelledlisting">Cancel</a>
+                                  @else
+                                    @if ($quick->status == 4)
+                                    <span class="badge badge-pill badge-info">Cancelled</span>
+                                    @elseif ($quick->status == 5)
+                                    <span class="badge badge-pill badge-success">Hired</span>
+                                    @elseif ($quick->status == 6)
+                                    <span class="badge badge-pill badge-danger">Failed</span>
+                                    @else
+                                    <span class="badge badge-pill badge-dark">Other</span>
+                                    @endif  
+                                  @endif
+                                </td>
+                                <form id="cancel_quick-form{{ $quick->id }}" action="{{ route('cancel_quick', ['id' => $quick->id]) }}" method="POST" style="display: none;">
+                                  @csrf
+                              </form>
+                            </tr>
+                              @endforeach
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                  <th>ID</th>
+                                  <th>Job Title</th>
+                                  <th>Location</th>
+                                  <th>Date</th>
+                                  <th>Status</th>
+                                  <th>Action</th>
+                                </tr>
+                            </tfoot>
+                          </table>    
+
+                        </div>
 
                       </div>
 

@@ -91,7 +91,7 @@
 
               <div class="card-body">
 
-                <table id="users" class="table table-striped table-hover" style="width:100%">
+                <table id="users" class="table table-striped table-hover">
                     <thead>
                       <tr>
                           <th>Name</th>

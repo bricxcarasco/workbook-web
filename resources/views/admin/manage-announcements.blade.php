@@ -120,48 +120,52 @@
               <!-- /.card-header -->
               <div class="card-body">
                 
-                <table id="announcements" class="table table-striped table-hover" style="width:100%">
-                  <thead>
-                    <tr>
-                      <th>Subject</th>
-                      <th>Target</th>
-                      <th>Message</th>
-                      <th>Date Created</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach ($announcements as $announcement)
-                    <tr>
-                      <td>{{ $announcement->title }}</td>  
-                      <td>
-                        @if ($announcement->target == 1)
-                        <span class="badge badge-primary">Providers</span>
-                        @elseif ($announcement->target == 1)
-                          <span class="badge badge-warning">Job Seekers</span>
-                        @else
-                        <span class="badge badge-info">Providers and Job Seekers</span>
-                          
-                        @endif
-                      </td>  
-                      <td>{{ $announcement->message }}</td>  
-                      <td>{{ $announcement->created_date }}</td>  
-                      <td>
-                        <button type="button" id="{{ $announcement->id }}" class="btn btn-danger removeAnnounce">Remove</button>  
-                      </td>  
-                    </tr>
-                    @endforeach
-                  </tbody>
-                  <tfoot>
+                <div class="table-responsive">
+
+                  <table id="announcements" class="table table-striped table-hover">
+                    <thead>
                       <tr>
-                      <th>Subject</th>
-                      <th>Target</th>
-                      <th>Message</th>
-                      <th>Date Created</th>
-                      <th>Action</th>
+                        <th>Subject</th>
+                        <th>Target</th>
+                        <th>Message</th>
+                        <th>Date Created</th>
+                        <th>Action</th>
                       </tr>
-                  </tfoot>
-                </table>    
+                    </thead>
+                    <tbody>
+                      @foreach ($announcements as $announcement)
+                      <tr>
+                        <td>{{ $announcement->title }}</td>  
+                        <td>
+                          @if ($announcement->target == 1)
+                          <span class="badge badge-primary">Providers</span>
+                          @elseif ($announcement->target == 1)
+                            <span class="badge badge-warning">Job Seekers</span>
+                          @else
+                          <span class="badge badge-info">Providers and Job Seekers</span>
+                            
+                          @endif
+                        </td>  
+                        <td>{{ $announcement->message }}</td>  
+                        <td>{{ $announcement->created_date }}</td>  
+                        <td>
+                          <button type="button" id="{{ $announcement->id }}" class="btn btn-danger removeAnnounce">Remove</button>  
+                        </td>  
+                      </tr>
+                      @endforeach
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                        <th>Subject</th>
+                        <th>Target</th>
+                        <th>Message</th>
+                        <th>Date Created</th>
+                        <th>Action</th>
+                        </tr>
+                    </tfoot>
+                  </table>    
+
+                </div>
 
               </div>
               <!-- /.card-body -->

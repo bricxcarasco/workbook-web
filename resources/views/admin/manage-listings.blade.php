@@ -67,37 +67,41 @@
               <!-- /.card-header -->
               <div class="card-body">
                 
-                <table id="announcements" class="table table-striped table-hover" style="width:100%">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Title</th>
-                      <th>Description</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach ($work_classes as $work_class)
-                    <tr>
-                      <td>{{ $work_class->id }}</td>  
-                      <td>{{ $work_class->title }}</td>  
-                      <td>{{ $work_class->description }}</td>  
-                      <td>
-                        <button id="{{ $work_class }}" class="btn btn-info view"><i class="fa fa-eye"></i> Edit</button>
-                        <button id="{{ $work_class->id }}" class="btn btn-danger remove"><i class="fa fa-times-circle"></i> Remove</button>
-                      </td>  
-                    </tr>
-                    @endforeach
-                  </tbody>
-                  <tfoot>
+                <div class="table-responsive">
+
+                  <table id="announcements" class="table table-striped table-hover">
+                    <thead>
                       <tr>
                         <th>ID</th>
-                      <th>Title</th>
-                      <th>Description</th>
-                      <th>Action</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Action</th>
                       </tr>
-                  </tfoot>
-                </table>    
+                    </thead>
+                    <tbody>
+                      @foreach ($work_classes as $work_class)
+                      <tr>
+                        <td>{{ $work_class->id }}</td>  
+                        <td>{{ $work_class->title }}</td>  
+                        <td>{{ $work_class->description }}</td>  
+                        <td>
+                          <button id="{{ $work_class }}" class="btn btn-info view"><i class="fa fa-eye"></i> Edit</button>
+                          <button id="{{ $work_class->id }}" class="btn btn-danger remove"><i class="fa fa-times-circle"></i> Remove</button>
+                        </td>  
+                      </tr>
+                      @endforeach
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                          <th>ID</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                        </tr>
+                    </tfoot>
+                  </table>    
+
+                </div>
 
               </div>
               <!-- /.card-body -->

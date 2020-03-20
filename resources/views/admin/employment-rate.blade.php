@@ -92,62 +92,66 @@
               <!-- /.card-header -->
               <div class="card-body">
                 
-                <table id="employment" class="table table-striped table-hover" style="width:100%">
-                  <thead>
-                    <tr>
-                      <th>Seeker</th>
-                      <th>Provider</th>
-                      <th>Job Type</th>
-                      <th>Date</th>
-                      <th>Status</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach ($employments as $employment)
-                    <tr>
-                      <td>{{ $employment->full_name }}</td>  
-                      <td>{{ $employment->business_name }}</td>  
-                      <td>
-                        @if ($employment->type == 1)
-                        <span class="badge badge-pill badge-info">Regular Job</span>
-                        @else
-                        <span class="badge badge-pill badge-warning">Request Job</span>
-                        @endif
-                      </td>  
-                      <td>{{ $employment->event_date }}</td>  
-                      <td>
-                        @if ($employment->status == 1)
-                        <span class="badge badge-pill badge-secondary">On Process</span>
-                        @elseif ($employment->status == 2)
-                        <span class="badge badge-pill badge-warning">Interview</span>
-                        @elseif ($employment->status == 3)
-                        <span class="badge badge-pill badge-primary">Pending</span>
-                        @elseif ($employment->status == 4)
-                        <span class="badge badge-pill badge-info">Cancelled</span>
-                        @elseif ($employment->status == 5)
-                        <span class="badge badge-pill badge-success">Hired</span>
-                        @elseif ($employment->status == 6)
-                        <span class="badge badge-pill badge-danger">Failed</span>
-                        @else
-                        <span class="badge badge-pill badge-dark">Other</span>
-                        @endif  
-                      </td>
-                      <td><button id="{{ $employment }}" class="viewMore">View More</button></td>  
-                    </tr>
-                    @endforeach
-                  </tbody>
-                  <tfoot>
+                <div class="table-responsive">
+
+                  <table id="employment" class="table table-striped table-hover">
+                    <thead>
                       <tr>
                         <th>Seeker</th>
                         <th>Provider</th>
-                        <th>Job</th>
+                        <th>Job Type</th>
                         <th>Date</th>
                         <th>Status</th>
                         <th>Action</th>
                       </tr>
-                  </tfoot>
-                </table>    
+                    </thead>
+                    <tbody>
+                      @foreach ($employments as $employment)
+                      <tr>
+                        <td>{{ $employment->full_name }}</td>  
+                        <td>{{ $employment->business_name }}</td>  
+                        <td>
+                          @if ($employment->type == 1)
+                          <span class="badge badge-pill badge-info">Regular Job</span>
+                          @else
+                          <span class="badge badge-pill badge-warning">Request Job</span>
+                          @endif
+                        </td>  
+                        <td>{{ $employment->event_date }}</td>  
+                        <td>
+                          @if ($employment->status == 1)
+                          <span class="badge badge-pill badge-secondary">On Process</span>
+                          @elseif ($employment->status == 2)
+                          <span class="badge badge-pill badge-warning">Interview</span>
+                          @elseif ($employment->status == 3)
+                          <span class="badge badge-pill badge-primary">Pending</span>
+                          @elseif ($employment->status == 4)
+                          <span class="badge badge-pill badge-info">Cancelled</span>
+                          @elseif ($employment->status == 5)
+                          <span class="badge badge-pill badge-success">Hired</span>
+                          @elseif ($employment->status == 6)
+                          <span class="badge badge-pill badge-danger">Failed</span>
+                          @else
+                          <span class="badge badge-pill badge-dark">Other</span>
+                          @endif  
+                        </td>
+                        <td><button id="{{ $employment }}" class="viewMore">View More</button></td>  
+                      </tr>
+                      @endforeach
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                          <th>Seeker</th>
+                          <th>Provider</th>
+                          <th>Job</th>
+                          <th>Date</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                    </tfoot>
+                  </table>    
+
+                </div>
 
               </div>
               <!-- /.card-body -->
