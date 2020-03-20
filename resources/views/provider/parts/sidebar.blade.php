@@ -15,6 +15,7 @@
             <a href="#">Utilities</a>
             <ul class="dropdown">
                 <li><a href="{{ url('/provider/my-profile') }}">My Profile</a></li>
+                <li><a href="{{ url('/provider/my-messages') }}">Messages</a></li>
             </ul>
         </li>
         <li>

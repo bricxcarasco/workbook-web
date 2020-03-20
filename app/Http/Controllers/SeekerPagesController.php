@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Application;
+use App\Chat;
 use App\Provider;
 use App\QuickListing;
 use App\RegularListing;
 use App\Seeker;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use stdClass;
 
 class SeekerPagesController extends Controller
 {
@@ -70,5 +74,46 @@ class SeekerPagesController extends Controller
             ->get();
 
         return view('seeker.ongoing-applications', compact('app_listings', 'app_quicks', 'seeker'));
+    }
+
+    public function myMessages()
+    {
+        $user = Auth::guard('web')->user();
+        $usersExceptMe = User::where('id', '<>', $user->id)->get();
+        $chat_counts = Chat::where('receiver_id', '<>' ,$user->id)->where('status', 0)->count();
+
+        $users = [];
+        foreach ($usersExceptMe as $other) {
+            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first()['id'];
+            if (!is_null($chatCheck)) {
+                $object = new stdClass;
+                $object->id = $other->id;
+                $object->name = $other->name;
+
+                $type = 'Admin';
+                $badge = 'primary';
+
+                if ($other->type == 2) {
+                    $type = 'Provider';
+                    $badge = 'warning';
+                } else {
+                    $type = 'Seeker';
+                    $badge = 'info';
+                }
+
+                $object->badge = $badge;
+                $object->type = $type;
+                $object->counts = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->where('status', 0)->count();
+                $chatDesc = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first();
+                $object->priority = $chatDesc->id;
+                $object->message = (strlen($chatDesc->message) > 13) ? substr($chatDesc->message,0,10).'...' : $chatDesc->message;
+                $object->status = $chatDesc->status;
+                $object->created_at = Carbon::parse($chatDesc->created_at)->format('Y-m-d H:i');
+                $object->created_date = $chatDesc->created_date;
+                array_push($users, $object);
+            }
+        }
+
+        return view('seeker.my-messages', compact('users'));
     }
 }

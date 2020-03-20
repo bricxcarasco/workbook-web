@@ -10,6 +10,7 @@
             <ul class="dropdown">
                 <li><a href="{{ url('/seeker/my-profile') }}">My Profile</a></li>
                 <li><a href="{{ url('/seeker/my-calendar') }}">My Calendar</a></li>
+                <li><a href="{{ url('/seeker/my-messages') }}">Messages</a></li>
             </ul>
         </li>
         <li class="d-lg-none"><a onclick="event.preventDefault(); document.getElementById('logout-form2').submit();" href="{{ route('logout') }}">Log Out</a></li>

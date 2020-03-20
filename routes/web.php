@@ -99,6 +99,7 @@ Route::middleware('provider')->group(function(){
         Route::get('/quick-job-list', 'ProviderPagesController@quickJobListing')->name('quick-job-listing');
         Route::get('/my-profile', 'ProviderPagesController@myProfile');
         Route::get('/my-schedule', 'ProviderPagesController@mySchedule');
+        Route::get('/my-messages', 'ProviderPagesController@myMessages');
         Route::get('/new-job-listing', 'ProviderPagesController@newJobListing');
         Route::get('/post-job', 'ProviderPagesController@postJob');
         Route::get('/quick-job-request', 'ProviderPagesController@quickJobRequest');
@@ -114,6 +115,7 @@ Route::middleware('seeker')->group(function(){
         Route::get('/my-calendar', 'SeekerPagesController@myCalendar');
         Route::get('/my-schedule', 'SeekerPagesController@mySchedule');
         Route::get('/my-profile', 'SeekerPagesController@myProfile');
+        Route::get('/my-messages', 'SeekerPagesController@myMessages');
         Route::get('/ongoing-applications', 'SeekerPagesController@ongoingApplications')->name('ongoing-applications');
     });
 });
