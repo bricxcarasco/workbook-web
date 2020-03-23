@@ -45,7 +45,7 @@
           <div class="col-lg-8 mb-4 mb-lg-0">
             <div class="d-flex align-items-center">
               <div>
-                <h2>Company Description</h2>
+                <h2>Seeker Information</h2>
               </div>
             </div>
           </div>
@@ -56,8 +56,6 @@
         </div>
         <div class="row mb-5">
           <div class="col-lg-12">
-
-              <h3 class="text-black mb-5 border-bottom pb-2">Job Details</h3>
               
               <div class="form-group">
                 <img src="{{ asset('images') }}/{{ $seeker->image }}" style="width: 200px; height: 200px;" class="img-fluid mb-4 w-20 rounded-circle"><br>

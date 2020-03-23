@@ -38,64 +38,50 @@
     </div>
     <!-- /.content-header -->
 
-    
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-
-        @if(session()->has('message'))
-            <div class="alert alert-success alert-dismissible">
-                {{ session()->get('message') }}
-            </div>
-        @endif
-
-        @if(session()->has('error'))
-            <div class="alert alert-danger alert-dismissible">
-                {{ session()->get('error') }}
-            </div>
-        @endif
-
+        
         <div class="row">
           <!-- right column -->
           <div class="col-md-12">
             <!-- general form elements disabled -->
-            <div class="card card-primary">
+            <div class="card card-success">
               <div class="card-header">
                 <h3 class="card-title">Listings</h3>
-                <button class="btn btn-success float-right" id="add">Add Listing</button>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
                 
                 <div class="table-responsive">
 
-                  <table id="announcements" class="table table-striped table-hover">
+                  <table id="employment" class="table table-striped table-hover">
                     <thead>
                       <tr>
                         <th>ID</th>
-                        <th>Title</th>
+                        <th>Category</th>
                         <th>Description</th>
+                        <th>Created At</th>
                         <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach ($work_classes as $work_class)
+                      @foreach ($category_list as $category)
                       <tr>
-                        <td>{{ $work_class->id }}</td>  
-                        <td>{{ $work_class->title }}</td>  
-                        <td>{{ $work_class->description }}</td>  
-                        <td>
-                          <button id="{{ $work_class }}" class="btn btn-info view"><i class="fa fa-eye"></i> Edit</button>
-                          <button id="{{ $work_class->id }}" class="btn btn-danger remove"><i class="fa fa-times-circle"></i> Remove</button>
-                        </td>  
+                        <td>{{ $category->id }}</td>
+                        <td>{{ $category->title }}</td>
+                        <td>{{ $category->description }}</td>
+                        <td>{{ $category->created_at }}</td>
+                        <td><button id="{{ $category->id }}" class="btn btn-info viewMore"><i class="fa fa-eye"></i> View Jobs Posted</button></td>
                       </tr>
                       @endforeach
                     </tbody>
                     <tfoot>
                         <tr>
                           <th>ID</th>
-                        <th>Title</th>
+                        <th>Category</th>
                         <th>Description</th>
+                        <th>Created At</th>
                         <th>Action</th>
                         </tr>
                     </tfoot>
@@ -111,12 +97,47 @@
           </div>
           <!--/.col (right) -->
         </div>
-        <!-- /.row -->
+
       </div><!-- /.container-fluid -->
     </section>
-
+    <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+
+
+  <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Job Information</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="padding: 0rem;">
+          
+          <table class="table table-striped" id="tabView">
+            <thead>
+              <tr>
+                <th scope="col">Provider</th>
+                <th scope="col">Title</th>
+                <th scope="col">Details</th>
+                <th scope="col">Location</th>
+                <th scope="col">Event Date</th>
+              </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+          </table>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <footer class="main-footer">
     <strong>Copyright &copy; 2020 WorkBook.</strong>
@@ -135,93 +156,12 @@
 <!-- ./wrapper -->
 
 
-<div class="modal fade" id="listingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Listing</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-
-          <label for="">Title</label>
-          <input class="form-control" type="text" id="title" name="title">
-
-          <label for="">Description</label>
-          <input class="form-control" type="text" id="description" name="description">
-
-          <span class="spanMessage" style="color:red; display:none;">Make sure fields are not empty!</span>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id ="updateListing">Save Listing</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Listing</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-
-          <input type="hidden" name="id" id="id">
-          <label for="">Title</label>
-          <input class="form-control" type="text" id="title" name="title">
-
-          <label for="">Description</label>
-          <input class="form-control" type="text" id="description" name="description">
-
-          <span class="spanMessage" style="color:red; display:none;">Make sure fields are not empty!</span>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id ="updateListing">Save Listing</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Delete Details</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <label>Are you sure you want to delete this listing?</label>
-          <input type="hidden" id="id">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" id ="deleteSeeker">Delete</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-      </form>
-    </div>
-  </div>
-</div>
-
   <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
   <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('plugins/datatables/jquery.dataTables.js') }}"></script>
   <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
   <script src="{{ asset('dist/js/adminlte.js') }}"></script>
+  <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
 
   <div class="modal fade" id="chatModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -234,11 +174,11 @@
   
                   <div class="card-tools">
                     
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    {{-- <button type="button" class="btn btn-tool" data-card-widget="collapse">
                       <i class="fas fa-minus"></i>
                     </button>
                     <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
-                    </button>
+                    </button> --}}
                   </div>
                 </div>
                 <!-- /.card-header -->
@@ -348,122 +288,54 @@
     }
   </script>
 
-<script>
-  $(document).ready(function() {
-    $('#announcements').DataTable(); 
+  <script>
+    $(document).ready(function() {
+      $('#employment').DataTable();
 
-    $("#add").click(function() {
-      $("#listingModal").modal("show");
-    });
-
-    $("#announcements").on('click', '.view', function() {
-      let work_class = JSON.parse($(this).attr('id'));
-      $("#editModal").modal("show");
-      $("#editModal #id").val(work_class.id);
-      $("#editModal #title").val(work_class.title);
-      $("#editModal #description").val(work_class.description);
-    });
-
-    $("#announcements").on('click', '.remove', function() {
-      let id = $(this).attr('id');
-      $("#deleteModal").modal("show");
-      $("#deleteModal #id").val(id);
-    });
-
-    $("#listingModal").on('click', '#updateListing', function() {
-      let description = $("#listingModal #description").val();
-      let title = $("#listingModal #title").val();
-      if (!description || !title) {
-        $("#listingModal .spanMessage").css('display', 'block');
-      } else {
-        $("#listingModal .spanMessage").css('display', 'none');
+      $("#employment").on('click', '.viewMore', function() {
+        let id = $(this).attr('id');
         $.ajax({
-          url: `/work_class/add`,
-          type: 'POST',
+          url: `/admin/recent-listings/${id}`,
+          type: 'GET',
           headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },
-          data: {
-            description : description,
-            title: title
-          },
           success: function(data) {
-            if (data == 'Success') { 
-              $("#listingModal").modal("hide");
-              location.reload();
-              alert('Listing has been added!');
+            console.log(data);
+            if(data === undefined || data.length == 0) {
+              alert('Empty records.');
             } else {
-              $("#listingModal").modal("hide");
-              location.reload();
-              alert('Listing adding failed!');
+              $("#viewModal").modal('show');
+              $("#tabView tbody").html("");
+              $.each(data, function(i, e) {
+                let str = strip_html_tags(e.details);
+                if(str.length > 10) 
+                  str = str.substring(0,10);
+                  var $tr = $("<tr>").append(
+                      $("<td>").text(e.user),
+                      $("<td>").text(e.title),
+                      $("<td>").text(str+'...'),
+                      $("<td>").text(e.location),
+                        $("<td>").text(e.created_date)
+                  );
+                  $tr.appendTo("#tabView tbody");
+              });
             }
           }
         });
-      }
+      });
     });
-
-    $("#editModal").on('click', '#updateListing', function() {
-      let id = $("#editModal #id").val();
-      let description = $("#editModal #description").val();
-      let title = $("#editModal #title").val();
-      if (!description || !title) {
-        $("#editModal .spanMessage").css('display', 'block');
-      } else {
-        $("#editModal .spanMessage").css('display', 'none');
-        $.ajax({
-          url: `/work_class/edit`,
-          type: 'POST',
-          headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
-          data: {
-            id: id,
-            description : description,
-            title: title
-          },
-          success: function(data) {
-            if (data == 'Success') { 
-              $("#editModal").modal("hide");
-              location.reload();
-              alert('Listing has been updated!');
-            } else {
-              $("#editModal").modal("hide");
-              location.reload();
-              alert('Listing updating failed!');
-            }
-          }
-        });
-      }
-    });
-
-    $("#deleteModal").on('click', '#deleteSeeker', function() {
-      let id = $("#deleteModal #id").val();
-        $.ajax({
-          url: `/work_class/delete`,
-          type: 'POST',
-          headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
-          data: {
-            id: id
-          },
-          success: function(data) {
-            if (data == 'Success') { 
-              $("#deleteModal").modal("hide");
-              location.reload();
-              alert('Listing has been deleted!');
-            } else {
-              $("#deleteModal").modal("hide");
-              location.reload();
-              alert('Listing deleting failed!');
-            }
-          }
-        });
-    });
+    function strip_html_tags(str)
+    {
+       if ((str===null) || (str===''))
+           return false;
+      else
+       str = str.toString();
+      return str.replace(/<[^>]*>/g, '');
+    }
+  </script>
 
 
-  });
-</script>
 
 </body>
 </html>

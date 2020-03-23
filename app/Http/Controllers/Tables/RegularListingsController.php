@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tables;
 
 use App\Application;
+use App\Chat;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ApplyRegularJobValidation;
@@ -19,8 +20,10 @@ class RegularListingsController extends Controller
 
     public function applyRegularJob($id)
     {
+        $user = Auth::guard('web')->user();
+        $chat_counts = Chat::where('receiver_id', '<>' ,$user->id)->where('status', 0)->count();
         $listing = RegularListing::find($id);
-        return view('seeker.apply-listing-job', compact('listing'));
+        return view('seeker.apply-listing-job', compact('listing', 'chat_counts'));
     }
 
     public function applyRegularJobSend(ApplyRegularJobValidation $request)

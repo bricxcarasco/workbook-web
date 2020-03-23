@@ -840,8 +840,8 @@ h1, h2, h3, h4 {
 .section-hero.inner-page, .section-hero.inner-page > .container > .row {
   height: auto;
   min-height: auto;
-  padding-top: 6em;
-  padding-bottom: 3em; }
+  padding-top: 3em;
+  padding-bottom: 1em; }
 
 .section-hero.overlay, .section-hero.overlay-2 {
   position: relative; }
@@ -1283,7 +1283,7 @@ h1, h2, h3, h4 {
   text-decoration: none; }
 
 .site-footer {
-  padding: 7rem 0;
+  padding: 3rem 0;
   position: relative;
   background: #555; }
   @media (max-width: 991.98px) {

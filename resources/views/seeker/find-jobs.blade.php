@@ -175,20 +175,20 @@
 
                                                 <br>
                                                 <div class="row">
-                                                  <div class="col-6">
+                                                  {{-- <div class="col-6">
                                                     <a href="#" class="btn btn-block btn-light btn-sm"><span class="icon-heart-o mr-2 text-danger"></span>Save Job</a>
-                                                  </div>
-                                                  <div class="col-6">
+                                                  </div> --}}
+                                                  <div class="col-12">
                                                     <a href="/apply/listing_job/{{ $listing->id }}" class="btn btn-block btn-primary btn-sm">Apply Now</a>
                                                   </div>
                                                 </div>
 
                                             </div>
-                                            <div class="card-footer">
+                                            {{-- <div class="card-footer">
                                                 <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
                                                 <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
                                                 <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
-                                            </div>
+                                            </div> --}}
                                           </div>
                                         @endforeach                                      
 
@@ -250,20 +250,20 @@
 
                                                 <br>
                                                 <div class="row">
-                                                  <div class="col-6">
+                                                  {{-- <div class="col-6">
                                                     <a href="#" class="btn btn-block btn-light btn-sm"><span class="icon-heart-o mr-2 text-danger"></span>Save Job</a>
-                                                  </div>
-                                                  <div class="col-6">
+                                                  </div> --}}
+                                                  <div class="col-12">
                                                     <a href="/apply/quick_job/{{ $quick->id }}" class="btn btn-block btn-primary btn-sm">Apply Now</a>
                                                   </div>
                                                 </div>
                                                 
                                           </div>
-                                          <div class="card-footer">
+                                          {{-- <div class="card-footer">
                                               <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
                                               <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
                                               <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
-                                          </div>
+                                          </div> --}}
                                         </div>
                                       @endforeach
 

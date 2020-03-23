@@ -160,7 +160,7 @@ class AdminPagesController extends Controller
         return view('admin.manage-announcements', compact('profile', 'chat_counts', 'chat_list', 'announcements'));
     }
 
-    public function manageListings() {
+    public function manageListingsCategory() {
         $user = Auth::guard('web')->user();
         $profile = $user;
         $usersExceptMe = User::where('id', '<>', $user->id)->get();
@@ -184,7 +184,44 @@ class AdminPagesController extends Controller
             }
         }
         $work_classes = WorkClass::where('is_delete', 0)->get();
-        return view('admin.manage-listings', compact('profile', 'chat_counts', 'chat_list', 'work_classes'));
+        return view('admin.manage-listings-category', compact('profile', 'chat_counts', 'chat_list', 'work_classes'));
+    }
+
+    public function manageListings() {
+        $user = Auth::guard('web')->user();
+        $profile = $user;
+        $usersExceptMe = User::where('id', '<>', $user->id)->get();
+        $chat_counts = Chat::where('receiver_id', '<>' ,$user->id)->where('status', 0)->count();
+
+        $chat_list = [];
+        foreach ($usersExceptMe as $other) {
+            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first()['id'];
+            if (!is_null($chatCheck)) {
+                $object = new stdClass;
+                $object->id = $other->id;
+                $object->name = $other->name;
+                $object->counts = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->where('status', 0)->count();
+                $chatDesc = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first();
+                $object->priority = $chatDesc->id;
+                $object->message = (strlen($chatDesc->message) > 13) ? substr($chatDesc->message,0,10).'...' : $chatDesc->message;
+                $object->status = $chatDesc->status;
+                $object->created_at = Carbon::parse($chatDesc->created_at)->format('Y-m-d H:i');
+                $object->created_date = $chatDesc->created_date;
+                array_push($chat_list, $object);
+            }
+        }
+        $category_list = WorkClass::where('is_delete', 0)->orderBy('id', 'desc')->get();
+        $categories = WorkClass::where('is_delete', 0)->orderBy('id', 'desc')->pluck('title');
+        $ids = WorkClass::where('is_delete', 0)->orderBy('id', 'desc')->pluck('id');
+        
+        $counts = [];
+        foreach ($ids as $id) {
+            array_push($counts, (QuickListing::where('tag', $id)->count() + RegularListing::where('tags', $id)->count()));
+        }
+
+        $total = round(array_sum($counts), -1);
+
+        return view('admin.manage-listings', compact('profile', 'chat_counts', 'chat_list', 'category_list', 'categories', 'counts', 'total'));
     }
 
     public function myEvents() {

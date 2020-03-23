@@ -1,6 +1,6 @@
 <nav class="mx-auto site-navigation">
     <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
-        <li><a href="{{ url('/seeker') }}" class="nav-link">Dashboard</a></li>
+        <li><a href="{{ url('/seeker') }}" class="nav-link">Timeline</a></li>
         <li>
             <a href="{{ url('/seeker/find-jobs') }}" class="nav-link">Find Jobs</a>
         </li>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tables;
 
 use App\Application;
+use App\Chat;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ApplyQuickJobValidation;
@@ -39,8 +40,10 @@ class QuickListingsController extends Controller
 
     public function applyQuickJob($id)
     {
+        $user = Auth::guard('web')->user();
+        $chat_counts = Chat::where('receiver_id', '<>' ,$user->id)->where('status', 0)->count();
         $quick = QuickListing::find($id);
-        return view('seeker.apply-quick-job', compact('quick'));
+        return view('seeker.apply-quick-job', compact('quick', 'chat_counts'));
     }
 
     public function applyQuickJobSend(ApplyQuickJobValidation $request)

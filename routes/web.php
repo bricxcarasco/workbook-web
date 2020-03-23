@@ -83,6 +83,7 @@ Route::middleware('admin')->group(function(){
         Route::get('/job-seekers', 'AdminPagesController@jobSeekers');
         Route::get('/manage-announcements', 'AdminPagesController@manageAnnouncements');
         Route::get('/manage-listings', 'AdminPagesController@manageListings');
+        Route::get('/manage-listings-category', 'AdminPagesController@manageListingsCategory');
         Route::get('/my-events', 'AdminPagesController@myEvents');
         Route::get('/recent-listings', 'AdminPagesController@recentListings');
         Route::get('/recent-listings/{id}', 'AdminPagesController@getListingSingle');
