@@ -41,9 +41,10 @@ class QuickListingsController extends Controller
     public function applyQuickJob($id)
     {
         $user = Auth::guard('web')->user();
+        $profile = $user;
         $chat_counts = Chat::where('receiver_id', '<>' ,$user->id)->where('status', 0)->count();
         $quick = QuickListing::find($id);
-        return view('seeker.apply-quick-job', compact('quick', 'chat_counts'));
+        return view('seeker.apply-quick-job', compact('profile', 'quick', 'chat_counts'));
     }
 
     public function applyQuickJobSend(ApplyQuickJobValidation $request)

@@ -20,62 +20,70 @@ class ProviderPagesController extends Controller
     public function jobListing()
     {
         $user_id = Auth::guard('web')->user()->id;
+        $profile = Auth::guard('web')->user();
         $chat_counts = Chat::where('receiver_id', '<>' ,$user_id)->where('status', 0)->count();
 
         $listings = RegularListing::where('is_delete', 0)->where('user_id', $user_id)->get();
-        return view('provider.job-listing', compact('chat_counts', 'listings'));
+        return view('provider.job-listing', compact('profile', 'chat_counts', 'listings'));
     }
 
     public function myProfile()
     {
         $userId = Auth::guard('web')->user()->id;
+        $profile = Auth::guard('web')->user();
         $chat_counts = Chat::where('receiver_id', '<>' ,$userId)->where('status', 0)->count();
 
         $provider = Provider::where('user_id', $userId)->first();
-        return view('provider.my-profile', compact('chat_counts', 'provider'));
+        return view('provider.my-profile', compact('profile', 'chat_counts', 'provider'));
     }
 
     public function mySchedule()
     {
         $user_id = Auth::guard('web')->user()->id;
+        $profile = Auth::guard('web')->user();
         $chat_counts = Chat::where('receiver_id', '<>' ,$user_id)->where('status', 0)->count();
-        return view('provider.my-schedule', compact('chat_counts'));
+        return view('provider.my-schedule', compact('profile', 'chat_counts'));
     }
 
     public function newJobListing()
     {
         $user_id = Auth::guard('web')->user()->id;
+        $profile = Auth::guard('web')->user();$profile = Auth::guard('web')->user();$profile = Auth::guard('web')->user();
         $chat_counts = Chat::where('receiver_id', '<>' ,$user_id)->where('status', 0)->count();
-        return view('provider.new-job-listing', compact('chat_counts'));
+        return view('provider.new-job-listing', compact('profile', 'chat_counts'));
     }
 
     public function postJob()
     {
         $user_id = Auth::guard('web')->user()->id;
+        $profile = Auth::guard('web')->user();
         $chat_counts = Chat::where('receiver_id', '<>' ,$user_id)->where('status', 0)->count();
         $categories = WorkClass::where('is_delete', 0)->select('id', 'title')->get();
-        return view('provider.post-job', compact('chat_counts', 'categories'));
+        return view('provider.post-job', compact('profile', 'chat_counts', 'categories'));
     }
     
     public function quickJobRequest()
     {
         $user_id = Auth::guard('web')->user()->id;
+        $profile = Auth::guard('web')->user();
         $chat_counts = Chat::where('receiver_id', '<>' ,$user_id)->where('status', 0)->count();
         $categories = WorkClass::where('is_delete', 0)->get();
-        return view('provider.quick-job-request', compact('chat_counts', 'categories'));
+        return view('provider.quick-job-request', compact('profile', 'chat_counts', 'categories'));
     }
 
     public function quickJobRequestAdd(Request $request, $id)
     {
         $user_id = Auth::guard('web')->user()->id;
+        $profile = Auth::guard('web')->user();
         $chat_counts = Chat::where('receiver_id', '<>' ,$user_id)->where('status', 0)->count();
         $category = WorkClass::find($id);
-        return view('provider.quick-job-request-add', compact('chat_counts', 'category'));
+        return view('provider.quick-job-request-add', compact('profile', 'chat_counts', 'category'));
     }
 
     public function viewApplications()
     {
         $userId = Auth::guard('web')->user()->id;
+        $profile = Auth::guard('web')->user();
         $chat_counts = Chat::where('receiver_id', '<>' ,$userId)->where('status', 0)->count();
 
         $provider = Provider::where('user_id', $userId)->first();
@@ -96,12 +104,13 @@ class ProviderPagesController extends Controller
             ->orderBy('applications.created_at', 'ASC')
             ->get();
 
-        return view('provider.view-applications', compact('chat_counts', 'app_listings', 'app_quicks', 'provider'));
+        return view('provider.view-applications', compact('profile', 'chat_counts', 'app_listings', 'app_quicks', 'provider'));
     }
 
     public function quickJobListing()
     {
         $user_id = Auth::guard('web')->user()->id;
+        $profile = Auth::guard('web')->user();
         $chat_counts = Chat::where('receiver_id', '<>' ,$user_id)->where('status', 0)->count();
 
         $quick_jobs = DB::table('quick_listings')
@@ -111,20 +120,22 @@ class ProviderPagesController extends Controller
             ->where('quick_listings.user_id', $user_id)
             ->get();
 
-        return view('provider.quick-job-list', compact('chat_counts', 'quick_jobs'));
+        return view('provider.quick-job-list', compact('profile', 'chat_counts', 'quick_jobs'));
     }
 
     public function jobListingSingle(Request $request, $id)
     {
         $user_id = Auth::guard('web')->user()->id;
+        $profile = Auth::guard('web')->user();
         $chat_counts = Chat::where('receiver_id', '<>' ,$user_id)->where('status', 0)->count();
         $listing = RegularListing::find($id);
-        return view('provider.post-job-view', compact('chat_counts', 'listing'));
+        return view('provider.post-job-view', compact('profile', 'chat_counts', 'listing'));
     }
 
     public function myMessages()
     {
         $user = Auth::guard('web')->user();
+        $profile = Auth::guard('web')->user();
         $usersExceptMe = User::where('id', '<>', $user->id)->get();
         $chat_counts = Chat::where('receiver_id', '<>' ,$user->id)->where('status', 0)->count();
         
@@ -160,7 +171,7 @@ class ProviderPagesController extends Controller
             }
         }
 
-        return view('provider.my-messages', compact('chat_counts', 'users'));
+        return view('provider.my-messages', compact('profile', 'chat_counts', 'users'));
     }
     
 }

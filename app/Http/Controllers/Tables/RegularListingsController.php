@@ -21,9 +21,10 @@ class RegularListingsController extends Controller
     public function applyRegularJob($id)
     {
         $user = Auth::guard('web')->user();
+        $profile = $user;
         $chat_counts = Chat::where('receiver_id', '<>' ,$user->id)->where('status', 0)->count();
         $listing = RegularListing::find($id);
-        return view('seeker.apply-listing-job', compact('listing', 'chat_counts'));
+        return view('seeker.apply-listing-job', compact('profile', 'listing', 'chat_counts'));
     }
 
     public function applyRegularJobSend(ApplyRegularJobValidation $request)

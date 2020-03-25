@@ -1,5 +1,7 @@
 <nav class="mx-auto site-navigation">
     <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
+        <li class="d-lg-none"><a href="{{ url('/provider') }}">{{ $profile->name }}</a></li>
+        <li class="d-lg-none"><a style="color: blue;" href="{{ url('/provider') }}"><img src="https://picsum.photos/50/50" class="img-circle elevation-2" alt="User Image"></a></li>
         <li><a href="{{ url('/provider') }}" class="nav-link">Timeline</a></li>
         <li class="has-children">
             <a href="#">Jobs</a>
