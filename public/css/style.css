@@ -18,7 +18,19 @@
     @media (max-width: 767.98px) {
       .site-navbar .site-logo {
         position: relative;
-        left: auto; } }
+        left: auto; 
+      }
+
+      .site-logo img {
+        width: 30px !important;
+        height: 30px !important;
+      }
+
+      .site-logo a {
+        font-size: 1.2rem !important;
+        letter-spacing: .1rem !important;
+      }
+    }
     .site-navbar .site-logo a {
       color: #fff;
       font-size: 1.5rem;

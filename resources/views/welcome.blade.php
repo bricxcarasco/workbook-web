@@ -46,7 +46,7 @@
     <header class="site-navbar mt-3">
       <div class="container-fluid">
         <div class="row align-items-center">
-          <div class="site-logo col-6"><a href="{{ url('/') }}">WorkBook</a></div>
+          <div class="site-logo col-6"><a href="{{ url('/') }}"><img align="middle" style="width: 50px; height: 50px; float: left;" src="{{ asset('images/workbook.png') }}" alt="Workbook"> WorkBook</a></div>
           
           <nav class="mx-auto site-navigation">
             <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">

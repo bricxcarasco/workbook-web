@@ -2,7 +2,7 @@
 <header class="site-navbar mt-3">
     <div class="container-fluid">
         <div class="row align-items-center">
-        <div class="site-logo col-6"><a href="{{ url('/provider') }}">WorkBook</a></div>
+        <div class="site-logo col-6"><a href="{{ url('/provider') }}"><img align="middle" style="width: 50px; height: 50px; float: left;" src="{{ asset('images/workbook.png') }}" alt="Workbook"> WorkBook</a></div>
 
         @include('provider.parts.sidebar', ['chat_counts' => $chat_counts, 'profile' => $profile])
         
