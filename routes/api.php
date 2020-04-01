@@ -16,3 +16,7 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('covid-case', 'API\CurlCovidController@all');
+Route::get('covid-case/summary', 'API\CurlCovidController@summary');
+Route::get('covid-case/{id}', 'API\CurlCovidController@country');
