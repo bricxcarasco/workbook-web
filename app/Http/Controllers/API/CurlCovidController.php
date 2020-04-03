@@ -31,8 +31,8 @@ class CurlCovidController extends Controller
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_URL => 'https://covid-rest.herokuapp.com',
         ]);
-        $resp = curl_exec($curl);
-        return $resp;
+        $resp = collect(json_decode(curl_exec($curl), true)['data'])->sortBy('country_name');
+        return $resp->values()->all();
         curl_close($curl);
     }
 
