@@ -1,13 +1,13 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>WorkBook</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/workbook.png') }}">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>WorkBook &mdash; Job Site</title>
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" href="{{ asset('images/workbook.png') }}">
+    
     
     <link rel="stylesheet" href="{{ asset('css/custom-bs.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.fancybox.min.css') }}">
