@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">	
   <meta name="csrf-token" content="{{ csrf_token() }}">
-	<link rel="icon" type="image/png" href="{{ asset('login_temp/images/icons/favicon.ico') }}"/>
+	<link rel="shortcut icon" href="{{ asset('images/workbook.png') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('login_temp/vendor/bootstrap/css/bootstrap.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('login_temp/fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('login_temp/vendor/animate/animate.css') }}">	
