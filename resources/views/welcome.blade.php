@@ -7,8 +7,8 @@
     <meta name="description" content="" />
     <meta name="keywords" content="" />
     <meta name="author" content="Free-Template.co" />
-    <link rel="shortcut icon" href="{{ asset('images/workbook.png') }}">
-    
+    <link rel="shortcut icon" href="https://i.ibb.co/HP42MWh/Work-Book-Logo.png">
+
     <link rel="stylesheet" href="{{ asset('css/custom-bs.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.fancybox.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-select.min.css') }}">

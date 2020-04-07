@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>WorkBook | Dashboard</title>
 
-  <link rel="shortcut icon" href="{{ asset('images/workbook.png') }}">
+  <link rel="shortcut icon" href="https://i.ibb.co/HP42MWh/Work-Book-Logo.png">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">

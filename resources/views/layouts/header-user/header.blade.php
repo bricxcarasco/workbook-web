@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <link rel="icon" type="image/png" href="{{ asset('images/workbook.png') }}">
+    <link rel="shortcut icon" href="https://i.ibb.co/HP42MWh/Work-Book-Logo.png">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>WorkBook &mdash; Job Site</title>
