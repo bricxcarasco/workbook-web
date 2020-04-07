@@ -99,7 +99,7 @@ class SeekerPagesController extends Controller
 
         $users = [];
         foreach ($usersExceptMe as $other) {
-            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first()->id;
+            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first()['id'];
             if (!is_null($chatCheck)) {
                 $object = new stdClass;
                 $object->id = $other->id;
