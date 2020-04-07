@@ -73,6 +73,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
+                <div class="table-responsive">
                 <table id="example" class="table table-condensed table-hover" width="100%">
                   <thead>
                     <th>ID</th>
@@ -93,6 +94,7 @@
                     <th>Action</th>
                   </tfoot>
                 </table>
+              </div>
               </div>
               <!-- /.card-body -->
             </div>

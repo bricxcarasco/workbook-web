@@ -69,24 +69,26 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example" class="table table-condensed table-hover" width="100%">
-                  <thead>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Registration Date</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                  </thead>
-                  <tfoot>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Registration Date</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                  </tfoot>
-                </table>
+                <div class="table-responsive">
+                  <table id="example" class="table table-condensed table-hover" width="100%">
+                    <thead>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Registration Date</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </thead>
+                    <tfoot>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Registration Date</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tfoot>
+                  </table>
+                </div>
               </div>
               <!-- /.card-body -->
             </div>
