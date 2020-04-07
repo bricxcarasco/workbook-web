@@ -4,9 +4,9 @@
     <title>Workbook &mdash; JobSite</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
-    <meta name="author" content="Free-Template.co" />
+    <meta name="description" content="Workbook" />
+    <meta name="keywords" content="Workbook" />
+    <meta name="author" content="Bricx Carasco" />
     <link rel="shortcut icon" href="https://i.ibb.co/HP42MWh/Work-Book-Logo.png">
 
     <link rel="stylesheet" href="{{ asset('css/custom-bs.css') }}">
