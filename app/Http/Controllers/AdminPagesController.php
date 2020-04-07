@@ -29,8 +29,8 @@ class AdminPagesController extends Controller
 
         $chat_list = [];
         foreach ($usersExceptMe as $other) {
-            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first()['id'];
-            if (!is_null($chatCheck)) {
+            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first();
+            if (isset($chatCheck['id'])) {
                 $object = new stdClass;
                 $object->id = $other->id;
                 $object->name = $other->name;
@@ -87,8 +87,8 @@ class AdminPagesController extends Controller
 
         $chat_list = [];
         foreach ($usersExceptMe as $other) {
-            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first()['id'];
-            if (!is_null($chatCheck)) {
+            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first();
+            if (isset($chatCheck['id'])) {
                 $object = new stdClass;
                 $object->id = $other->id;
                 $object->name = $other->name;
@@ -113,8 +113,8 @@ class AdminPagesController extends Controller
 
         $chat_list = [];
         foreach ($usersExceptMe as $other) {
-            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first()['id'];
-            if (!is_null($chatCheck)) {
+            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first();
+            if (isset($chatCheck['id'])) {
                 $object = new stdClass;
                 $object->id = $other->id;
                 $object->name = $other->name;
@@ -141,8 +141,8 @@ class AdminPagesController extends Controller
 
         $chat_list = [];
         foreach ($usersExceptMe as $other) {
-            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first()['id'];
-            if (!is_null($chatCheck)) {
+            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first();
+            if (isset($chatCheck['id'])) {
                 $object = new stdClass;
                 $object->id = $other->id;
                 $object->name = $other->name;
@@ -168,8 +168,8 @@ class AdminPagesController extends Controller
 
         $chat_list = [];
         foreach ($usersExceptMe as $other) {
-            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first()['id'];
-            if (!is_null($chatCheck)) {
+            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first();
+            if (isset($chatCheck['id'])) {
                 $object = new stdClass;
                 $object->id = $other->id;
                 $object->name = $other->name;
@@ -195,8 +195,8 @@ class AdminPagesController extends Controller
 
         $chat_list = [];
         foreach ($usersExceptMe as $other) {
-            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first()['id'];
-            if (!is_null($chatCheck)) {
+            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first();
+            if (isset($chatCheck['id'])) {
                 $object = new stdClass;
                 $object->id = $other->id;
                 $object->name = $other->name;
@@ -232,8 +232,8 @@ class AdminPagesController extends Controller
 
         $chat_list = [];
         foreach ($usersExceptMe as $other) {
-            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first()['id'];
-            if (!is_null($chatCheck)) {
+            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first();
+            if (isset($chatCheck['id'])) {
                 $object = new stdClass;
                 $object->id = $other->id;
                 $object->name = $other->name;
@@ -258,8 +258,8 @@ class AdminPagesController extends Controller
 
         $chat_list = [];
         foreach ($usersExceptMe as $other) {
-            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first()['id'];
-            if (!is_null($chatCheck)) {
+            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first();
+            if (isset($chatCheck['id'])) {
                 $object = new stdClass;
                 $object->id = $other->id;
                 $object->name = $other->name;
@@ -295,8 +295,8 @@ class AdminPagesController extends Controller
 
         $chat_list = [];
         foreach ($usersExceptMe as $other) {
-            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first()['id'];
-            if (!is_null($chatCheck)) {
+            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first();
+            if (isset($chatCheck['id'])) {
                 $object = new stdClass;
                 $object->id = $other->id;
                 $object->name = $other->name;
@@ -350,8 +350,8 @@ class AdminPagesController extends Controller
 
         $chat_list = [];
         foreach ($usersExceptMe as $other) {
-            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first()['id'];
-            if (!is_null($chatCheck)) {
+            $chatCheck = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first();
+            if (isset($chatCheck['id'])) {
                 $object = new stdClass;
                 $object->id = $other->id;
                 $object->name = $other->name;
