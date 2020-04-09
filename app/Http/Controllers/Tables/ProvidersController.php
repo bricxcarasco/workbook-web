@@ -39,21 +39,38 @@ class ProvidersController extends Controller
         $randomPassword = $this->random_strings(8);
         $password = Hash::make($randomPassword);
 
+        $provider = User::where('email', $request->email_address)->count();
+
+        if ($provider > 0) {
+            return "Exist";
+        }
 
         $user = new User;
         $user->email = $request->email_address;
         $user->type = 2;
         $user->password = $password;
+        $user->password_raw = $randomPassword;
         $user->name = $request->business_name;
 
-        if ($user->save()) {
-            $request->merge(['user_id' => $user->id]);
+        try {
+
+            if ($user->save()) {
+                $request->merge(['user_id' => $user->id]);
+            }
+    
+            Provider::insert($request->all());
+            
+            if (!NotificationsController::createAccount($request->email_address, $request->email_address, $randomPassword, $request->business_name)) {
+                return "Invalid";
+            }
+    
+            return "Success";
+
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            return "Failed";
         }
 
-        Provider::insert($request->all());
-        $createUserSendEmail = NotificationsController::createAccount($request->email_address, $request->email_address, $randomPassword, $request->business_name);
-
-        return "Success";
     }
 
     public function providerEdit(Request $request)

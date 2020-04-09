@@ -133,7 +133,7 @@
             <div class="d-flex align-items-center justify-content-center mb-2">
               <strong class="number" data-number="{{ $data_count['users'] }}">0</strong>
             </div>
-            <span class="caption">Users per day</span>
+            <span class="caption">Users traffic</span>
           </div>
 
             

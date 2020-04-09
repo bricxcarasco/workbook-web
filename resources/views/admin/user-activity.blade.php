@@ -94,7 +94,7 @@
               <div class="inner">
                 <h3>{{ $data_count['users'] }}</h3>
 
-                <p>All Users</p>
+                <p>Users traffic</p>
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>

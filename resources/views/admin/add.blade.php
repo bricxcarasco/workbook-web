@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>WorkBook | Website Administrator</title>
+  <title>WorkBook | Add Administrator</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -26,11 +26,11 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Website Administrator</h1>
+            <h1 class="m-0 text-dark">Add Administrator</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item active">Website Administrator</li>
+              <li class="breadcrumb-item active">Add Administrator</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -57,51 +57,46 @@
 
         <div class="row">
           <!-- right column -->
-          <div class="col-md-12">
+          <div class="col-md-6">
             <!-- general form elements disabled -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Administrator User List</h3>
-                <a id="add" href="/administrator/add" class="btn btn-success float-right">Add Administrator</a>
+                <h3 class="card-title">Add Administrator</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                
-                <div class="table-responsive">
 
-                  <table id="administrator" class="table table-striped table-hover">
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email Address</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach ($administrators as $administrator)
-                      <tr>
-                        <td>{{ $administrator->id }}</td>  
-                        <td>{{ $administrator->name }}</td>  
-                        <td>{{ $administrator->email }}</td>
-                        <td>
-                          <a href="/administrator/edit/{{ $administrator->id }}" class="btn btn-info edit"><i class="fa fa-eye"></i> Edit</a>
-                          <button id="{{ $administrator }}" class="btn btn-danger remove"><i class="fa fa-times-circle"></i> Remove</button>
-                        </td>  
-                      </tr>
-                      @endforeach
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                          <th>ID</th>
-                        <th>Name</th>
-                        <th>Email Address</th>
-                        <th>Action</th>
-                        </tr>
-                    </tfoot>
-                  </table>    
+                <form id="upload_form" action="/administrator/add" method="post" enctype="multipart/form-data">
+                  @csrf
+                  <label for="">Image</label>
+                  <input class="form-control" type="file" name="image_upload" id="image_upload">
+                  @if ($errors->has('image_upload'))
+                        <span style="display: block;" class="error invalid-feedback">{{ $errors->first('image_upload') }}</span>
+                    @endif
+      
+                  <label for="">Name</label>
+                  <input class="form-control" type="text" name="name" id="name">
+                  @if ($errors->has('name'))
+                        <span style="display: block;" class="error invalid-feedback">{{ $errors->first('name') }}</span>
+                    @endif
+      
+                  <label for="">Email</label>
+                  <input class="form-control" type="email" name="email" id="email">
+                  @if ($errors->has('email'))
+                        <span style="display: block;" class="error invalid-feedback">{{ $errors->first('email') }}</span>
+                    @endif
+                  
+                  <label for="">Password</label>
+                  <input class="form-control" type="password" name="password" id="password">
+                  @if ($errors->has('password'))
+                        <span style="display: block;" class="error invalid-feedback">{{ $errors->first('password') }}</span>
+                    @endif
 
-                </div>
+                  <br>
+
+                  <button type="submit" class="btn btn-success float-right">Add Administrator</button>
+
+                </form>
 
               </div>
               <!-- /.card-body -->
@@ -117,29 +112,6 @@
 
   </div>
   <!-- /.content-wrapper -->
-
-  <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Delete Administrator</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <label>Are you sure you want to delete this account?</label>
-            <input type="hidden" id="id">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" id ="deleteSeeker">Delete</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-        </form>
-      </div>
-    </div>
-  </div>
 
 
   <footer class="main-footer">
@@ -163,49 +135,6 @@
   <script src="{{ asset('plugins/datatables/jquery.dataTables.js') }}"></script>
   <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
   <script src="{{ asset('dist/js/adminlte.js') }}"></script>
-
-
-  <div class="modal fade" id="chatModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-          <form>
-            <!-- DIRECT CHAT -->
-              <div class="card direct-chat direct-chat-primary" style="margin-bottom: 0rem;">
-                <div class="card-header">
-                  <h5 class="card-title">Direct Chat</h5>
-  
-                  <div class="card-tools">
-                    
-                    {{-- <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
-                    </button> --}}
-                  </div>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                  <input type="hidden" id="receiverId">
-                  <div id="chatMessagesDiv" class="direct-chat-messages" style="padding: 30px !important;">
-  
-                  </div>
-                </div>
-                <div class="card-footer">
-                    <div class="input-group">
-                      <input type="text" name="message" id="message" placeholder="Type Message ..." class="form-control" required>
-                      <span class="input-group-append">
-                        <button type="button" id="sendMessage" class="btn btn-primary">Send</button>
-                      </span>
-                    </div>
-                </div>
-              </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-        </form>
-      </div>
-    </div>
-  </div>
   
   
   <script>
@@ -288,44 +217,6 @@
                   element.scrollTop = element.scrollHeight;
                 }, 200);
     }
-  </script>
-
-  <script>
-    $(document).ready(function() {
-      $('#administrator').DataTable();
-
-      $("#administrator").on('click', '.remove', function() {
-        let user = JSON.parse($(this).attr('id'));
-        $("#removeModal").modal("show");
-        $("#removeModal #id").val(user.id);
-      });
-
-      $('#removeModal').on('click', '#deleteSeeker', function() {
-        let id = $('#removeModal #id').val();
-        $.ajax({
-          url: `/administrator/delete`,
-          type: 'POST',
-          headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
-          data: {
-            id: id
-          },
-          success: function(data) {
-            $("#removeModal").modal("hide");
-            location.reload();
-            alert('Administrator has been deleted!');
-          }
-        });
-      });
-
-    });
-
-    function validateEmail(email) {
-      let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(String(email).toLowerCase());
-    }
-
   </script>
 
 </body>

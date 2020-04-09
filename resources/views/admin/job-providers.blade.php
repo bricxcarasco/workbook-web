@@ -187,6 +187,17 @@
             
             <label>DTI Permit</label></br>
               <input type="text"  class="form-control" id ="add_dti_permit">
+
+              <br>
+              <div class="alert alert-danger alert-dismissible" id="alertEmail" style="display: none;">
+                Email has been taken!
+              </div>
+              <div class="alert alert-danger alert-dismissible" id="alertEmailInvalid" style="display: none;">
+                Email is invalid!
+              </div>
+              <div class="alert alert-danger alert-dismissible" id="alertFailed" style="display: none;">
+                Failed server error!
+              </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" id="addSeeker">Add</button>
@@ -416,6 +427,19 @@
       getList();
 
       $('#add').click(function() {
+        $("#addModal #add_business_name").val('');
+        $("#addModal #add_business_type").val('');
+        $("#addModal #add_mailing_address").val('');
+        $("#addModal #add_email_address").val('');
+        $("#addModal #add_mobile_number").val('');
+        $("#addModal #add_telephone_number").val('');
+        $("#addModal #add_profile_desc").val('');
+        $("#addModal #add_facebook").val('');
+        $("#addModal #add_twitter").val('');
+        $("#addModal #add_instagram").val('');
+        $("#addModal #add_affiliation").val('');
+        $("#addModal #add_dti_permit").val('');
+        $("#addModal #addSeeker").attr('disabled', false);
         $('#addModal').modal('show');
       });
 
@@ -479,6 +503,7 @@
             $("#addModal #spanInvalidEmail").css('display', 'none');
 
         } else {
+            $(this).attr('disabled', true);
             $.ajax({
               url: '/provider',
               type: 'POST',
@@ -502,11 +527,26 @@
                 dti_permit : add_dti_permit
               },
               success: function(data) {
+                $("#addModal #addSeeker").attr('disabled', false);
+                $('#addModal #alertEmail').css('display', 'none');
+                $('#addModal #alertEmailInvalid').css('display', 'none');
+                $('#addModal #alertFailed').css('display', 'none');
+                
                 if (data == 'Success') {
+                  $(this).removeAttr('disabled');
                   $('#addModal').modal('hide');
                   $('.alertMessage').hide('slow');
                   $('#addSuccessAlert').show('slow');
                   getList();
+                } else if (data == 'Exist') {
+                  $('#addModal #alertEmail').css('display', 'block');
+                  $(this).removeAttr('disabled');
+                } else if (data == 'Invalid') {
+                  $('#addModal #alertEmailInvalid').css('display', 'block');
+                  $(this).removeAttr('disabled');
+                } else if (data == 'Failed') {
+                  $('#addModal #alertFailed').css('display', 'block');
+                  $(this).removeAttr('disabled');
                 }
               }
             });

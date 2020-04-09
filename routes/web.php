@@ -62,8 +62,10 @@ Route::post('/announcement/delete', 'Tables\AnnouncementsController@deleteAnnoun
 
 Route::get('/application/view/{employment}', 'Tables\ApplicationsController@viewDetailEmployment');
 
-Route::post('/administrator/add', 'Tables\AdministratorsController@addAdministrator');
-Route::post('/administrator/edit', 'Tables\AdministratorsController@editAdministrator');
+Route::get('/administrator/add', 'Tables\AdministratorsController@getAdministrator')->name('administrator.get');
+Route::get('/administrator/edit/{id}', 'Tables\AdministratorsController@editAdministrator')->name('administrator.edit');
+Route::post('/administrator/add', 'Tables\AdministratorsController@addAdministrator')->name('administrator.add');
+Route::post('/administrator/edit', 'Tables\AdministratorsController@updateAdministrator')->name('administrator.update');
 Route::post('/administrator/delete', 'Tables\AdministratorsController@deleteAdministrator');
 
 Route::get('/calendar/list', 'Tables\CalendarEventsController@calendarList');

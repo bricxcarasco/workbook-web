@@ -314,11 +314,13 @@ class AdminPagesController extends Controller
         $quick = QuickListing::count();
         $providers = UserLog::where('type', 2)->count();
         $seekers = UserLog::where('type', 3)->count();
+        $providerCount = Provider::count();
+        $seekerCount = Seeker::count();
 
         $data_count = array(
             'jobs' => ($regular + $quick),
-            'providers' => $providers,
-            'seekers' => $seekers,
+            'providers' => $providerCount,
+            'seekers' => $seekerCount,
             'users' => ($seekers + $providers)
         );
 
