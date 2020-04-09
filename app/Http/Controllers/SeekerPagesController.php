@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Application;
 use App\Chat;
+use App\Http\Requests\ChangePasswordRequest;
 use App\Provider;
 use App\QuickListing;
 use App\RegularListing;
@@ -12,6 +13,8 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use stdClass;
 
 class SeekerPagesController extends Controller
@@ -64,6 +67,38 @@ class SeekerPagesController extends Controller
         $chat_counts = Chat::where('receiver_id', '<>' ,$userId)->where('status', 0)->count();
         $seeker = Seeker::where('user_id', $userId)->first();
         return view('seeker.my-profile', compact('profile', 'chat_counts', 'seeker'));
+    }
+
+    public function changePassword()
+    {
+        $userId = Auth::guard('web')->user()->id;
+        $profile = Auth::guard('web')->user();
+        $chat_counts = Chat::where('receiver_id', '<>' ,$userId)->where('status', 0)->count();
+
+        $seeker = Seeker::where('user_id', $userId)->first();
+        return view('seeker.change-password', compact('profile', 'chat_counts', 'seeker'));
+    }
+
+    public function updatePassword(ChangePasswordRequest $request)
+    {
+        $user = Auth::guard('web')->user();
+
+        if ($user->password_raw != $request->current_password) {
+            return redirect()->back()->with('error', 'Invalid current password!');
+        }
+
+        try {
+            User::where('id', $user->id)->update([
+                'password' => Hash::make($request->new_password),
+                'password_raw' => $request->new_password
+            ]);
+            return redirect()->back()->with('message', 'Password successfully changed!');
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            return redirect()->back()->with('error', 'Internal server error!');
+        }
+
+        return $request->all();
     }
 
     public function ongoingApplications()

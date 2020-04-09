@@ -15,6 +15,7 @@
             </a>
             <ul class="dropdown">
                 <li><a href="{{ url('/seeker/my-profile') }}">My Profile</a></li>
+                <li><a href="{{ url('/seeker/change-password') }}">Change Password</a></li>
                 <li><a href="{{ url('/seeker/my-calendar') }}">My Calendar</a></li>
                 <li><a href="{{ url('/seeker/my-messages') }}">Messages 
                 @if ($chat_counts > 0)

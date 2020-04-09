@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>WorkBook | Sign-In</title>
+	<title>WorkBook | Forgot</title>
 	<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">	
   <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -19,16 +19,31 @@
 <body>
 	
 	<div class="limiter">
+
+    @if(session()->has('message'))
+            <div class="alert alert-success">
+                {{ session()->get('message') }}
+            </div>
+        @endif
+
+        @if(session()->has('error'))
+            <div class="alert alert-danger">
+                {{ session()->get('error') }}
+            </div>
+        @endif
+
 		<div class="container-login100">
+      
 			<div class="wrap-login100">
-				<form method="POST" action="{{ route('login') }}" class="login100-form validate-form p-l-55 p-r-55 p-t-178">
+        
+				<form method="POST" action="{{ route('forgot-password') }}" class="login100-form validate-form p-l-55 p-r-55 p-t-178">
           @csrf
 					<span class="login100-form-title">
-						<a href="{{ url('/') }}" class="txtBRAND">WorkBook</a> | Sign In
+						<a href="{{ url('/') }}" class="txtBRAND">WorkBook</a> | Forgot
           </span>
           
             <div class="wrap-input100 validate-input m-b-16" data-validate="Please enter email address">
-              <input id="email" class="input100{{ $errors->has('email') ? ' is-invalid' : '' }}" type="email" name="email" value="{{ old('email') }}" required autofocus placeholder="Username">
+              <input id="email" class="input100{{ $errors->has('email') ? ' is-invalid' : '' }}" type="email" name="email" value="{{ old('email') }}" required autofocus placeholder="Email">
               <span class="focus-input100"></span>
 
             </div>
@@ -39,39 +54,16 @@
                 </span>
               </div>
             @endif
-            
-            <div class="wrap-input100 validate-input" data-validate = "Please enter password">
-              <input id="password" class="input100{{ $errors->has('password') ? ' is-invalid' : '' }}" type="password" name="password" placeholder="Password" required>
-              <span class="focus-input100"></span>
-
-            </div>
-            @if ($errors->has('password'))
-              <div class="flex-col-c p-t-5 p-b-5" style="color: red !important; font-style: italic !important;">
-                <span class="txtRED p-b-9">
-                  {{ $errors->first('password') }}
-                </span>
-              </div>
-            @endif
-            
-            <div class="p-t-13 p-b-13 p-l-40">
-              <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-      
-                  <label class="form-check-label" for="remember">
-                      {{ __('Remember Me') }}
-                  </label>
-              </div>
-            </div>
 
             <div class="container-login100-form-btn">
               <button type="submit" class="login100-form-btn">
-                {{ __('Login') }}
+                {{ __('Send Password to Email') }}
               </button>
             </div>
             
             <div class="flex-col-c p-t-40 p-b-40">
-              <a href="{{ url('/forgot-password') }}" class="txt3 p-b-9">
-                Forgot your password?
+              <a href="{{ url('/login') }}" class="txt3 p-b-9">
+                Sign in?
               </a>
 
               <span class="txt1 p-b-9">

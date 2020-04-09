@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Application;
 use App\Chat;
+use App\Http\Requests\ChangePasswordRequest;
 use App\Provider;
 use App\QuickListing;
 use App\RegularListing;
@@ -13,6 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use stdClass;
 
 class ProviderPagesController extends Controller
@@ -35,6 +37,37 @@ class ProviderPagesController extends Controller
 
         $provider = Provider::where('user_id', $userId)->first();
         return view('provider.my-profile', compact('profile', 'chat_counts', 'provider'));
+    }
+
+    public function changePassword()
+    {
+        $userId = Auth::guard('web')->user()->id;
+        $profile = Auth::guard('web')->user();
+        $chat_counts = Chat::where('receiver_id', '<>' ,$userId)->where('status', 0)->count();
+
+        $provider = Provider::where('user_id', $userId)->first();
+        return view('provider.change-password', compact('profile', 'chat_counts', 'provider'));
+    }
+
+    public function updatePassword(ChangePasswordRequest $request)
+    {
+        $user = Auth::guard('web')->user();
+
+        if ($user->password_raw != $request->current_password) {
+            return redirect()->back()->with('error', 'Invalid current password!');
+        }
+
+        try {
+            User::where('id', $user->id)->update([
+                'password' => Hash::make($request->new_password),
+                'password_raw' => $request->new_password
+            ]);
+            return redirect()->back()->with('message', 'Password successfully changed!');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Internal server error!');
+        }
+
+        return $request->all();
     }
 
     public function mySchedule()

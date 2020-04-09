@@ -107,7 +107,8 @@ class ProvidersController extends Controller
 
         $userUpdate = User::where('id', $request->id)->update([
             'is_delete' => 0,
-            'password' => $password
+            'password' => $password,
+            'password_raw' => $randomPassword
         ]);
         $providerUpdate = Provider::where('user_id', $request->id)->update([
             'is_delete' => 0

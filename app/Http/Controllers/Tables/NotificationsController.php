@@ -180,4 +180,21 @@ class NotificationsController extends Controller
             return 'Failed';
         }
     }
+
+    public static function forgotPassword($email, $password, $name)
+    {
+        $to_name = $name;
+        $to_email = $email;
+
+        $data = array(
+            'name'=> $name,
+            'password' => $password
+        );
+
+        Mail::send('mails.forgot', $data, function($message) use ($to_name, $to_email) {
+            $message->to($to_email, $to_name)->subject('Forgot Password Account');
+            $message->from('workbookweblaguna@gmail.com', 'WorkBook Team');
+            // hyperx1234
+        });
+    }
 }

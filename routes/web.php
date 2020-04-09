@@ -75,6 +75,9 @@ Route::post('/work_class/add', 'Tables\WorkClassesController@addWorkClass');
 Route::post('/work_class/edit', 'Tables\WorkClassesController@editWorkClass');
 Route::post('/work_class/delete', 'Tables\WorkClassesController@deleteWorkClass');
 
+Route::get('/forgot-password', 'HomeController@forgotPassword')->name('forgot-password');
+Route::post('/forgot-password', 'HomeController@updatePassword');
+
 Route::middleware('admin')->group(function(){
     Route::prefix('admin')->group(function () {
         Route::get('/', 'AdminDashboardController@index')->name('admin.dashboard');
@@ -99,6 +102,8 @@ Route::middleware('provider')->group(function(){
         Route::get('/job-listing/get/{id}', 'ProviderPagesController@jobListingSingle')->name('job-listing-single');
         Route::get('/quick-job-list', 'ProviderPagesController@quickJobListing')->name('quick-job-listing');
         Route::get('/my-profile', 'ProviderPagesController@myProfile');
+        Route::get('/change-password', 'ProviderPagesController@changePassword');
+        Route::post('/change-password', 'ProviderPagesController@updatePassword');
         Route::get('/my-schedule', 'ProviderPagesController@mySchedule');
         Route::get('/my-messages', 'ProviderPagesController@myMessages');
         Route::get('/new-job-listing', 'ProviderPagesController@newJobListing');
@@ -116,6 +121,8 @@ Route::middleware('seeker')->group(function(){
         Route::get('/my-calendar', 'SeekerPagesController@myCalendar');
         Route::get('/my-schedule', 'SeekerPagesController@mySchedule');
         Route::get('/my-profile', 'SeekerPagesController@myProfile');
+        Route::get('/change-password', 'SeekerPagesController@changePassword');
+        Route::post('/change-password', 'SeekerPagesController@updatePassword');
         Route::get('/my-messages', 'SeekerPagesController@myMessages');
         Route::get('/ongoing-applications', 'SeekerPagesController@ongoingApplications')->name('ongoing-applications');
     });

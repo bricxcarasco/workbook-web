@@ -24,6 +24,7 @@
             </a>
             <ul class="dropdown">
                 <li><a href="{{ url('/provider/my-profile') }}">My Profile</a></li>
+                <li><a href="{{ url('/provider/change-password') }}">Change Password</a></li>
                 <li><a href="{{ url('/provider/my-messages') }}">Messages 
                 @if ($chat_counts > 0)
                     <span class="badge badge-danger navbar-badge">{{ $chat_counts }}</span>
