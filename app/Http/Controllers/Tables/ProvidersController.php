@@ -60,9 +60,7 @@ class ProvidersController extends Controller
     
             Provider::insert($request->all());
             
-            if (!NotificationsController::createAccount($request->email_address, $request->email_address, $randomPassword, $request->business_name)) {
-                return "Invalid";
-            }
+            NotificationsController::createAccount($request->email_address, $request->email_address, $randomPassword, $request->business_name);
     
             return "Success";
 
