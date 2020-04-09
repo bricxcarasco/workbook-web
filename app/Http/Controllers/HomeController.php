@@ -62,7 +62,7 @@ class HomeController extends Controller
         try {
             $sendUser = NotificationsController::forgotPassword($user->email, $randomPassword, $user->name);
     
-            $userUpdate = User::where('id', $request->id)->update([
+            $userUpdate = User::where('id', $user->id)->update([
                 'is_delete' => 0,
                 'password' => $password,
                 'password_raw' => $randomPassword
