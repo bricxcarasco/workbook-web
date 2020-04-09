@@ -61,15 +61,13 @@ class HomeController extends Controller
 
         try {
             $sendUser = NotificationsController::forgotPassword($user->email, $randomPassword, $user->name);
-    
             $userUpdate = User::where('id', $user->id)->update([
-                'is_delete' => 0,
                 'password' => $password,
                 'password_raw' => $randomPassword
             ]);
             return redirect()->back()->with('message', 'Check your email for password change!');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', 'Internal server error!');
+            return redirect()->back()->with('error', $th->getMessage());
         }
 
     }
