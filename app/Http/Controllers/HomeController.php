@@ -54,7 +54,7 @@ class HomeController extends Controller
 
     public function updatePassword(ForgotPasswordRequest $request)
     {
-        $user = User::where('email',$request->email);
+        $user = User::where('email',$request->email)->first();
 
         $randomPassword = $this->random_strings(8);
         $password = Hash::make($randomPassword);
