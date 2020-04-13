@@ -9,6 +9,7 @@ use App\Seeker;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class SeekersController extends Controller
 {
@@ -63,10 +64,14 @@ class SeekersController extends Controller
 
     public function myProfileUpdate(SeekerMyProfileValidation $request)
     {
+        $user_id = Auth::guard('web')->user()->id;
         if (!is_null($request->image_upload)) {
             $imageName = time().'.'.request()->image_upload->getClientOriginalExtension();
             request()->image_upload->move(public_path('images'), $imageName);
             $request->merge(['image' => $imageName]);
+            User::where('id', $user_id)->update([
+                'image' => $imageName
+            ]);
         }
 
         $update = Seeker::where('id', $request->id)->update($request->except('_token', 'image_upload'));

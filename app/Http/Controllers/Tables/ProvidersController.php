@@ -119,10 +119,14 @@ class ProvidersController extends Controller
 
     public function myProfileUpdate(MyProfileValidation $request)
     {
+        $user_id = Auth::guard('web')->user()->id;
         if (!is_null($request->image_upload)) {
             $imageName = time().'.'.request()->image_upload->getClientOriginalExtension();
             request()->image_upload->move(public_path('images'), $imageName);
             $request->merge(['image' => $imageName]);
+            User::where('id', $user_id)->update([
+                'image' => $imageName
+            ]);
         }
 
         $update = Provider::where('id', $request->id)->update($request->except('_token', 'image_upload'));
