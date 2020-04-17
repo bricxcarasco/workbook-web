@@ -65,7 +65,7 @@
                 </label>
                   <input type="file" class="form-control" name="image_upload">
                 @if ($errors->has('image_upload'))
-                    {{ $errors->first('image_upload') }}
+                    <span style="color: red; font-style: italic;">{{ $errors->first('image_upload') }}</span>
                 @endif
               </div>
 
@@ -75,7 +75,7 @@
                 <label for="full_name">Business Name</label>
                 <input type="text" class="form-control" name="full_name" value="{{ $seeker->full_name }}" placeholder="Business Name">
                 @if ($errors->has('full_name'))
-                    {{ $errors->first('full_name') }}
+                    <span style="color: red; font-style: italic;">{{ $errors->first('full_name') }}</span>
                 @endif
               </div>
 
@@ -83,7 +83,7 @@
                 <label for="birth_date">Birth Date</label>
                 <input type="text" class="form-control" name="birth_date" value="{{ $seeker->birth_date }}" placeholder="Birth Date">
                 @if ($errors->has('birth_date'))
-                    {{ $errors->first('birth_date') }}
+                    <span style="color: red; font-style: italic;">{{ $errors->first('birth_date') }}</span>
                 @endif
               </div>
 
@@ -91,7 +91,7 @@
                 <label for="gender">Gender</label>
                 <input type="text" class="form-control" name="gender" value="{{ $seeker->gender }}" placeholder="Gender">
                 @if ($errors->has('gender'))
-                    {{ $errors->first('gender') }}
+                    <span style="color: red; font-style: italic;">{{ $errors->first('gender') }}</span>
                 @endif
               </div>
 
@@ -99,7 +99,7 @@
                 <label for="civil_status">Civil Status</label>
                 <input type="text" class="form-control" name="civil_status" value="{{ $seeker->civil_status }}" placeholder="Civil Status">
                 @if ($errors->has('civil_status'))
-                    {{ $errors->first('civil_status') }}
+                    <span style="color: red; font-style: italic;">{{ $errors->first('civil_status') }}</span>
                 @endif
               </div>
 
@@ -107,7 +107,7 @@
                 <label for="address">Address</label>
                 <input type="text" class="form-control" name="address" value="{{ $seeker->address }}" placeholder="Email Address">
                 @if ($errors->has('address'))
-                    {{ $errors->first('address') }}
+                    <span style="color: red; font-style: italic;">{{ $errors->first('address') }}</span>
                 @endif
               </div>
 
@@ -115,7 +115,7 @@
                 <label for="telephone_number">Telephone Number</label>
                 <input type="text" class="form-control" name="telephone_number" value="{{ $seeker->telephone_number }}" placeholder="Email telephone_number">
                 @if ($errors->has('telephone_number'))
-                    {{ $errors->first('telephone_number') }}
+                    <span style="color: red; font-style: italic;">{{ $errors->first('telephone_number') }}</span>
                 @endif
               </div>
 
@@ -123,7 +123,7 @@
                 <label for="mobile_number">Mobile Number</label>
                 <input type="text" class="form-control" name="mobile_number" value="{{ $seeker->mobile_number }}" placeholder="Email mobile_number">
                 @if ($errors->has('mobile_number'))
-                    {{ $errors->first('mobile_number') }}
+                    <span style="color: red; font-style: italic;">{{ $errors->first('mobile_number') }}</span>
                 @endif
               </div>
 
@@ -131,7 +131,7 @@
                 <label for="email_address">Email Address</label>
                 <input type="text" class="form-control" name="email_address" value="{{ $seeker->email_address }}" placeholder="Email Address">
                 @if ($errors->has('email_address'))
-                    {{ $errors->first('email_address') }}
+                    <span style="color: red; font-style: italic;">{{ $errors->first('email_address') }}</span>
                 @endif
               </div>
 
@@ -141,7 +141,7 @@
                 <label for="high_school">High School</label>
                 <input type="text" class="form-control" name="high_school" value="{{ $seeker->high_school }}" placeholder="high_school">
                 @if ($errors->has('high_school'))
-                    {{ $errors->first('high_school') }}
+                    <span style="color: red; font-style: italic;">{{ $errors->first('high_school') }}</span>
                 @endif      
               </div>
 
@@ -149,7 +149,7 @@
                 <label for="high_school_year">Year Graduated</label>
                 <input type="text" class="form-control" name="high_school_year" value="{{ $seeker->high_school_year }}" placeholder="high_school_year">
                 @if ($errors->has('high_school_year'))
-                    {{ $errors->first('high_school_year') }}
+                    <span style="color: red; font-style: italic;">{{ $errors->first('high_school_year') }}</span>
                 @endif
               </div>
 
@@ -157,7 +157,7 @@
                 <label for="college">College</label>
                 <input type="text" class="form-control" name="college" value="{{ $seeker->college }}" placeholder="college">
                 @if ($errors->has('college'))
-                    {{ $errors->first('college') }}
+                    <span style="color: red; font-style: italic;">{{ $errors->first('college') }}</span>
                 @endif
               </div>
 
@@ -165,7 +165,7 @@
                 <label for="college_year">Year Graduated</label>
                 <input type="text" class="form-control" name="college_year" value="{{ $seeker->college_year }}" placeholder="college_year">
                 @if ($errors->has('college_year'))
-                    {{ $errors->first('college_year') }}
+                    <span style="color: red; font-style: italic;">{{ $errors->first('college_year') }}</span>
                 @endif
               </div>
           </div>

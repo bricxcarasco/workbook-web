@@ -65,7 +65,7 @@
                 </label>
                   <input type="file" class="form-control" name="image_upload">
                 @if ($errors->has('image_upload'))
-                    {{ $errors->first('image_upload') }}
+                    <span style="color: red; font-style: italic;">{{ $errors->first('image_upload') }}</span>
                 @endif
               </div>
 
@@ -75,7 +75,7 @@
                 <label for="business_name">Business Name</label>
                 <input type="text" class="form-control" name="business_name" value="{{ $provider->business_name }}" placeholder="Business Name">
                 @if ($errors->has('business_name'))
-                    {{ $errors->first('business_name') }}
+                    <span style="color: red; font-style: italic;">{{ $errors->first('business_name') }}</span>
                 @endif
               </div>
 
@@ -83,7 +83,7 @@
                 <label for="business_type">Business Type</label>
                 <input type="text" class="form-control" name="business_type" value="{{ $provider->business_type }}" placeholder="Business Type">
                 @if ($errors->has('business_type'))
-                    {{ $errors->first('business_type') }}
+                    <span style="color: red; font-style: italic;">{{ $errors->first('business_type') }}</span>
                 @endif
               </div>
 
@@ -91,7 +91,7 @@
                 <label for="email_address">Email Address</label>
                 <input type="text" class="form-control" name="email_address" value="{{ $provider->email_address }}" placeholder="Email Address">
                 @if ($errors->has('email_address'))
-                    {{ $errors->first('email_address') }}
+                    <span style="color: red; font-style: italic;">{{ $errors->first('email_address') }}</span>
                 @endif
               </div>
               
@@ -99,7 +99,7 @@
                 <label for="mailing_address">Location</label>
                 <input type="text" class="form-control" name="mailing_address" value="{{ $provider->mailing_address }}" placeholder="Location">
                 @if ($errors->has('mailing_address'))
-                    {{ $errors->first('mailing_address') }}
+                    <span style="color: red; font-style: italic;">{{ $errors->first('mailing_address') }}</span>
                 @endif
               </div>
 
@@ -107,7 +107,7 @@
                 <label for="profile_desc">Profile Description</label>
                 <input type="text" class="form-control" name="profile_desc" value="{{ $provider->profile_desc }}" placeholder="Profile Description">
                 @if ($errors->has('profile_desc'))
-                    {{ $errors->first('profile_desc') }}
+                    <span style="color: red; font-style: italic;">{{ $errors->first('profile_desc') }}</span>
                 @endif
               </div>
 
@@ -117,7 +117,7 @@
                 <label for="facebook">Facebook Username (Optional)</label>
                 <input type="text" class="form-control" name="facebook" value="{{ $provider->facebook }}" placeholder="Facebook">
                 @if ($errors->has('facebook'))
-                    {{ $errors->first('facebook') }}
+                    <span style="color: red; font-style: italic;">{{ $errors->first('facebook') }}</span>
                 @endif      
               </div>
 
@@ -125,7 +125,7 @@
                 <label for="twitter">Twitter Username (Optional)</label>
                 <input type="text" class="form-control" name="twitter" value="{{ $provider->twitter }}" placeholder="Twitter">
                 @if ($errors->has('twitter'))
-                    {{ $errors->first('twitter') }}
+                    <span style="color: red; font-style: italic;">{{ $errors->first('twitter') }}</span>
                 @endif
               </div>
 
@@ -133,7 +133,7 @@
                 <label for="instagram">Instagram Account (Optional)</label>
                 <input type="text" class="form-control" name="instagram" value="{{ $provider->instagram }}" placeholder="Instagram">
                 @if ($errors->has('affiliation'))
-                    {{ $errors->first('affiliation') }}
+                    <span style="color: red; font-style: italic;">{{ $errors->first('affiliation') }}</span>
                 @endif
               </div>
 
@@ -141,7 +141,7 @@
                 <label for="affiliation">Affiliation</label>
                 <input type="text" class="form-control" name="affiliation" value="{{ $provider->affiliation }}" placeholder="Affiliation">
                 @if ($errors->has('affiliation'))
-                    {{ $errors->first('affiliation') }}
+                    <span style="color: red; font-style: italic;">{{ $errors->first('affiliation') }}</span>
                 @endif
               </div>
           </div>
