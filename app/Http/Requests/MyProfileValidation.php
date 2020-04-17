@@ -21,10 +21,10 @@ class MyProfileValidation extends FormRequest
             'email_address' => 'bail|required|email',
             'mailing_address' => 'bail|required',
             'profile_desc' => 'bail|required',
-            'facebook' => 'bail|required',
-            'twitter' => 'bail|required',
-            'instagram' => 'bail|required',
-            'affiliation' => 'bail|required',
+            'facebook' => 'bail|nullable',
+            'twitter' => 'bail|nullable',
+            'instagram' => 'bail|nullable',
+            'affiliation' => 'bail|nullable',
             'image_upload' => 'bail|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
