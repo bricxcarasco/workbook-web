@@ -60,9 +60,10 @@
               <div class="form-group">
                 <img src="{{ asset('images') }}/{{ $provider->image }}" style="width: 200px; height: 200px;" class="img-fluid mb-4 w-20 rounded-circle"><br>
                 <label for="company-website-tw d-block">Upload Featured Image</label> <br>
-                <label class="btn btn-primary btn-md btn-file">
-                  Browse File<input type="file" name="image_upload">
+                <label class="">
+                  Browse File
                 </label>
+                  <input type="file" class="form-control" name="image_upload">
                 @if ($errors->has('image_upload'))
                     {{ $errors->first('image_upload') }}
                 @endif
