@@ -132,7 +132,7 @@
                                               <div class="d-flex justify-content-between align-items-center">
                                                   <div class="d-flex justify-content-between align-items-center viewCom" style="cursor: hand;" id="{{ $listing }}" title="View company information">
                                                       <div class="mr-2" >
-                                                          @if (empty($listing->p_image))
+                                                          @if (!empty($listing->p_image))
                                                             <img class="rounded-circle" width="50" height="50" src="{{ asset('images') }}/{{ $listing->p_image }}" alt="">
                                                           @else
                                                             <img class="rounded-circle" width="50" height="50" src="https://picsum.photos/50/50" alt="">
