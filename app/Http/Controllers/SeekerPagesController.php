@@ -41,6 +41,7 @@ class SeekerPagesController extends Controller
         $providers = Provider::where('is_delete', 0)->get();
         $user = Auth::guard('web')->user();
         $seeker = Seeker::where('user_id', $user->id)->first();
+        // return compact('profile', 'chat_counts', 'regulars','quicks','providers','user','seeker');
         return view('seeker.find-jobs', compact('profile', 'chat_counts', 'regulars','quicks','providers','user','seeker'));
     }
 

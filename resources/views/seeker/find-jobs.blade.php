@@ -553,16 +553,16 @@
           
 
           if (!listing.p_image) {
-            $("#viewRegularJobModal #imageFe").attr("src","images/default-job.png");
+            $("#viewRegularJobModal #imageFe").attr("src","/images/default-job.png");
           } else {
-            let src = 'images/'+listing.p_image;
+            let src = '/images/'+listing.p_image;
             $("#viewRegularJobModal #imageFe").attr("src",src);
           }
 
           if (!listing.image) {
-            $("#viewRegularJobModal #imageBig").attr("src","images/default-job.png");
+            $("#viewRegularJobModal #imageBig").attr("src","/images/default-job.png");
           } else {
-            let src = 'images/'+listing.image;
+            let src = '/images/'+listing.image;
             $("#viewRegularJobModal #imageBig").attr("src",src);
           }
 
