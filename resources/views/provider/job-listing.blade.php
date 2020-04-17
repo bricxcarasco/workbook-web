@@ -62,11 +62,11 @@
                   <img src="{{ asset('images') }}/{{ $listing->image }}" style="width:150px; height: 150px;" class="img-fluid rounded mb-4">
                 @endif
               </div>
-
+              
               <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
                 <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
                   <h2>{{ $listing->title }}</h2>
-                  <strong>{{ $listing->details }}</strong>
+                  <strong>{{ str_replace('&nbsp;', ' ', strip_tags($listing->details)) }}</strong>
                 </div>
                 <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25">
                   <span class="icon-room"></span> {{ $listing->barangay.' '.$listing->municipality.' '.$listing->postal }}
