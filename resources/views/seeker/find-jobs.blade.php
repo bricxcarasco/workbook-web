@@ -82,7 +82,7 @@
                                 @if (empty($seeker->image))
                                   <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
                                 @else
-                                  <img class="rounded-circle" width="45" src="{{ asset('images') }}/{{ $seeker->image }}" alt="">
+                                  <img class="rounded-circle" width="50" height="50" src="{{ asset('images') }}/{{ $seeker->image }}" alt="">
                                 @endif
                                 
                                 <div class="h5">{{ $seeker->full_name }}</div>
@@ -126,71 +126,71 @@
 
                                     <div class="tab-pane fade show active" id="jobs" role="tabpanel" aria-labelledby="jobs-tab">
                                         
-                                        @foreach ($regulars as $listing)
-                                          <div class="card gedf-card">
-                                            <div class="card-header">
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <div class="d-flex justify-content-between align-items-center viewCom" style="cursor: hand;" id="{{ $listing }}" title="View company information">
-                                                        <div class="mr-2" >
-                                                            @if (empty($listing->p_image))
-                                                              <img class="rounded-circle" width="45" src="{{ asset('images') }}/{{ $listing->p_image }}" alt="">
-                                                            @else
-                                                              <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
-                                                            @endif
-                                                        </div>
-                                                        <div class="ml-2">
-                                                            <div class="h5 m-0">{{ $listing->business_name }}</div>
-                                                            <div class="h7 text-muted">{{ $listing->email_address }}</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i> {{ $listing->created_date }}</div>
-                                                <a class="card-link viewJob" id="{{ $listing }}" href="#" title="View job information">
-                                                    <h5 class="card-title">
-                                                      {{ $listing->title }}
-                                                    </h5>
-                                                </a>
-                
-                                                <p class="card-text">
-                                                  @if (strlen(strip_tags($listing->details)) > 100)
-                                                    {{ substr(strip_tags($listing->details),0,100)."..." }}
-                                                  @else
-                                                    {{ strip_tags($listing->details) }}
-                                                  @endif
-                                                </p>
-
-                                                <p class="card-text">
-                                                  <i class="fa fa-map-marker"></i> {{ $listing->barangay.' '.$listing->municipality.' '.$listing->postal }}
-                                                </p>
-
-                                                <p class="card-text">
-                                                  <i class="fa fa-users"></i> Slots Available : {{ $listing->slots }}
-                                                </p>
-                                                
-                                                <div>
-                                                  <i class="fa fa-money" aria-hidden="true"></i>{{ ' Php. '.number_format($listing->min_offer, 2, '.', ',').' - Php. '.number_format($listing->max_offer, 2, '.', ',') }}
-                                                </div>
-
-                                                <br>
-                                                <div class="row">
-                                                  {{-- <div class="col-6">
-                                                    <a href="#" class="btn btn-block btn-light btn-sm"><span class="icon-heart-o mr-2 text-danger"></span>Save Job</a>
-                                                  </div> --}}
-                                                  <div class="col-12">
-                                                    <a href="/apply/listing_job/{{ $listing->id }}" class="btn btn-block btn-primary btn-sm">Apply Now</a>
+                                      @foreach ($regulars as $listing)
+                                        <div class="card gedf-card">
+                                          <div class="card-header">
+                                              <div class="d-flex justify-content-between align-items-center">
+                                                  <div class="d-flex justify-content-between align-items-center viewCom" style="cursor: hand;" id="{{ $listing }}" title="View company information">
+                                                      <div class="mr-2" >
+                                                          @if (empty($listing->p_image))
+                                                            <img class="rounded-circle" width="50" height="50" src="{{ asset('images') }}/{{ $listing->p_image }}" alt="">
+                                                          @else
+                                                            <img class="rounded-circle" width="50" height="50" src="https://picsum.photos/50/50" alt="">
+                                                          @endif
+                                                      </div>
+                                                      <div class="ml-2">
+                                                          <div class="h5 m-0">{{ $listing->business_name }}</div>
+                                                          <div class="h7 text-muted">{{ $listing->email_address }}</div>
+                                                      </div>
                                                   </div>
-                                                </div>
-
-                                            </div>
-                                            {{-- <div class="card-footer">
-                                                <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
-                                                <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
-                                                <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
-                                            </div> --}}
+                                              </div>
                                           </div>
-                                        @endforeach                                      
+                                          <div class="card-body">
+                                              <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i> {{ $listing->created_date }}</div>
+                                              <a class="card-link viewJob" id="{{ $listing }}" href="#" title="View job information">
+                                                  <h5 class="card-title">
+                                                    {{ $listing->title }}
+                                                  </h5>
+                                              </a>
+              
+                                              <p class="card-text">
+                                                @if (strlen(strip_tags($listing->details)) > 100)
+                                                  {{ str_replace('&nbsp;', ' ', substr(strip_tags($listing->details),0,100))."..." }}
+                                                @else
+                                                  {{ str_replace('&nbsp;', ' ', strip_tags($listing->details)) }}
+                                                @endif
+                                              </p>
+
+                                              <p class="card-text">
+                                                <i class="fa fa-map-marker"></i> {{ $listing->barangay.' '.$listing->municipality.' '.$listing->postal }}
+                                              </p>
+
+                                              <p class="card-text">
+                                                <i class="fa fa-users"></i> Slots Available : {{ $listing->slots }}
+                                              </p>
+                                              
+                                              <div>
+                                                <i class="fa fa-money" aria-hidden="true"></i>{{ ' Php. '.number_format($listing->min_offer, 2, '.', ',').' - Php. '.number_format($listing->max_offer, 2, '.', ',') }}
+                                              </div>
+
+                                              <br>
+                                              <div class="row">
+                                                {{-- <div class="col-6">
+                                                  <a href="#" class="btn btn-block btn-light btn-sm"><span class="icon-heart-o mr-2 text-danger"></span>Save Job</a>
+                                                </div> --}}
+                                                <div class="col-12">
+                                                  <a href="/apply/listing_job/{{ $listing->id }}" class="btn btn-block btn-primary btn-sm">Apply Now</a>
+                                                </div>
+                                              </div>
+
+                                          </div>
+                                          {{-- <div class="card-footer">
+                                              <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
+                                              <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
+                                              <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
+                                          </div> --}}
+                                        </div>
+                                      @endforeach                                      
 
                                     </div>
 
@@ -203,10 +203,10 @@
                                                   <div class="d-flex justify-content-between align-items-center viewCom" style="cursor: hand;" id="{{ $quick }}" title="View company information">
                                                       <div class="mr-2">
                                                           @if (empty($quick->p_image))
-                                                              <img class="rounded-circle" width="45" src="{{ asset('images') }}/{{ $quick->p_image }}" alt="">
-                                                            @else
-                                                              <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
-                                                            @endif
+                                                            <img class="rounded-circle" width="50" height="50" src="https://picsum.photos/50/50" alt="">
+                                                          @else
+                                                            <img class="rounded-circle" width="50" height="50" src="{{ asset('images') }}/{{ $quick->p_image }}" alt="">
+                                                          @endif
                                                       </div>
                                                       <div class="ml-2">
                                                         <div class="h5 m-0">{{ $quick->business_name }}</div>
@@ -232,9 +232,9 @@
                                             </h4>
                                               <p class="card-text">
                                                 @if (strlen(strip_tags($quick->request)) > 150)
-                                                {{ substr(strip_tags($quick->request),0,150)."..." }}
+                                                {{ str_replace('&nbsp;', ' ', substr(strip_tags($quick->request),0,150))."..." }}
                                               @else
-                                                {{ strip_tags($quick->request) }}
+                                                {{ str_replace('&nbsp;', ' ', strip_tags($quick->request)) }}
                                               @endif
                                               </p>
 
@@ -514,7 +514,7 @@
           let listing = JSON.parse($(this).attr('id'));
           $("#viewRegularJobModal").modal('show');
           $("#viewRegularJobModal #title").text(listing.title);
-          $("#viewRegularJobModal #description").text(listing.details);
+          $("#viewRegularJobModal #description").text( listing.details.replace(/<\/?[^>]+(>|$)/g, "").replace("&nbsp;", " ").replace("&#39;", "'") );
           $("#viewRegularJobModal #location").text(listing.location);
           $("#viewRegularJobModal #tags").text(listing.tags);
           $("#viewRegularJobModal #created_at").text(listing.created_at);
