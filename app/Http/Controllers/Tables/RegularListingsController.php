@@ -10,6 +10,7 @@ use App\Http\Requests\ApplyRegularJobValidation;
 use App\RegularListing;
 use App\Seeker;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class RegularListingsController extends Controller
 {

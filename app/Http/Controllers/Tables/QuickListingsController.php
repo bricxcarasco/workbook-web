@@ -10,6 +10,7 @@ use App\Http\Requests\ApplyQuickJobValidation;
 use App\QuickListing;
 use App\Seeker;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class QuickListingsController extends Controller
 {
