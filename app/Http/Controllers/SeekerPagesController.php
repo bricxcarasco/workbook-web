@@ -29,6 +29,7 @@ class SeekerPagesController extends Controller
             ->where('regular_listings.status', 0)
             ->leftJoin('providers', 'regular_listings.user_id', '=', 'providers.user_id')
             ->select('regular_listings.*', 'providers.business_name', 'providers.business_type', 'providers.image as p_image', 'providers.email_address', 'providers.mailing_address', 'providers.telephone_number', 'providers.mobile_number', 'providers.facebook', 'providers.twitter', 'providers.instagram', 'providers.affiliation')
+            ->orderBy('regular_listings.id', 'DESC')
             ->get();
         
         $quicks = QuickListing::where('quick_listings.is_delete', 0)
@@ -36,6 +37,7 @@ class SeekerPagesController extends Controller
             ->leftJoin('providers', 'quick_listings.user_id', '=', 'providers.user_id')
             ->leftJoin('work_classes', 'quick_listings.tag', '=', 'work_classes.id')
             ->select('quick_listings.*', 'providers.business_name', 'providers.business_type', 'providers.image as p_image', 'providers.email_address','work_classes.title', 'work_classes.description', 'providers.mailing_address', 'providers.telephone_number', 'providers.mobile_number', 'providers.facebook', 'providers.twitter', 'providers.instagram', 'providers.affiliation')
+            ->orderBy('quick_listings.id', 'DESC')
             ->get();
 
         $providers = Provider::where('is_delete', 0)->get();
