@@ -700,8 +700,8 @@
         let image = `/images/${data.valid_id}`;
         let resume = `/images/${data.resume}`;
         $("#viewAttch").modal('show');
-        $("#viewAttch #valid_id").attr('src', image);
-        $("#viewAttch #resume").attr('href', resume);
+        $("#viewAttch #valid_id").attr('src', data.valid_id);
+        $("#viewAttch #resume").attr('href', data.resume);
         $("#viewAttch #labelRes").text(data.resume);
         
       }

@@ -556,14 +556,14 @@
             $("#viewRegularJobModal #imageFe").attr("src","/images/default-job.png");
           } else {
             let src = '/images/'+listing.p_image;
-            $("#viewRegularJobModal #imageFe").attr("src",src);
+            $("#viewRegularJobModal #imageFe").attr("src",listing.p_image);
           }
 
           if (!listing.image) {
             $("#viewRegularJobModal #imageBig").attr("src","/images/default-job.png");
           } else {
             let src = '/images/'+listing.image;
-            $("#viewRegularJobModal #imageBig").attr("src",src);
+            $("#viewRegularJobModal #imageBig").attr("src",listing.image);
           }
 
         });
