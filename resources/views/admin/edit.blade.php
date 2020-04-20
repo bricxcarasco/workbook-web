@@ -68,7 +68,7 @@
 
                 <form action="/administrator/edit" method="post" enctype="multipart/form-data">
 
-                  <img src="{{ asset('images') }}/{{ $edit_user->image }}" style="width: 200px; height: 200px;" class="img-fluid mb-4 w-20 rounded-circle"><br>
+                  <img src="{{ $edit_user->image }}" style="width: 200px; height: 200px;" class="img-fluid mb-4 w-20 rounded-circle"><br>
 
                   @csrf
                   <label for="">Image</label>

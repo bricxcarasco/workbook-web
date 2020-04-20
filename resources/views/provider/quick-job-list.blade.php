@@ -65,7 +65,7 @@
                 @if (empty($quick_job->image))
                   <img src="{{ asset('images/default-job.png') }}" style="width:150px; height: 150px;" class="img-fluid rounded mb-4 float-right">
                 @else
-                  <img src="{{ asset('images') }}/{{ $quick_job->image }}" style="width:150px; height: 150px;" class="img-fluid rounded mb-4 float-right">
+                  <img src="{{ $quick_job->image }}" style="width:150px; height: 150px;" class="img-fluid rounded mb-4 float-right">
                 @endif
 
                 <h5 class="card-title">{{ $quick_job->description }}</h5>

@@ -16,6 +16,7 @@ use App\UserLog;
 use Illuminate\Support\Facades\Auth;
 use App\Seeker;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 use stdClass;
 
 class AdministratorsController extends Controller
@@ -104,8 +105,16 @@ class AdministratorsController extends Controller
     public function addAdministrator(AddAdministratorRequest $request)
     {
         if (!is_null($request->image_upload)) {
-            $imageName = time().'.'.request()->image_upload->getClientOriginalExtension();
-            request()->image_upload->move(public_path('images'), $imageName);
+            // $imageName = time().'.'.request()->image_upload->getClientOriginalExtension();
+            // request()->image_upload->move(public_path('images'), $imageName);
+            // $request->merge(['image_new' => $imageName]);
+
+            $file = $request->file('image_upload');
+            $name = time() . '.' . $file->getClientOriginalExtension();
+            $filePath = 'uploads/' . $name;
+            Storage::disk('s3')->put($filePath, file_get_contents($file));
+            $imageName = 'https://sample-bucket-gss.s3-ap-northeast-1.amazonaws.com/uploads/'.$name;
+
             $request->merge(['image_new' => $imageName]);
         }
 
@@ -134,8 +143,17 @@ class AdministratorsController extends Controller
         ];
 
         if (!is_null($request->image_upload)) {
-            $imageName = time().'.'.request()->image_upload->getClientOriginalExtension();
-            request()->image_upload->move(public_path('images'), $imageName);
+            // $imageName = time().'.'.request()->image_upload->getClientOriginalExtension();
+            // request()->image_upload->move(public_path('images'), $imageName);
+            // $request->merge(['image_new' => $imageName]);
+            // $data['image'] = $imageName;
+
+            $file = $request->file('image_upload');
+            $name = time() . '.' . $file->getClientOriginalExtension();
+            $filePath = 'uploads/' . $name;
+            Storage::disk('s3')->put($filePath, file_get_contents($file));
+            $imageName = 'https://sample-bucket-gss.s3-ap-northeast-1.amazonaws.com/uploads/'.$name;
+
             $request->merge(['image_new' => $imageName]);
             $data['image'] = $imageName;
         }

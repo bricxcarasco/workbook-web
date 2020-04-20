@@ -121,9 +121,18 @@ class ProvidersController extends Controller
     {
         $user_id = Auth::guard('web')->user()->id;
         if (!is_null($request->image_upload)) {
-            $imageName = time().'.'.request()->image_upload->getClientOriginalExtension();
-            request()->image_upload->move(public_path('images'), $imageName);
+            // $imageName = time().'.'.request()->image_upload->getClientOriginalExtension();
+            // request()->image_upload->move(public_path('images'), $imageName);
+            // $request->merge(['image' => $imageName]);
+
+            $file = $request->file('image_upload');
+            $name = time() . '.' . $file->getClientOriginalExtension();
+            $filePath = 'uploads/' . $name;
+            Storage::disk('s3')->put($filePath, file_get_contents($file));
+            $imageName = 'https://sample-bucket-gss.s3-ap-northeast-1.amazonaws.com/uploads/'.$name;
+
             $request->merge(['image' => $imageName]);
+
             User::where('id', $user_id)->update([
                 'image' => $imageName
             ]);
@@ -149,14 +158,30 @@ class ProvidersController extends Controller
     public function postJobAdd(PostRegularJobAddValidation $request)
     {
         if (!is_null($request->image_upload)) {
-            $imageName = time().'.'.request()->image_upload->getClientOriginalExtension();
-            request()->image_upload->move(public_path('images'), $imageName);
+            // $imageName = time().'.'.request()->image_upload->getClientOriginalExtension();
+            // request()->image_upload->move(public_path('images'), $imageName);
+            // $request->merge(['image' => $imageName]);
+
+            $file = $request->file('image_upload');
+            $name = time() . '.' . $file->getClientOriginalExtension();
+            $filePath = 'uploads/' . $name;
+            Storage::disk('s3')->put($filePath, file_get_contents($file));
+            $imageName = 'https://sample-bucket-gss.s3-ap-northeast-1.amazonaws.com/uploads/'.$name;
+
             $request->merge(['image' => $imageName]);
         }
 
         if (!is_null($request->dti)) {
-            $dtiImageName = time().'.'.request()->dti->getClientOriginalExtension();
-            request()->dti->move(public_path('images'), $dtiImageName);
+            // $dtiImageName = time().'.'.request()->dti->getClientOriginalExtension();
+            // request()->dti->move(public_path('images'), $dtiImageName);
+            // $request->merge(['dti_permit' => $dtiImageName]);
+
+            $fileDTI = $request->file('dti');
+            $dtiname = time() . '.' . $fileDTI->getClientOriginalExtension();
+            $fileDTIPath = 'uploads/' . $dtiname;
+            Storage::disk('s3')->put($fileDTIPath, file_get_contents($fileDTI));
+            $dtiImageName = 'https://sample-bucket-gss.s3-ap-northeast-1.amazonaws.com/uploads/'.$dtiname;
+
             $request->merge(['dti_permit' => $dtiImageName]);
         }
 
@@ -175,14 +200,30 @@ class ProvidersController extends Controller
     public function postJobEdit(PostRegularJobEditValidation $request)
     {   
         if (!is_null($request->image_upload)) {
-            $imageName = time().'.'.request()->image_upload->getClientOriginalExtension();
-            request()->image_upload->move(public_path('images'), $imageName);
+            // $imageName = time().'.'.request()->image_upload->getClientOriginalExtension();
+            // request()->image_upload->move(public_path('images'), $imageName);
+            // $request->merge(['image' => $imageName]);
+
+            $file = $request->file('image_upload');
+            $name = time() . '.' . $file->getClientOriginalExtension();
+            $filePath = 'uploads/' . $name;
+            Storage::disk('s3')->put($filePath, file_get_contents($file));
+            $imageName = 'https://sample-bucket-gss.s3-ap-northeast-1.amazonaws.com/uploads/'.$name;
+
             $request->merge(['image' => $imageName]);
         }
 
         if (!is_null($request->dti)) {
-            $dtiImageName = time().'.'.request()->dti->getClientOriginalExtension();
-            request()->dti->move(public_path('images'), $dtiImageName);
+            // $dtiImageName = time().'.'.request()->dti->getClientOriginalExtension();
+            // request()->dti->move(public_path('images'), $dtiImageName);
+            // $request->merge(['dti_permit' => $dtiImageName]);
+
+            $fileDTI = $request->file('dti');
+            $dtiname = time() . '.' . $fileDTI->getClientOriginalExtension();
+            $fileDTIPath = 'uploads/' . $dtiname;
+            Storage::disk('s3')->put($fileDTIPath, file_get_contents($fileDTI));
+            $dtiImageName = 'https://sample-bucket-gss.s3-ap-northeast-1.amazonaws.com/uploads/'.$dtiname;
+
             $request->merge(['dti_permit' => $dtiImageName]);
         }
 

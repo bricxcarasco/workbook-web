@@ -93,7 +93,7 @@
                         @if (empty($category->image))
                             <img src="{{ asset('images/default-job.png') }}" style="width:150px; height: 150px;" class="img-fluid">
                         @else
-                            <img src="{{ asset('images') }}/{{ $category->image }}" style="width:150px; height: 150px;" class="img-fluid">
+                            <img src="{{ $category->image }}" style="width:150px; height: 150px;" class="img-fluid">
                         @endif
 
                         <br><br>

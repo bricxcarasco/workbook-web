@@ -66,9 +66,18 @@ class SeekersController extends Controller
     {
         $user_id = Auth::guard('web')->user()->id;
         if (!is_null($request->image_upload)) {
-            $imageName = time().'.'.request()->image_upload->getClientOriginalExtension();
-            request()->image_upload->move(public_path('images'), $imageName);
+            // $imageName = time().'.'.request()->image_upload->getClientOriginalExtension();
+            // request()->image_upload->move(public_path('images'), $imageName);
+            // $request->merge(['image' => $imageName]);
+
+            $file = $request->file('image_upload');
+            $name = time() . '.' . $file->getClientOriginalExtension();
+            $filePath = 'uploads/' . $name;
+            Storage::disk('s3')->put($filePath, file_get_contents($file));
+            $imageName = 'https://sample-bucket-gss.s3-ap-northeast-1.amazonaws.com/uploads/'.$name;
+
             $request->merge(['image' => $imageName]);
+
             User::where('id', $user_id)->update([
                 'image' => $imageName
             ]);

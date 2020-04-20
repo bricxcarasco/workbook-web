@@ -82,7 +82,7 @@
                                 @if (empty($seeker->image))
                                   <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
                                 @else
-                                  <img class="rounded-circle" width="50" height="50" src="{{ asset('images') }}/{{ $seeker->image }}" alt="">
+                                  <img class="rounded-circle" width="50" height="50" src="{{ $seeker->image }}" alt="">
                                 @endif
                                 
                                 <div class="h5">{{ $seeker->full_name }}</div>
@@ -133,7 +133,7 @@
                                                   <div class="d-flex justify-content-between align-items-center viewCom" style="cursor: hand;" id="{{ $listing }}" title="View company information">
                                                       <div class="mr-2" >
                                                           @if (!empty($listing->p_image))
-                                                            <img class="rounded-circle" width="50" height="50" src="{{ asset('images') }}/{{ $listing->p_image }}" alt="">
+                                                            <img class="rounded-circle" width="50" height="50" src="{{ $listing->p_image }}" alt="">
                                                           @else
                                                             <img class="rounded-circle" width="50" height="50" src="https://picsum.photos/50/50" alt="">
                                                           @endif
@@ -205,7 +205,7 @@
                                                           @if (empty($quick->p_image))
                                                             <img class="rounded-circle" width="50" height="50" src="https://picsum.photos/50/50" alt="">
                                                           @else
-                                                            <img class="rounded-circle" width="50" height="50" src="{{ asset('images') }}/{{ $quick->p_image }}" alt="">
+                                                            <img class="rounded-circle" width="50" height="50" src="{{ $quick->p_image }}" alt="">
                                                           @endif
                                                       </div>
                                                       <div class="ml-2">
@@ -283,7 +283,7 @@
                             @if (empty($provider->image))
                               <img class="card-img-top" src="{{ asset('images/default-job.png') }}" alt="Card image cap">
                             @else
-                              <img class="card-img-top" src="{{ asset('images') }}/{{ $provider->image }}" alt="Card image cap">
+                              <img class="card-img-top" src="{{ $provider->image }}" alt="Card image cap">
                             @endif
                             <div class="card-body">
                               <h5 class="card-title">{{ $provider->business_name }}</h5>

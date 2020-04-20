@@ -30,14 +30,30 @@ class RegularListingsController extends Controller
     public function applyRegularJobSend(ApplyRegularJobValidation $request)
     {
         if (!is_null($request->image_upload)) {
-            $imageName = time().'.'.request()->image_upload->getClientOriginalExtension();
-            request()->image_upload->move(public_path('images'), $imageName);
+            // $imageName = time().'.'.request()->image_upload->getClientOriginalExtension();
+            // request()->image_upload->move(public_path('images'), $imageName);
+            // $request->merge(['resume' => $imageName]);
+
+            $file = $request->file('image_upload');
+            $name = time() . '.' . $file->getClientOriginalExtension();
+            $filePath = 'uploads/' . $name;
+            Storage::disk('s3')->put($filePath, file_get_contents($file));
+            $imageName = 'https://sample-bucket-gss.s3-ap-northeast-1.amazonaws.com/uploads/'.$name;
+
             $request->merge(['resume' => $imageName]);
         }
 
         if (!is_null($request->identification)) {
-            $imageNameID = time().'.'.request()->identification->getClientOriginalExtension();
-            request()->identification->move(public_path('images'), $imageNameID);
+            // $imageNameID = time().'.'.request()->identification->getClientOriginalExtension();
+            // request()->identification->move(public_path('images'), $imageNameID);
+            // $request->merge(['valid_id' => $imageNameID]);
+
+            $fileDTI = $request->file('identification');
+            $dtiname = time() . '.' . $fileDTI->getClientOriginalExtension();
+            $fileDTIPath = 'uploads/' . $dtiname;
+            Storage::disk('s3')->put($fileDTIPath, file_get_contents($fileDTI));
+            $imageNameID = 'https://sample-bucket-gss.s3-ap-northeast-1.amazonaws.com/uploads/'.$dtiname;
+
             $request->merge(['valid_id' => $imageNameID]);
         }
 

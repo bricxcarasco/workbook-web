@@ -1,7 +1,7 @@
 <nav class="mx-auto site-navigation">
     <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
         <li class="d-lg-none"><a href="{{ url('/seeker') }}">{{ $profile->name }}</a></li>
-        <li class="d-lg-none"><a style="color: blue;" href="{{ url('/seeker') }}"><img src="{{ asset('images') }}/{{ $profile->image }}" style="width: 50px; height:50px;" class="img-circle elevation-2" alt="User Image"></a></li>
+        <li class="d-lg-none"><a style="color: blue;" href="{{ url('/seeker') }}"><img src="{{ $profile->image }}" style="width: 50px; height:50px;" class="img-circle elevation-2" alt="User Image"></a></li>
         <li><a href="{{ url('/seeker') }}" class="nav-link">Timeline</a></li>
         <li>
             <a href="{{ url('/seeker/find-jobs') }}" class="nav-link">Find Jobs</a>
