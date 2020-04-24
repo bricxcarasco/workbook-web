@@ -51,8 +51,13 @@
           <button type="button" class="close" data-dismiss="alert">&times;</button>
         </div>
 
+        <div id="enableSuccessAlert" class="alertMessage alert alert-success alert-dismissible fade show" style="display: none;" role="alert">
+          Quick job request successfully enabled!
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+
         <div id="deleteSuccessAlert" class="alertMessage alert alert-danger alert-dismissible fade show" style="display: none;" role="alert">
-          Quick job request successfully deleted!
+          Quick job request successfully disabled!
           <button type="button" class="close" data-dismiss="alert">&times;</button>
         </div>
 
@@ -78,7 +83,13 @@
                 </p>
 
                 <button id="{{ $quick_job->id }}" onclick="view(this.id)" class="btn btn-primary">View More Info</button>
-                <button id="{{ $quick_job->id }}" onclick="remove(this.id)" class="btn btn-danger">Delete</button>
+
+                @if ($quick_job->is_delete == 0) 
+                  <button id="{{ $quick_job->id }}" onclick="remove(this.id)" class="btn btn-danger">Disable</button>
+                @else
+                  <button id="{{ $quick_job->id }}" onclick="enable(this.id)" class="btn btn-warning">Enable</button>
+                @endif
+
 
                 <div style="margin-top: 20px;" class="row form-group">
                   <h5>
@@ -155,18 +166,41 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Delete Details</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Disable Details</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
             <form>
-              <label>Are you sure you want to delete this job?</label>
+              <label>Are you sure you want to disable this job?</label>
               <input type="hidden" id="id">
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-danger" id ="deleteSeeker">Delete</button>
+            <button type="button" class="btn btn-danger" id ="deleteSeeker">Disable</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="enableModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Enable Details</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <label>Are you sure you want to enable this job?</label>
+              <input type="hidden" id="id">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-warning" id ="deleteSeeker">Enable</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
           </form>
@@ -234,6 +268,28 @@
             });
         });
 
+        $('#enableModal').on('click', '#deleteSeeker', function() {
+          let id = $(this).attr('id');
+            $.ajax({
+              url: `/quick_job_list/enable`,
+              type: 'PUT',
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+              data: {
+                id: $('#enableModal #id').val()
+              },
+              success: function(data) {
+                if (data == 'Success') {
+                  $('#enableModal').modal('hide');
+                  $('.alertMessage').hide('slow');
+                  $('#enableSuccessAlert').show('slow');
+                  location.reload();
+                }
+              }
+            });
+        });
+
       });
 
       function view(id) {
@@ -259,6 +315,11 @@
       function remove(id) {
         $('#deleteModal').modal('show');
         $('#deleteModal #id').val(id);
+      }
+
+      function enable(id) {
+        $('#enableModal').modal('show');
+        $('#enableModal #id').val(id);
       }
     </script>
 

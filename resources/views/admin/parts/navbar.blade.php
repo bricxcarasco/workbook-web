@@ -59,8 +59,6 @@
             </a>
             <div class="dropdown-divider"></div>
           @endforeach
-
-          <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
         </div>
 
       </li>

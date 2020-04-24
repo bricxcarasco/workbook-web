@@ -29,6 +29,16 @@ class QuickListingsController extends Controller
         }
     }
 
+    public function enableQuickJobListing(Request $request)
+    {
+        try {
+            QuickListing::where('id', $request->id)->update(['is_delete' => 0]);
+            return 'Success';
+        } catch (\Throwable $th) {
+            return 'Failed';
+        }
+    }
+
     public function deleteQuickJobListing(Request $request)
     {
         try {

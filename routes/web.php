@@ -38,6 +38,7 @@ Route::put('/provider/post-job', 'Tables\ProvidersController@postJobEdit');
 Route::get('/quick_job_list/get/{id}', 'Tables\QuickListingsController@getQuickJobListingSingle');
 Route::put('/quick_job_list/put', 'Tables\QuickListingsController@updateQuickJobListing');
 Route::put('/quick_job_list/delete', 'Tables\QuickListingsController@deleteQuickJobListing');
+Route::put('/quick_job_list/enable', 'Tables\QuickListingsController@enableQuickJobListing');
 
 Route::get('/job_listing/all', 'Tables\RegularListingsController@getJobListingAll');
 

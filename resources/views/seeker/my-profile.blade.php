@@ -72,7 +72,7 @@
               <input type="hidden" name="id" value="{{ $seeker->id }}">
 
               <div class="form-group">
-                <label for="full_name">Business Name</label>
+                <label for="full_name">Name</label>
                 <input type="text" class="form-control" name="full_name" value="{{ $seeker->full_name }}" placeholder="Business Name">
                 @if ($errors->has('full_name'))
                     <span style="color: red; font-style: italic;">{{ $errors->first('full_name') }}</span>
@@ -89,7 +89,11 @@
 
               <div class="form-group">
                 <label for="gender">Gender</label>
-                <input type="text" class="form-control" name="gender" value="{{ $seeker->gender }}" placeholder="Gender">
+                {{-- <input type="text" class="form-control" name="gender" value="{{ $seeker->gender }}" placeholder="Gender"> --}}
+                <select name="gender" id="gender" class="form-control" placeholder="Gender">
+                  <option value="1">Male</option>
+                  <option value="2">Female</option>
+                </select>
                 @if ($errors->has('gender'))
                     <span style="color: red; font-style: italic;">{{ $errors->first('gender') }}</span>
                 @endif

@@ -149,7 +149,6 @@ class ProviderPagesController extends Controller
         $quick_jobs = DB::table('quick_listings')
             ->leftJoin('work_classes', 'quick_listings.tag', '=', 'work_classes.id')
             ->select('quick_listings.*', 'work_classes.title', 'work_classes.description', 'work_classes.image')
-            ->where('quick_listings.is_delete', 0)
             ->where('quick_listings.user_id', $user_id)
             ->get();
 

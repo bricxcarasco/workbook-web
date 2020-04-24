@@ -556,7 +556,7 @@
               divApp = divApp + `
                     <div class="direct-chat-msg">
                       <div class="direct-chat-infos clearfix">
-                        <span class="direct-chat-name float-left">Me</span>
+                        <span class="direct-chat-name float-left">${data.user.name}</span>
                         <span class="direct-chat-timestamp float-right">${element.created_date}</span>
                       </div>
                       <img class="direct-chat-img" src="{{ asset('dist/img/user1-128x128.jpg') }}" alt="message user image">
@@ -568,7 +568,7 @@
               divApp = divApp + `
                     <div class="direct-chat-msg right">
                       <div class="direct-chat-infos clearfix">
-                        <span class="direct-chat-name float-right">${data.user.name}</span>
+                        <span class="direct-chat-name float-right">Me</span>
                         <span class="direct-chat-timestamp float-left">${element.created_date}</span>
                       </div>
                       <img class="direct-chat-img" src="{{ asset('dist/img/user3-128x128.jpg') }}" alt="message user image">
