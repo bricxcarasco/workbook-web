@@ -43,7 +43,7 @@
             <a href="#" onClick="chat(this.id)" id="{{ $chat->id }}" class="dropdown-item">
               <!-- Message Start -->
               <div class="media">
-                <img src="{{ asset('dist/img/user1-128x128.jpg') }}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                <img src="{{ $chat->image }}" alt="User Avatar" style="width: 50px; height:50px;" class="mr-3 img-circle">
                 <div class="media-body">
                   <h3 class="dropdown-item-title">
                     {{ $chat->name }}

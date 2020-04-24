@@ -146,7 +146,7 @@
                       <span class="direct-chat-name float-left">${data.user.name}</span>
                       <span class="direct-chat-timestamp float-right">${element.created_date}</span>
                     </div>
-                    <img class="direct-chat-img" src="{{ asset('dist/img/user1-128x128.jpg') }}" alt="message user image">
+                    <img class="direct-chat-img" src="${data.user.image}" alt="message user image">
                     <div class="direct-chat-text">
                       ${element.message}
                     </div>
@@ -158,7 +158,7 @@
                       <span class="direct-chat-name float-right">Me</span>
                       <span class="direct-chat-timestamp float-left">${element.created_date}</span>
                     </div>
-                    <img class="direct-chat-img" src="{{ asset('dist/img/user3-128x128.jpg') }}" alt="message user image">
+                    <img class="direct-chat-img" src="${data.me.image}" alt="message user image">
                     <div class="direct-chat-text">
                       ${element.message}
                     </div>

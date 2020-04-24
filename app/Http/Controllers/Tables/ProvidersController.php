@@ -76,6 +76,12 @@ class ProvidersController extends Controller
     {
         try {
             Provider::where('id', $request->id)->update($request->all());
+
+            $provider = Provider::find($request->id);
+            $business_name = $request->business_name;
+
+            User::where('id', $provider->user_id)->update(['name' => $business_name]);
+
             return "Success";
         } catch (\Throwable $th) {
             Log::debug($th);
@@ -135,9 +141,14 @@ class ProvidersController extends Controller
             $request->merge(['image' => $imageName]);
 
             User::where('id', $user_id)->update([
+                'name' => $request->business_name,
                 'image' => $imageName
             ]);
         }
+
+        User::where('id', $user_id)->update([
+            'name' => $request->business_name
+        ]);
 
         $update = Provider::where('id', $request->id)->update($request->except('_token', 'image_upload'));
         

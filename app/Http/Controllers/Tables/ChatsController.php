@@ -25,7 +25,8 @@ class ChatsController extends Controller
         return response()->json(
             [
                 'chats' => $merged->values()->all(),
-                'user' => $he
+                'user' => $he,
+                'me' => Auth::guard('web')->user()
             ]
         );
     }

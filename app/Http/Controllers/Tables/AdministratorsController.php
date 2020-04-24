@@ -38,7 +38,7 @@ class AdministratorsController extends Controller
                 $chatDesc = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first();
                 $object->priority = $chatDesc->id;
                 $object->message = (strlen($chatDesc->message) > 13) ? substr($chatDesc->message,0,10).'...' : $chatDesc->message;
-                $object->status = $chatDesc->status;
+                $object->status = $chatDesc->status;$object->image = User::find($other->id)->image;
                 $object->created_at = Carbon::parse($chatDesc->created_at)->format('Y-m-d H:i');
                 $object->created_date = $chatDesc->created_date;
                 array_push($chat_list, $object);
@@ -79,7 +79,7 @@ class AdministratorsController extends Controller
                 $chatDesc = Chat::where('sender_id', $other->id)->where('receiver_id', $user->id)->orderBy('id', 'desc')->first();
                 $object->priority = $chatDesc->id;
                 $object->message = (strlen($chatDesc->message) > 13) ? substr($chatDesc->message,0,10).'...' : $chatDesc->message;
-                $object->status = $chatDesc->status;
+                $object->status = $chatDesc->status;$object->image = User::find($other->id)->image;
                 $object->created_at = Carbon::parse($chatDesc->created_at)->format('Y-m-d H:i');
                 $object->created_date = $chatDesc->created_date;
                 array_push($chat_list, $object);
